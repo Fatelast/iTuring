@@ -101,9 +101,6 @@
         <!-- 标题 -->
         <div class="title">
           <span class="title-one">每周特价</span>
-          <button class="right-btns">
-            >
-          </button>
         </div>
 
         <div class="special-books">
@@ -151,9 +148,6 @@
         <!-- 标题 -->
         <div class="title">
           <span class="title-one">热门图书</span>
-          <button class="right-btns">
-            >
-          </button>
         </div>
 
         <div class="hot-books">
@@ -201,6 +195,28 @@
             </div>
           </div>
 
+          <div class="book-item">
+            <div class="img-view">
+              <img src="../../assets/tuijian/01nihuima.jpg">
+            </div>
+            <div class="info-view">
+              <h3 class="book-name">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+
+          <div class="book-item">
+            <div class="img-view">
+              <img src="../../assets/tuijian/01nihuima.jpg">
+            </div>
+            <div class="info-view">
+              <h3 class="book-name">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+
 
         </div>
 
@@ -225,15 +241,20 @@ export default {
   width: 1080px;
   margin: 0 auto;
 }
+
+
+/* 轮播图 */
 .banner-view {
   width: 1080px;
-  height: 330px;
+  height: 309px;
   background: pink;
 }
 
+
+/* 内容展示 */
 .book-list {
   width: 1080px;
-  height: 1340px;
+  height: 2000px;
   overflow: hidden;
 }
 .new-view {
@@ -268,11 +289,11 @@ export default {
   border: 0;
   border-radius: 50%;
   cursor: pointer;
+  margin-right: 20px;
 }
 .new-books {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: flex-start;
   box-sizing: inherit;
   width: 100%;
   height: 560px;
@@ -285,8 +306,8 @@ export default {
 }
 .new-items {
   display: flex;
-  justify-content: flex-start;
-  /* flex: 1; */
+  /* justify-content: space-between; */
+  flex: 1;
   flex-wrap: wrap;
   height: 560px;
   /* border: 1px solid green; */
@@ -297,13 +318,14 @@ export default {
   width: 255px;
   height: 264px;
   background: greenyellow;
-  margin: 16px 20px 0 0;
-  min-width: 255px;
-  max-width: 255px;
+  margin-top: 16px ;
+  min-width: 248px;
+  max-width: 250px;
   overflow: hidden;
   border-radius: 5px;
   cursor: pointer;
   box-sizing: inherit;
+  margin-right: 20px;
 }
 .img-view {
   width: 255px;
@@ -360,6 +382,8 @@ export default {
 .special-books {
   display: flex;
   width: 100%;
+  /* margin-right: 16px; */
+  /* justify-content: space-between; */
 }
 
 /* 第三栏 */
@@ -370,8 +394,9 @@ export default {
 }
 .hot-books{
   display: flex;
-  flex: 1;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  
 }
 .more-hot-books{
   display: block;
