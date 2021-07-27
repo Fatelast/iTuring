@@ -112,9 +112,11 @@
     </div>
 
     <!-- 主要内容 -->
-    <el-tabs v-model="activeName" @tab-click="handleClick" class="main-content">
+    <!--v-model="activeName" @tab-click="handleClick" -->
+    <el-tabs class="main-content">
       <el-tab-pane label="图书介绍" class="tab">
         <div class="book-intro">
+          <!-- 特别说明 -->
           <h4 class="title">特别说明</h4>
           <div class="text">
             <p>再简单的代码，也有更好的实现方式</p>
@@ -125,6 +127,7 @@
             <li><p>1个示例，7次重构，18种实现，助你明辨优劣代码</p></li>
             <li><p>每章都配有小测验及习题答案，学以致用</p></li>
           </ul>
+          <!-- 简介 -->
           <h4 class="title">简介</h4>
           <div class="text">
             <p>
@@ -132,6 +135,7 @@
             </p>
             <p><br /></p>
           </div>
+          <!-- 本书特色 -->
           <h4 class="title">本书特色</h4>
           <div class="text">
             <p>
@@ -142,6 +146,7 @@
             </p>
             <p><br /></p>
           </div>
+          <!-- 作译者介绍 -->
           <h4 class="title">作译者介绍</h4>
           <div class="text">
             <p>
@@ -154,6 +159,7 @@
             </p>
             <p><br /></p>
           </div>
+          <!-- 出版信息 -->
           <h4 class="title">出版信息</h4>
           <div class="text">
             <ul class="pd-12">
@@ -385,33 +391,22 @@
       </el-tab-pane>
       <el-tab-pane label="勘误" class="tab">
         <template>
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :value="item.value"
-            >
-            </el-option>
+          <el-select value="是否确认" placeholder="请选择">
+            <el-option value="未确认"> </el-option>
+            <el-option value="已确认"> </el-option>
           </el-select>
         </template>
         <template>
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :value="item.value"
-            >
-            </el-option>
+          <el-select value="介质" placeholder="请选择">
+            <el-option value="电子书"> </el-option>
+            <el-option value="纸质版"> </el-option>
           </el-select>
         </template>
         <template>
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :value="item.value"
-            >
-            </el-option>
+          <el-select value="类型" placeholder="请选择">
+            <el-option value="文字格式错误"> </el-option>
+            <el-option value="技术错误"> </el-option>
+            <el-option value="建议"> </el-option>
           </el-select>
         </template>
       </el-tab-pane>
@@ -421,8 +416,12 @@
 </template>
 
 <script>
+import {getBookInfo} from "../../api/bookInfo";
 export default {
   name: "BookInfo",
+  mounted() {
+    getBookInfo();
+  },
 };
 </script>
 
@@ -667,7 +666,7 @@ export default {
   .flex-view {
     display: flex;
     flex-wrap: nowrap;
-    align-content: flex-end;
+    justify-content: flex-start;
   }
   .published-item .published-label {
     justify-content: space-between;
