@@ -3,7 +3,7 @@
     <h3 class="title">{{ itemData.subject }}</h3>
     <div class="info">
       <div class="left-info">
-        <img class="left-info-avatar" src="../assets/logo.png" alt="" />
+        <img class="left-info-avatar" src="../../../assets/logo.png" alt="" />
         <span>{{ itemData.authorNickName }}</span>
         <span>{{ itemData.createDate.split("T")[0] }}</span>
       </div>
@@ -24,7 +24,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .articleItem {
   border-bottom: 1px dashed #cedce4;
   padding: 16px 0;

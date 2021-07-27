@@ -1,26 +1,42 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Book from '../views/Book.vue'
-import Article from '../views/Article.vue'
+import Home from '../views/Home'
+import Article from '../views/Home/Article/Article.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Article',
-    component: Article
+    path: '/home',
+    name: 'Home',
+    component: Home,
+    children:[
+      {
+        path: '/home/book',
+        name:'BookMainPage',
+        component:()=>import('../views/BookMainPage/BooKMainPage'),
+        children:[
+          {
+            path:'/home/book/:id',
+            name:'BookInfo',
+            component:()=>import('../views/BookInfo')
+          }
+        ]
+      },
+      {
+        path: '/home/article',
+        name:'Article',
+        component:Article
+      },
+      // {
+      //   path:'/login',
+      //   name:'Login',  
+      // }
+    ]
   },
   {
-    path: '/book',
-    name:'Book',
-    component:Book
-  },
-  {
-    path: '/article',
-    name:'Home',
-    component:Home
-  },
+    path:'/',
+    redirect:'/home'
+  }
   
 ]
 
