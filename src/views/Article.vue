@@ -43,8 +43,11 @@
       </div>
       <!-- 列表 -->
       <div class="articleList">
-        <ArticleItem />
-        <ArticleItem />
+        <ArticleItem
+          v-for="item in articleListItems"
+          :key="item.id"
+          :itemData="item"
+        />
       </div>
     </div>
   </div>
@@ -52,6 +55,7 @@
 
 <script>
 import ArticleItem from "./ArticleItem";
+import { getArticle } from "../utils/api";
 export default {
   name: "Article",
   components: {
@@ -60,12 +64,25 @@ export default {
   data() {
     return {
       count: 0,
+      articleListItems: [],
+      articleObject: {
+        url: "/Article",
+        params: {
+          sort: "new",
+          page: 1,
+          tab: "",
+        },
+      },
     };
   },
   methods: {
-    load() {
-      this.count += 2;
+    async getArticleData({ url, params, method = "GET" }) {
+      let { articleListItems } = await getArticle({ url, params, method });
+      this.articleListItems = articleListItems;
     },
+  },
+  async mounted() {
+    this.getArticleData(this.articleObject);
   },
 };
 </script>

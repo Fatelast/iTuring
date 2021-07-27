@@ -1,15 +1,15 @@
 <template>
   <div class="articleItem">
-    <h3 class="title">2021年Java软件开发有前途吗?</h3>
+    <h3 class="title">{{ itemData.subject }}</h3>
     <div class="info">
       <div class="left-info">
         <img class="left-info-avatar" src="../assets/logo.png" alt="" />
-        <span>易牛小朗</span>
-        <span>2021-07-24</span>
+        <span>{{ itemData.authorNickName }}</span>
+        <span>{{ itemData.createDate.split("T")[0] }}</span>
       </div>
       <div class="right-num">
-        <span>0推荐</span>
-        <span>98阅读</span>
+        <span>{{ itemData.voteCount }}推荐</span>
+        <span>{{ itemData.viewCount }}阅读</span>
       </div>
     </div>
   </div>
@@ -18,6 +18,9 @@
 <script>
 export default {
   name: "ArticleItem",
+  props: {
+    itemData: Object,
+  },
 };
 </script>
 
