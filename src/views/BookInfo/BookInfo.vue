@@ -5,21 +5,26 @@
       <!-- 封面及作者 -->
       <div class="book-infos">
         <div class="book-img-box">
-          <img src="./images/封面.jpg" alt="" />
+          <img
+            :src="
+              `https://file.ituring.com.cn/LargeCover/${bookInfoList.coverKey}`
+            "
+            alt=""
+          />
         </div>
         <div class="book-info-box">
           <div class="book-state">
             <span class="state">上市销售</span>
-            <span>图灵程序设计丛书</span>
+            <span>{{ bookInfoList.bookCollectionName }}</span>
           </div>
-          <h1>你真的会写代码吗</h1>
+          <h1>{{ bookInfoList.name }}</h1>
           <div class="authors">
             <span>作者：</span>
-            <span class="name">[意]马尔科·法埃拉（Marco Faella）</span>
+            <span class="name">{{ bookInfoList.authorNameString }}</span>
           </div>
           <div class="translator">
             <span>译者：</span>
-            <span class="name">雷威，李强</span>
+            <span class="name">{{ bookInfoList.translatorNameString }}</span>
           </div>
         </div>
       </div>
@@ -31,7 +36,7 @@
           </div>
           <div class="count-box">
             <span class="count-title">加入心愿单</span>
-            <div class="count-num">129</div>
+            <div class="count-num">{{ bookInfoList.favCount }}</div>
           </div>
         </div>
 
@@ -41,7 +46,7 @@
           </div>
           <div class="count-box">
             <span class="count-title">推荐</span>
-            <div class="count-num">11</div>
+            <div class="count-num">{{ bookInfoList.voteCount }}</div>
           </div>
         </div>
 
@@ -51,7 +56,7 @@
           </div>
           <div class="count-box">
             <span class="count-title">在线阅读</span>
-            <div class="count-num">1.2K</div>
+            <div class="count-num">{{ bookInfoList.viewCount }}</div>
           </div>
         </div>
 
@@ -63,14 +68,16 @@
             <span class="count-title">随书下载</span>
             <div>
               <span class="text">文件</span>
-              <span class="num-text">2</span>
+              <span class="num-text">{{
+                bookInfoList.resources ? bookInfoList.resources.length : 0
+              }}</span>
             </div>
           </div>
         </div>
 
         <div class="count-item">
           <div class="count-img">
-            <img src="./images/want-read-icon.030fb9dc.svg" alt="" />
+            <img src="./images/share-icon.01325570.svg" alt="" />
           </div>
           <div class="count-box">
             <span class="count-title">分享</span>
@@ -84,29 +91,36 @@
     <div class="buy-way">
       <div class="title">购买方式</div>
       <div class="flex-view">
-        <div class="buy-way-item">
-          <div class="name">纸质书</div>
-          <div class="price">
-            <span class="discount-price">¥ 73.64</span>
-            <span class="original-price">¥89.8</span>
-            <button class="buy-btn">+购书袋</button>
+        <div
+          class="buy-way-item"
+          v-for="salesInfo in salesInfos"
+          :key="salesInfo.edition"
+          v-show="salesInfo.canBeSaled"
+        >
+          <div class="name">
+            {{ salesInfosObj[salesInfo.edition].kind }}
           </div>
-        </div>
-        <div class="buy-way-item">
-          <div class="name">纸质书</div>
-          <div class="price">
-            <span class="discount-price">¥ 73.64</span>
-            <span class="original-price">¥89.8</span>
+          <div class="price" v-if="salesInfo.edition !== 8">
+            <span class="discount-price">¥{{ salesInfo.discountPrice }}</span>
+            <span
+              class="original-price"
+              v-if="salesInfo.discountPrice !== salesInfo.price"
+              >¥{{ salesInfo.price }}</span
+            >
+            <el-button icon="el-icon-plus" class="buy-btn" type="primary">{{
+              salesInfosObj[salesInfo.edition].join
+            }}</el-button>
           </div>
-          <button class="buy-btn">+购书袋</button>
-        </div>
-        <div class="buy-way-item">
-          <div class="name">纸质书</div>
-          <div class="price">
-            <span class="discount-price">¥ 73.64</span>
-            <span class="original-price">¥89.8</span>
+          <div v-else>
+            <el-button class="buy-left" type="primary" size="mini">
+              <img src="./images/buy-dangdang.96fdd8ae.svg" alt="" />
+              当当
+            </el-button>
+            <el-button class="buy-right" type="primary" size="mini">
+              <img src="./images/buy-jingdong.1d483f5f.svg" alt="" />
+              京东
+            </el-button>
           </div>
-          <button class="buy-btn">+购书袋</button>
         </div>
       </div>
     </div>
@@ -131,7 +145,7 @@
           <h4 class="title">简介</h4>
           <div class="text">
             <p>
-              本书的核心思想是通过对各方面的代码质量进行比较，使读者了解经验丰富的开发者拥有的思维模式。为了展示软件开发最佳实践，作者对一个水容器示例进行多次重构，讨论了18种实现，分别从7个方面改进代码质量：时间效率、空间效率、监控与可靠性、测试与可靠性、可读性、线程安全、可复用性。在此过程中，作者还探讨了与计算机科学、Java编程以及软件工程相关的专业话题，这些知识都有助于读者写出更好的代码。
+              {{bookInfoList.briefIntro.abstract}}
             </p>
             <p><br /></p>
           </div>
@@ -139,10 +153,7 @@
           <h4 class="title">本书特色</h4>
           <div class="text">
             <p>
-              再复杂的开发任务，也有巧妙的解决方案。再简单的代码，也有更好的实现方式。本书为追求软件质量的你而作，书中通过一个简单的水容器示例，从7个维度展示了如何写好代码。本书以Java为例，所演示的技巧适用于任何面向对象语言。在面对多样化的开发需求时，这些技巧将帮助你掌握权衡之术。
-              好代码：1个示例，7次重构（时间效率、空间效率、可靠性、稳健性、可读性、可复用性、线程安全）
-              “构建高质量的软件向来不是简单的事情，重新审视优秀的设计原则和技巧总是没错的。在这本书中，你会发现一个全新的视角。希望你能像我一样喜欢这本书。”
-              ——凯·霍斯特曼，《Java核心技术》《写给大忙人看的Java核心技术》等书作者
+              {{bookInfoList.briefIntro.highlight}}
             </p>
             <p><br /></p>
           </div>
@@ -150,12 +161,7 @@
           <h4 class="title">作译者介绍</h4>
           <div class="text">
             <p>
-              【作者简介】 马尔科·法埃拉（Marco Faella）
-              意大利那不勒斯费德里克二世大学副教授，面向本科生和研究生讲授高级编程、软件工程、面向对象设计、编译器与程序分析、游戏设计等课程，同时为信息技术从业者开发和讲授Java编程课。另外，他也是爱思唯尔、施普林格等旗下期刊的审稿人。
-              【译者简介】 雷威
-              信公科技首席架构师，曾在阿里巴巴中间件团队任职。沉浸软件行业十余年，热衷于软件架构、研发效能、分布式、云原生等领域，相信技术能改变世界。
-              李强
-              信公科技CTO，浙江中金黄金集团前副总裁兼CTO，曾就职于美国道富银行。技术涉猎广泛，在产品设计开发、架构设计、技术团队管理等方面有丰富经验。另译有《监控的艺术》《扩展jQuery》等。
+              {{bookInfoList.briefIntro.authorInfo}}
             </p>
             <p><br /></p>
           </div>
@@ -168,7 +174,7 @@
                   <span>书</span>
                   <span>名</span>
                 </span>
-                <span class="published-value">你真的会写代码吗</span>
+                <span class="published-value">{{bookInfoList.name}}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
@@ -177,7 +183,7 @@
                   <span>书</span>
                   <span>名</span>
                 </span>
-                <span class="published-value">图灵程序设计丛书</span>
+                <span class="published-value">{{bookInfoList.bookCollectionName}}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
@@ -187,7 +193,7 @@
                   <span>辑</span>
                 </span>
                 <span class="published-value"
-                  >关于本书的问题，请联系 <a href="#">杨琳</a></span
+                  >关于本书的问题，请联系 <a href="#">{{bookInfoList.contributor.Editor[0].name}}</a></span
                 >
               </li>
               <li class="published-item flex-view">
@@ -197,21 +203,21 @@
                   <span>日</span>
                   <span>期</span>
                 </span>
-                <span class="published-value">2021-07-15</span>
+                <span class="published-value">{{bookInfoList.publishDate}}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
                   <span>书</span>
                   <span>号</span>
                 </span>
-                <span class="published-value">978-7-115-56634-8</span>
+                <span class="published-value">{{bookInfoList.isbn}}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
                   <span>定</span>
                   <span>价</span>
                 </span>
-                <span class="published-value">251</span>
+                <span class="published-value">{{bookInfoList.price}}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
@@ -416,11 +422,25 @@
 </template>
 
 <script>
-import {getBookInfo} from "../../api/bookInfo";
+import { getBookInfo } from "../../api/bookInfo";
 export default {
   name: "BookInfo",
-  mounted() {
-    getBookInfo();
+  data() {
+    return {
+      bookInfoList: {}, //详情页总数据
+      salesInfos: [], //购买方式的种类
+      salesInfosObj: {
+        1: { kind: "纸质书", join: "购书袋" },
+        4: { kind: "电子书", join: "购书袋" },
+        5: { kind: "样书", join: "样书袋" },
+        8: { kind: "其他渠道" },
+      },
+    };
+  },
+  async mounted() {
+    const bookInfoList = await getBookInfo("2811");
+    this.bookInfoList = bookInfoList;
+    this.salesInfos = bookInfoList.salesInfos;
   },
 };
 </script>
@@ -428,7 +448,6 @@ export default {
 <style lang="less" scoped>
 .bookInfoContainer {
   width: 100%;
-  /* background-color: pink; */
 }
 
 /* 详情页头部 */
@@ -547,7 +566,7 @@ export default {
   }
 }
 
-.count-item .count-item .count-box .count-num,
+.count-item .count-box .count-num,
 .count-item .count-box div .num-text {
   font-weight: 600;
   font-size: 20px;
@@ -574,7 +593,7 @@ export default {
 .buy-way .flex-view {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   .buy-way-item {
     width: 235px;
     height: 127px;
@@ -608,16 +627,16 @@ export default {
     .buy-btn {
       display: block;
       background: #4684e2;
-      border-radius: 4px;
-      text-align: center;
       color: #fff;
-      font-size: 14px;
-      height: 32px;
-      line-height: 32px;
-      width: 76px;
-      outline: none;
-      border: none;
       margin-top: 12px;
+    }
+    .buy-left {
+      background: #ec4737;
+      color: #fff;
+    }
+    .buy-right {
+      background: #d1382c;
+      color: #fff;
     }
   }
 }

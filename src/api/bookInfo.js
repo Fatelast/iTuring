@@ -1,9 +1,9 @@
-import axios from 'axios';
+import request from '../utils/request'
 
 // 获取图书的详细信息
-export const getBookInfo = () => {
-  return axios.get('/api/Book/2811')
-    .then(res => {
-      console.log(res);
-    })
+export const getBookInfo = (Id) => {
+  return request({
+    method: 'GET',
+    url: `/Book/${Id}`
+  })
 }
