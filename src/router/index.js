@@ -6,6 +6,7 @@ import Home from "../views/home/home.vue";
 Vue.use(VueRouter);
 
 const routes = [
+// <<<<<<< HEAD
 	{
 		path: "/",
 		name: "Home",
@@ -46,6 +47,25 @@ const routes = [
 //   }
 // ]
 // >>>>>>> aad480368a1694d6bd6a9899fee73cb6dbec8e7e
+// =======
+//   {
+//     path: '/',
+//     name: 'Article',
+//     component: Article
+//   },
+//   {
+//     path: '/book',
+//     name:'Book',
+//     component:Book
+//   },
+// 	{
+// 		path: "/",
+// 		name: "Home",
+// 		component: Home,
+// 	},
+  
+// ]
+// >>>>>>> 7d7f465def1eedab6c4f0e91ab145a4e4bab3a46
 
 const router = new VueRouter({
 	mode: "history",

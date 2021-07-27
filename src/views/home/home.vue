@@ -1,4 +1,6 @@
 <template>
+
+  <!--首页 https://api.ituring.com.cn/api/Page/Home -->
   <div class="content-view">
     <!-- 轮播图 -->
     <div class="banner-view">
@@ -13,7 +15,7 @@
 
     <!-- 内容区 -->
     <div class="book-list hidden-sm">
-      <!-- 第一栏 -->
+      <!-- 新书上市 -->
       <div class="new-view">
         <!-- 标题 -->
         <div class="title">
@@ -29,80 +31,30 @@
             src="../../assets/tuijian/tulingxinshu.png"
           >
           <!-- 内容区中盒子 -->
-          <div class="new-items ">
+          <div
+            class="new-items"
+            v-for="preSalePage in preSalePages"
+            :key="preSalePage.id"
+          >
             <!-- 小盒子 -->
             <div class="book-item">
               <div class="img-view">
-                <img src="../../assets/tuijian/01nihuima.jpg">
+                <img
+                  :src="`https://file.ituring.com.cn/Original/${preSalePage.coverKey}`"
+                  :alt="preSalePage.name"
+                >
               </div>
               <div class="info-view">
-                <h3 class="book-name">你真的会写代码吗</h3>
-                <p class="authors">Marco Faella（作者）</p>
-                <p class="translators">雷威，李强（译者）</p>
-              </div>
-            </div>
-
-            <div class="book-item">
-              <div class="img-view">
-                <img src="../../assets/tuijian/01nihuima.jpg">
-              </div>
-              <div class="info-view">
-                <h3 class="book-name">你真的会写代码吗</h3>
-                <p class="authors">Marco Faella（作者）</p>
-                <p class="translators">雷威，李强（译者）</p>
-              </div>
-            </div>
-
-            <div class="book-item">
-              <div class="img-view">
-                <img src="../../assets/tuijian/01nihuima.jpg">
-              </div>
-              <div class="info-view">
-                <h3 class="book-name">你真的会写代码吗</h3>
-                <p class="authors">Marco Faella（作者）</p>
-                <p class="translators">雷威，李强（译者）</p>
-              </div>
-            </div>
-
-            <div class="book-item">
-              <div class="img-view">
-                <img src="../../assets/tuijian/01nihuima.jpg">
-              </div>
-              <div class="info-view">
-                <h3 class="book-name">你真的会写代码吗</h3>
-                <p class="authors">Marco Faella（作者）</p>
-                <p class="translators">雷威，李强（译者）</p>
-              </div>
-            </div>
-
-            <div class="book-item">
-              <div class="img-view">
-                <img src="../../assets/tuijian/01nihuima.jpg">
-              </div>
-              <div class="info-view">
-                <h3 class="book-name">你真的会写代码吗</h3>
-                <p class="authors">Marco Faella（作者）</p>
-                <p class="translators">雷威，李强（译者）</p>
-              </div>
-            </div>
-
-            <div class="book-item">
-              <div class="img-view">
-                <img src="../../assets/tuijian/01nihuima.jpg">
-              </div>
-              <div class="info-view">
-                <h3 class="book-name">你真的会写代码吗</h3>
-                <p class="authors">Marco Faella（作者）</p>
-                <p class="translators">雷威，李强（译者）</p>
+                <h3 class="book-name">{{preSalePage.name}}</h3>
+                <p class="authors">{{preSalePage.authorNameString}}（作者）</p>
+                <p class="translators">{{preSalePage.translatorNameString}}（译者）</p>
               </div>
             </div>
           </div>
-
         </div>
-
       </div>
 
-      <!-- 第二栏 -->
+      <!-- 每周特价 -->
       <div class="special-view">
         <!-- 标题 -->
         <div class="title">
@@ -114,41 +66,25 @@
             class="special-img"
             src="../../assets/tuijian/tejia.png"
           >
-          <div class="book-item">
+          <div
+            class="book-item"
+            v-for="weeklySpecialItem in weeklyList"
+            :key="weeklySpecialItem.id"
+          >
             <div class="img-view">
-              <img src="../../assets/tuijian/01nihuima.jpg">
+              <img :src="`https://file.ituring.com.cn/Original/${weeklySpecialItem.coverKey}`">
             </div>
             <div class="info-view">
-              <h3 class="book-name">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="book-item">
-            <div class="img-view">
-              <img src="../../assets/tuijian/01nihuima.jpg">
-            </div>
-            <div class="info-view">
-              <h3 class="book-name">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="book-item">
-            <div class="img-view">
-              <img src="../../assets/tuijian/01nihuima.jpg">
-            </div>
-            <div class="info-view">
-              <h3 class="book-name">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
+              <h3 class="book-name">{{weeklySpecialItem.name}}</h3>
+              <p class="authors">{{weeklySpecialItem.authorNameString}}（作者）</p>
+              <p class="translators">{{weeklySpecialItem.translatorNameString}}（译者）</p>
             </div>
           </div>
 
         </div>
       </div>
 
-      <!-- 第三栏 -->
+      <!-- 热门图书 -->
       <div class="hot-view">
 
         <!-- 标题 -->
@@ -157,69 +93,21 @@
         </div>
 
         <div class="hot-books">
-          <div class="book-item">
+          <div
+            class="book-item"
+            v-for="BooksItem in popList"
+            :key="BooksItem.id"
+          >
             <div class="img-view">
-              <img src="../../assets/tuijian/01nihuima.jpg">
+              <img
+                :src="`https://file.ituring.com.cn/Original/${BooksItem.coverKey}`"
+                :alt="BooksItem.name"
+              >
             </div>
             <div class="info-view">
-              <h3 class="book-name">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-
-          <div class="book-item">
-            <div class="img-view">
-              <img src="../../assets/tuijian/01nihuima.jpg">
-            </div>
-            <div class="info-view">
-              <h3 class="book-name">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-
-          <div class="book-item">
-            <div class="img-view">
-              <img src="../../assets/tuijian/01nihuima.jpg">
-            </div>
-            <div class="info-view">
-              <h3 class="book-name">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-
-          <div class="book-item">
-            <div class="img-view">
-              <img src="../../assets/tuijian/01nihuima.jpg">
-            </div>
-            <div class="info-view">
-              <h3 class="book-name">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-
-          <div class="book-item">
-            <div class="img-view">
-              <img src="../../assets/tuijian/01nihuima.jpg">
-            </div>
-            <div class="info-view">
-              <h3 class="book-name">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-
-          <div class="book-item">
-            <div class="img-view">
-              <img src="../../assets/tuijian/01nihuima.jpg">
-            </div>
-            <div class="info-view">
-              <h3 class="book-name">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
+              <h3 class="book-name">{{BooksItem.name}}</h3>
+              <p class="authors">{{BooksItem.authorNameString}}（作者）</p>
+              <p class="translators">{{BooksItem.translatorNameString}}（译者）</p>
             </div>
           </div>
 
@@ -238,9 +126,39 @@
 // import { component } from 'vue/types/umd';
 import Carousel from "../../components/Carousel/index";
 import Carousel2 from "../../components/Carousel-2/index";
+import api from "../../API/home";
 
 export default {
   name: "home",
+  data() {
+    return {
+      popList: [],
+      weeklyList: [],
+      preSalePages: [],
+    };
+  },
+
+  async mounted() {
+    // 请求轮播图数据
+    const lunbotu = (await api.reqGetCarouselBigImg()).banners;
+    console.log("lunbotu", lunbotu);
+
+    // console.log(result);
+
+    // 请求新书上市、每周特价、热门图书数据
+    const getRecommendPageText = (await api.reqGetRecommendPageText())
+      .blockContents;
+    const result = getRecommendPageText.map((item) => {
+      return item.tag.bookItems;
+    });
+    // console.log(result);
+    const bookItems = Object.freeze(result.slice(0, 3));
+    this.popList = bookItems[0];
+    this.weeklyList = bookItems[1];
+    this.preSalePages = bookItems[2];
+    // console.log(bookItems);
+  },
+
   components: {
     Carousel,
     Carousel2,
@@ -279,8 +197,6 @@ export default {
 /* 内容展示 */
 .book-list {
   width: 1080px;
-  height: 2000px;
-  overflow: hidden;
 }
 .new-view {
   display: block;
@@ -358,16 +274,13 @@ export default {
   padding: 8px 0;
   background: #eaf1f5;
 }
-.img-view:hover{
+.img-view:hover {
   transform: scale(1.05, 1.05);
 }
 .img-view img {
   display: block;
   height: 100%;
   margin: 0 auto;
-}
-.img-view img:hover {
-  /* transform: scale(1.05, 1.05); */
 }
 .info-view {
   width: 223px;

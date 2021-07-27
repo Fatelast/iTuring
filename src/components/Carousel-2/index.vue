@@ -72,7 +72,6 @@ export default {
       //   prevEl: ".swiper-button-prev",
       // },
     });
-    console.log(this.swiper);
   },
 };
 </script>
