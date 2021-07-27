@@ -1,3 +1,4 @@
+// <<<<<<< HEAD
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/home/home.vue";
@@ -19,6 +20,32 @@ const routes = [
 	//   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
 	// }
 ];
+// =======
+// import Vue from 'vue'
+// import VueRouter from 'vue-router'
+// import Home from '../views/Home.vue'
+// import Book from '../views/Book.vue'
+// import Article from '../views/Article.vue'
+// Vue.use(VueRouter)
+
+// const routes = [
+//   {
+//     path: '/',
+//     name: 'Home',
+//     component: Home
+//   },
+//   {
+//     path: '/book',
+//     name:'Book',
+//     component:Book
+//   },
+//   {
+//     path: '/article',
+//     name:'Article',
+//     component:Article
+//   }
+// ]
+// >>>>>>> aad480368a1694d6bd6a9899fee73cb6dbec8e7e
 
 const router = new VueRouter({
 	mode: "history",

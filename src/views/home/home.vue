@@ -2,7 +2,9 @@
   <div class="content-view">
     <!-- 轮播图 -->
     <div class="banner-view">
-
+      <div>
+        
+      </div>
     </div>
 
     <!-- 内容区 -->
@@ -248,6 +250,8 @@ export default {
   width: 1080px;
   height: 309px;
   background: pink;
+  margin: 16px 0 3px 0;
+  border-radius: 8px;
 }
 
 
