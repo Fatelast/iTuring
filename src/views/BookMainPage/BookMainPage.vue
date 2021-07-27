@@ -6,54 +6,19 @@
       <aside class="nav_container">
         <dl class="bookNav">
           <dt class="bookCategory">图书分类</dt>
-          <dd>全部</dd>
-          <dd class="category">
-            <p>计算机</p>
+          <!-- 分类列表 -->
+          <!-- kkkkkkk -->
+          <dd :class="{ totalBooks: true, select: true }">全部</dd>
+          <dd class="category1" v-for="category1 in categoryList" :key="category1.id">
+            <p>{{ category1.name }}</p>
             <ul style="display:none">
-              <li class="category">
-                <p>编程语言</p>
+              <!-- <ul> -->
+              <li class="category2" v-for="category2 in category1.children" :key="category2.id">
+                <p>{{ category2.name }}</p>
+                <!-- <ul> -->
                 <ul style="display:none">
-                  <li class="category">
-                    <p>Python</p>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </dd>
-          <dd class="category">
-            <p>计算机</p>
-            <ul style="display:none">
-              <li class="category">
-                <p>编程语言</p>
-                <ul style="display:none">
-                  <li class="category">
-                    <p>Python</p>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </dd>
-          <dd class="category ">
-            <p>计算机</p>
-            <ul style="display:none">
-              <li class="category">
-                <p>编程语言</p>
-                <ul style="display:none">
-                  <li class="category">
-                    <p>Python</p>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </dd>
-          <dd class="category">
-            <p>计算机</p>
-            <ul style="display:none">
-              <li class="category">
-                <p>编程语言</p>
-                <ul style="display:none">
-                  <li class="category">
-                    <p>Python</p>
+                  <li class="category3" v-for="category3 in category2.children" :key="category3.id">
+                    <p>{{ category3.name }}</p>
                   </li>
                 </ul>
               </li>
@@ -157,114 +122,20 @@
         </div>
         <!-- 书本展示列表 -->
         <div class="BookList_container">
-          <div class="bookItem">
+          <div class="bookItem" v-for="bookItem in bookItems" :key="bookItem.id">
             <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+              <img
+                class="bookImg"
+                v-lazy="{ src: 'https://file.ituring.com.cn/LargeCover/' + bookItem.coverKey }"
+                :alt="bookItem.name"
+              />
             </div>
             <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="bookItem">
-            <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
-            </div>
-            <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="bookItem">
-            <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
-            </div>
-            <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="bookItem">
-            <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
-            </div>
-            <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="bookItem">
-            <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
-            </div>
-            <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="bookItem">
-            <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
-            </div>
-            <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="bookItem">
-            <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
-            </div>
-            <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="bookItem">
-            <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
-            </div>
-            <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="bookItem">
-            <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
-            </div>
-            <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="bookItem">
-            <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
-            </div>
-            <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
-            </div>
-          </div>
-          <div class="bookItem">
-            <div class="bookImg_container">
-              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
-            </div>
-            <div class="bookInfo">
-              <h3 class="bookTitle">你真的会写代码吗</h3>
-              <p class="authors">Marco Faella（作者）</p>
-              <p class="translators">雷威，李强（译者）</p>
+              <h3 class="bookTitle">{{ bookItem.name }}</h3>
+              <p class="authors" v-if="bookItem.authorNameString">{{ bookItem.authorNameString }}（作者）</p>
+              <p class="translators" v-if="bookItem.translatorNameString">
+                {{ bookItem.translatorNameString }}（译者）
+              </p>
             </div>
           </div>
         </div>
@@ -273,7 +144,7 @@
         <el-pagination
           class="pagination"
           :background="true"
-          :current-page="current"
+          :current-page="page"
           :page-size="15"
           layout="prev, pager, next"
           :total="total"
@@ -358,24 +229,49 @@
 </template>
 
 <script>
-import req from '../../utils/request'
+import { reqGetAllBooks, reqGetAdvancedBook } from '../../api/bookMainPage'
 export default {
   name: 'BookMainPage',
   data() {
     return {
+      categoryId: 0,
+      edition: 1,
+      name: '',
+      sort: 'new',
+      // 当前页
+      page: 1,
+      // 书本总数
       total: 50,
-      current: 1,
+      // 当前页的书本列表
+      bookItems: [],
+      // 三级分类列表
+      categoryList: [],
+      // 用于日期选择器组件
       date: ''
     }
   },
   async mounted() {
-    const res = await req({
-      url: '/Category/All',
-      method: 'get'
-    })
-    console.log(res)
+    const categoryList = await reqGetAllBooks()
+    this.categoryList = categoryList
+    // console.log(categoryList)
+
+    // 得到请求需要的属性
+    const { categoryId, edition, name, sort, page } = this
+    const dataObj = {
+      categoryId,
+      edition,
+      name,
+      sort,
+      page
+    }
+    const { bookItems, pagination } = await reqGetAdvancedBook(dataObj)
+    // console.log(bookItems, pagination)
+    this.total = pagination.totalItemCount
+    this.bookItems = bookItems
   },
-  methods: {}
+  methods: {
+    // async reqAdvancedBook() {}
+  }
 }
 </script>
 
@@ -419,6 +315,9 @@ export default {
       input {
         vertical-align: middle;
       }
+      &.totalBooks.select {
+        color: #4684e2;
+      }
     }
     /* 热门标签样式 */
     .tag_container {
@@ -453,14 +352,23 @@ export default {
     padding-left: 16px;
     // line-height: 24.8px;
     transition: color 0.5s;
-    &:hover {
+    // kkkkkkk
+    &:hover > p {
       color: #4684e2;
     }
     &.select > p {
       color: #4684e2;
     }
-    .category {
+    .category1,
+    .category2,
+    .category3 {
       padding-left: 16px;
+      margin-top: 4px;
+    }
+    .category1 > p:hover,
+    .category2 > p:hover,
+    .category3 > p:hover {
+      color: #4684e2;
     }
     .select > p {
       color: #4684e2;
@@ -619,6 +527,7 @@ export default {
           line-height: 20px;
           overflow: hidden;
           text-overflow: ellipsis;
+          text-align: center;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           margin: 12px 0 8px;
