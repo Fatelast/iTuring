@@ -156,7 +156,7 @@
 export default {};
 </script>
 
-<style >
+<style scoped>
 /* aside 部分开始 */
 aside {
   position: absolute;
@@ -177,8 +177,8 @@ body {
 .header-container {
   position: absolute;
   top: 0;
-  left: 172px;
-  width: 1360px;
+  left: 180px;
+  width: 1350px;
   height: 56px;
   z-index: -18;
   overflow: hidden;
