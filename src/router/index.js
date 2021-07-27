@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Book from '../views/Book.vue'
 import Article from '../views/Article.vue'
-import BookInfo from '../views/BookInfo/BookInfo'
+import BookInfo from '../views/BookInfo'
 Vue.use(VueRouter)
 
 const routes = [

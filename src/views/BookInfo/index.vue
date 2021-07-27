@@ -129,7 +129,7 @@
     <!--v-model="activeName" @tab-click="handleClick" -->
     <el-tabs class="main-content">
       <el-tab-pane label="图书介绍" class="tab">
-        <div class="book-intro">
+        <div class="book-intro" v-if="bookInfoList.briefIntro">
           <!-- 特别说明 -->
           <h4 class="title">特别说明</h4>
           <div class="text">
@@ -145,7 +145,7 @@
           <h4 class="title">简介</h4>
           <div class="text">
             <p>
-              {{bookInfoList.briefIntro.abstract}}
+              {{ bookInfoList.briefIntro.abstract }}
             </p>
             <p><br /></p>
           </div>
@@ -153,7 +153,7 @@
           <h4 class="title">本书特色</h4>
           <div class="text">
             <p>
-              {{bookInfoList.briefIntro.highlight}}
+              {{ bookInfoList.briefIntro.highlight }}
             </p>
             <p><br /></p>
           </div>
@@ -161,7 +161,7 @@
           <h4 class="title">作译者介绍</h4>
           <div class="text">
             <p>
-              {{bookInfoList.briefIntro.authorInfo}}
+              {{ bookInfoList.briefIntro.authorInfo }}
             </p>
             <p><br /></p>
           </div>
@@ -174,7 +174,7 @@
                   <span>书</span>
                   <span>名</span>
                 </span>
-                <span class="published-value">{{bookInfoList.name}}</span>
+                <span class="published-value">{{ bookInfoList.name }}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
@@ -183,7 +183,9 @@
                   <span>书</span>
                   <span>名</span>
                 </span>
-                <span class="published-value">{{bookInfoList.bookCollectionName}}</span>
+                <span class="published-value">{{
+                  bookInfoList.bookCollectionName
+                }}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
@@ -193,7 +195,10 @@
                   <span>辑</span>
                 </span>
                 <span class="published-value"
-                  >关于本书的问题，请联系 <a href="#">{{bookInfoList.contributor.Editor[0].name}}</a></span
+                  >关于本书的问题，请联系
+                  <a href="#">{{
+                    bookInfoList.contributor.Editor[0].name
+                  }}</a></span
                 >
               </li>
               <li class="published-item flex-view">
@@ -203,21 +208,32 @@
                   <span>日</span>
                   <span>期</span>
                 </span>
-                <span class="published-value">{{bookInfoList.publishDate}}</span>
+                <span class="published-value">{{
+                  bookInfoList.publishDate
+                }}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
                   <span>书</span>
                   <span>号</span>
                 </span>
-                <span class="published-value">{{bookInfoList.isbn}}</span>
+                <span class="published-value">{{ bookInfoList.isbn }}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
                   <span>定</span>
                   <span>价</span>
                 </span>
-                <span class="published-value">{{bookInfoList.price}}</span>
+                <span class="published-value">{{ salesInfos[0].price }}</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>页</span>
+                  <span>数</span>
+                </span>
+                <span class="published-value">{{
+                  bookInfoList.paperEditionInfo.pageNumber
+                }}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
@@ -226,14 +242,18 @@
                   <span>方</span>
                   <span>式</span>
                 </span>
-                <span class="published-value">单色</span>
+                <span class="published-value">{{
+                  bookInfoList.paperEditionInfo.bookPrintName
+                }}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
                   <span>开</span>
                   <span>本</span>
                 </span>
-                <span class="published-value">16开</span>
+                <span class="published-value">{{
+                  bookInfoList.paperEditionInfo.pageSizeName
+                }}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
@@ -250,10 +270,9 @@
                   <span>书</span>
                   <span>名</span>
                 </span>
-                <span class="published-value"
-                  >Seriously Good Software: Code That Works, Survives, and
-                  Wins</span
-                >
+                <span class="published-value">{{
+                  bookInfoList.originalBookInfo.originalBookName
+                }}</span>
               </li>
               <li class="published-item flex-view">
                 <span class="published-label flex-view">
@@ -261,57 +280,24 @@
                   <span>书</span>
                   <span>号</span>
                 </span>
-                <span class="published-value">9781617296291</span>
+                <span class="published-value">{{
+                  bookInfoList.originalBookInfo.originalBookIsbn
+                }}</span>
               </li>
             </ul>
           </div>
         </div>
       </el-tab-pane>
       <el-tab-pane label="在线阅读" class="tab">
-        <div class="catalog">
-          <div class="catalog-item flex-view">
-            <span>版权声明</span>
-            <span class="title">阅读</span>
-          </div>
-          <div class="catalog-item flex-view">
-            <span>程序员之旅</span>
-            <span class="title">阅读</span>
-          </div>
-          <div class="catalog-item flex-view">
-            <span>序</span>
-            <span class="title">阅读</span>
-          </div>
-          <div class="catalog-item flex-view">
-            <span>前言</span>
-            <span class="title">阅读</span>
-          </div>
-          <div class="catalog-item flex-view">
-            <span>致谢</span>
-            <span class="title">阅读</span>
-          </div>
-          <div class="catalog-item flex-view">
-            <span>第 1 章 软件质量和待解决问题</span>
-            <img src="./images/lock.584dc0b5.svg" class="title" />
-          </div>
-          <div class="catalog-item flex-view">
-            <span>第 2 章 软件质量和待解决问题</span>
-            <img src="./images/lock.584dc0b5.svg" class="title" />
-          </div>
-          <div class="catalog-item flex-view">
-            <span>第 3 章 软件质量和待解决问题</span>
-            <img src="./images/lock.584dc0b5.svg" class="title" />
-          </div>
-          <div class="catalog-item flex-view">
-            <span>第 4 章 软件质量和待解决问题</span>
-            <img src="./images/lock.584dc0b5.svg" class="title" />
-          </div>
-          <div class="catalog-item flex-view">
-            <span>第 5 章 软件质量和待解决问题</span>
-            <img src="./images/lock.584dc0b5.svg" class="title" />
-          </div>
-          <div class="catalog-item flex-view">
-            <span>第 6 章 软件质量和待解决问题</span>
-            <img src="./images/lock.584dc0b5.svg" class="title" />
+        <div class="catalog" v-if="bookInfoList.ebook">
+          <div
+            class="catalog-item flex-view"
+            v-for="chapter in bookInfoList.ebook.chapters"
+            :key="chapter.id"
+          >
+            <span>{{ chapter.subject }}</span>
+            <span v-if="chapter.isFree" class="title">阅读</span>
+            <img v-else src="./images/lock.584dc0b5.svg" class="title" />
           </div>
         </div>
       </el-tab-pane>
@@ -327,25 +313,29 @@
             />
             <button class="send-btn">发送</button>
           </div>
+          <div class="tab-view flex-view">
+            <div class="count-text">
+              共有4条评论
+            </div>
+            <div class="tab-box flex-view">
+              <span class="tab-select">热门</span>
+              <div class="line"></div>
+              <span class="tab-select">最新</span>
+            </div>
+          </div>
         </div>
-        <div class="tab-view flex-view">
-          <div class="count-text">
-            共有4条评论
-          </div>
-          <div class="tab-box flex-view">
-            <span class="tab-select">热门</span>
-            <div class="line"></div>
-            <span class="tab-select">最新</span>
-          </div>
-        </div>
-        <div class="comments-list">
+        <div
+          class="comments-list"
+          v-for="discuss in discussList.comments"
+          :key="discuss.id"
+        >
           <div class="comment-item">
             <div class="flex-item flex-view">
               <div class="flex-view">
-                <img src="./images/27387.png" alt="" />
+                <img :src="`https://file.ituring.com.cn/LargeCover/${discuss.userAvatarImageKey}`" alt="" />
                 <div class="person">
-                  <div class="name">金山YIN霸</div>
-                  <div class="time">2020-05-15 04:53:09</div>
+                  <div class="name">{{ discuss.userNickName }}</div>
+                  <div class="time">{{discuss.commentDate}}</div>
                 </div>
               </div>
               <div class="float-right">
@@ -354,43 +344,7 @@
               </div>
             </div>
             <p class="comment-content">
-              动作真快！20年3月的书已经开始翻译了，当然manning 有MEAP
-            </p>
-          </div>
-          <div class="comment-item">
-            <div class="flex-item flex-view">
-              <div class="flex-view">
-                <img src="./images/27387.png" alt="" />
-                <div class="person">
-                  <div class="name">金山YIN霸</div>
-                  <div class="time">2020-05-15 04:53:09</div>
-                </div>
-              </div>
-              <div class="float-right">
-                <span>推荐 </span>
-                <span>回复</span>
-              </div>
-            </div>
-            <p class="comment-content">
-              动作真快！20年3月的书已经开始翻译了，当然manning 有MEAP
-            </p>
-          </div>
-          <div class="comment-item">
-            <div class="flex-item flex-view">
-              <div class="flex-view">
-                <img src="./images/27387.png" alt="" />
-                <div class="person">
-                  <div class="name">金山YIN霸</div>
-                  <div class="time">2020-05-15 04:53:09</div>
-                </div>
-              </div>
-              <div class="float-right">
-                <span>推荐 </span>
-                <span>回复</span>
-              </div>
-            </div>
-            <p class="comment-content">
-              动作真快！20年3月的书已经开始翻译了，当然manning 有MEAP
+              {{discuss.content}}
             </p>
           </div>
         </div>
@@ -422,7 +376,7 @@
 </template>
 
 <script>
-import { getBookInfo } from "../../api/bookInfo";
+import { getBookInfo, getdiscuss } from "../../api/bookInfo";
 export default {
   name: "BookInfo",
   data() {
@@ -435,12 +389,15 @@ export default {
         5: { kind: "样书", join: "样书袋" },
         8: { kind: "其他渠道" },
       },
+      discussList: {}, //评论数据
     };
   },
   async mounted() {
     const bookInfoList = await getBookInfo("2811");
+    const discussList = await getdiscuss("2811");
     this.bookInfoList = bookInfoList;
     this.salesInfos = bookInfoList.salesInfos;
+    this.discussList = discussList;
   },
 };
 </script>

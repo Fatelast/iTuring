@@ -7,3 +7,11 @@ export const getBookInfo = (Id) => {
     url: `/Book/${Id}`
   })
 }
+
+// 获取评论
+export const getdiscuss = () => {
+  return request({
+    method: 'GET',
+    url: `/Book/Comment/?id=2811`
+  })
+}
