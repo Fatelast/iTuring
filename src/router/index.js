@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import Book from '../views/Book.vue'
 import Article from '../views/Article.vue'
 import BookInfo from '../views/BookInfo/BookInfo'
@@ -9,23 +8,23 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Article',
+    component: Article
   },
   {
     path: '/book',
-    name:'Book',
-    component:Book
+    name: 'Book',
+    component: Book
   },
   {
     path: '/article',
-    name:'Article',
-    component:Article
+    name: 'Article',
+    component: Article
   },
   {
     path: '/book/123',
-    name:'BookInfo',
-    component:BookInfo
+    name: 'BookInfo',
+    component: BookInfo
   }
 ]
 
