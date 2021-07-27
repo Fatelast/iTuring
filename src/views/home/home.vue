@@ -2,8 +2,12 @@
   <div class="content-view">
     <!-- 轮播图 -->
     <div class="banner-view">
-      <div>
-        
+      <div class="swiper-one">
+        <Carousel />
+      </div>
+      <div class="banner-two">
+        <!-- <div class="book-swiper-view"></div> -->
+        <Carousel2 />
       </div>
     </div>
 
@@ -163,7 +167,7 @@
               <p class="translators">雷威，李强（译者）</p>
             </div>
           </div>
-          
+
           <div class="book-item">
             <div class="img-view">
               <img src="../../assets/tuijian/01nihuima.jpg">
@@ -174,7 +178,7 @@
               <p class="translators">雷威，李强（译者）</p>
             </div>
           </div>
-          
+
           <div class="book-item">
             <div class="img-view">
               <img src="../../assets/tuijian/01nihuima.jpg">
@@ -185,7 +189,7 @@
               <p class="translators">雷威，李强（译者）</p>
             </div>
           </div>
-          
+
           <div class="book-item">
             <div class="img-view">
               <img src="../../assets/tuijian/01nihuima.jpg">
@@ -218,23 +222,33 @@
               <p class="translators">雷威，李强（译者）</p>
             </div>
           </div>
-
 
         </div>
 
-        <a class="more-hot-books" href="">查看全部热门书籍</a>
+        <a
+          class="more-hot-books"
+          href=""
+        >查看全部热门书籍</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// import { component } from 'vue/types/umd';
+import Carousel from "../../components/Carousel/index";
+import Carousel2 from "../../components/Carousel-2/index";
+
 export default {
   name: "home",
+  components: {
+    Carousel,
+    Carousel2,
+  },
 };
 </script>
 
-<style>
+<style scoped>
 * {
   margin: 0;
   padding: 0;
@@ -244,16 +258,23 @@ export default {
   margin: 0 auto;
 }
 
-
 /* 轮播图 */
 .banner-view {
+  display: flex;
   width: 1080px;
   height: 309px;
-  background: pink;
   margin: 16px 0 3px 0;
-  border-radius: 8px;
 }
-
+.swiper-one {
+  width: 740px;
+  height: 309px;
+}
+/* 第二个轮播 */
+.banner-two {
+  width: 320px;
+  height: 309px;
+  background: #f8fafb;
+}
 
 /* 内容展示 */
 .book-list {
@@ -322,7 +343,7 @@ export default {
   width: 255px;
   height: 264px;
   background: greenyellow;
-  margin-top: 16px ;
+  margin-top: 16px;
   min-width: 248px;
   max-width: 250px;
   overflow: hidden;
@@ -337,10 +358,16 @@ export default {
   padding: 8px 0;
   background: #eaf1f5;
 }
+.img-view:hover{
+  transform: scale(1.05, 1.05);
+}
 .img-view img {
   display: block;
   height: 100%;
   margin: 0 auto;
+}
+.img-view img:hover {
+  /* transform: scale(1.05, 1.05); */
 }
 .info-view {
   width: 223px;
@@ -391,18 +418,17 @@ export default {
 }
 
 /* 第三栏 */
-.hot-view{
+.hot-view {
   width: 100%;
   height: 352px;
   margin: 24px 0;
 }
-.hot-books{
+.hot-books {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  
 }
-.more-hot-books{
+.more-hot-books {
   display: block;
   width: 100%;
   height: 22px;
@@ -412,7 +438,5 @@ export default {
   margin: 24px auto 0;
   color: #4684e2;
   text-decoration: none;
-
-
 }
 </style>
