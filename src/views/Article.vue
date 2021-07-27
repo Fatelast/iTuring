@@ -69,7 +69,21 @@
               alt=""
             ></p>
           <p>2021年Java软件开发有前途吗？总的来说Java软件开发，到今天依旧势头不减，无论是前途还是钱途都是非常优秀的，但这一切的前提都是要学好Java技术，不然上面的都是些空话。我这有免费的Java入门视频，有兴趣的小伙伴们可以自行领取。</p>
-
+          <!-- 底部评论 -->
+          <div class='bottom-content'>
+            <div class='bottom-title'>发表新的评论</div>
+            <div class='comment'>
+              <span>请先登录后发表评论</span>
+            </div>
+            <div class='bottom-num'>
+              <div class='left-num'>共有0条评论</div>
+              <div class='right-num'>
+                <span class='left'>热门</span>
+                <div class='line'></div>
+                <span class='right'>最新</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -182,17 +196,50 @@ export default {
 .right-content {
   width: 722px;
 }
-.right-content p{
+.right-content p {
   font-size: 16px;
   line-height: 28px;
   margin-bottom: 20px;
 }
-.right-content h2{
+.right-content h2 {
   font-size: 24px;
   line-height: 32px;
 }
-.right-content h3{
+.right-content h3 {
   font-size: 22px;
   line-height: 38px;
+}
+/* 底部 */
+.bottom-content {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+  height: 22px;
+  color: #152844;
+  margin: 24px 0 12px;
+}
+.comment {
+  color: #5f77a6;
+  font-size: 14px;
+  background: #f6f9fb;
+  border-radius: 4px;
+  text-align: center;
+  height: 64px;
+  line-height: 64px;
+}
+.bottom-num {
+  margin: 24px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.right-num {
+  display: flex;
+}
+.right-num .line {
+  width: 1px;
+  height: 14px;
+  margin: 3px 12px;
+  background: #cedce4;
 }
 </style>
