@@ -78,9 +78,28 @@ export default {
   methods: {
     async getArticleData({ url, params, method = "GET" }) {
       let { articleListItems } = await getArticle({ url, params, method });
-      this.articleListItems = articleListItems;
+      this.articleListItems.push(articleListItems);
     },
   },
+  created() {
+    window.onscroll = () => {
+      var scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      // 变量 windowHeight 是可视区的高度
+      var windowHeight =
+        document.documentElement.clientHeight || document.body.clientHeight;
+      // 变量 scrollHeight 是滚动条的总高度
+      var scrollHeight =
+        document.documentElement.scrollHeight || document.body.scrollHeight;
+      if (scrollTop + windowHeight >= scrollHeight - 20) {
+        console.log(this.articleObject.params.page);
+        this.articleObject.params.page += 1;
+        console.log(this.articleObject.params.page);
+        this.getArticleData(this.articleObject);
+      }
+    };
+  },
+
   async mounted() {
     this.getArticleData(this.articleObject);
   },
