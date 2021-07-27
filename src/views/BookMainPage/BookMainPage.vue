@@ -1,0 +1,781 @@
+<template>
+  <div>
+    <!-- 图书页面主要结构 -->
+    <div class="Container">
+      <!-- 左侧侧边栏部分 -->
+      <aside class="nav_container">
+        <dl class="bookNav">
+          <dt class="bookCategory">图书分类</dt>
+          <dd>全部</dd>
+          <dd class="category">
+            <p>计算机</p>
+            <ul style="display:none">
+              <li class="category">
+                <p>编程语言</p>
+                <ul style="display:none">
+                  <li class="category">
+                    <p>Python</p>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </dd>
+          <dd class="category">
+            <p>计算机</p>
+            <ul style="display:none">
+              <li class="category">
+                <p>编程语言</p>
+                <ul style="display:none">
+                  <li class="category">
+                    <p>Python</p>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </dd>
+          <dd class="category ">
+            <p>计算机</p>
+            <ul style="display:none">
+              <li class="category">
+                <p>编程语言</p>
+                <ul style="display:none">
+                  <li class="category">
+                    <p>Python</p>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </dd>
+          <dd class="category">
+            <p>计算机</p>
+            <ul style="display:none">
+              <li class="category">
+                <p>编程语言</p>
+                <ul style="display:none">
+                  <li class="category">
+                    <p>Python</p>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </dd>
+        </dl>
+        <dl>
+          <dt class="bookStatus">书籍状态</dt>
+          <dd>
+            <input type="checkbox" name="" id="0" value="上市销售" />
+            <span>上市销售</span>
+          </dd>
+          <dd>
+            <input type="checkbox" name="" id="1" value="诚招译者" />
+            <span>诚招译者</span>
+          </dd>
+          <dd>
+            <input type="checkbox" name="" id="2" value="正在翻译" />
+            <span>正在翻译</span>
+          </dd>
+        </dl>
+        <dl>
+          <dt class="bookOther">其他</dt>
+          <dd>
+            <input type="checkbox" name="" id="3" />
+            <span>免费</span>
+          </dd>
+          <dd>
+            <input type="checkbox" name="" id="4" />
+            <span>可兑换样书</span>
+          </dd>
+        </dl>
+        <dl>
+          <dt>出版日期</dt>
+          <!-- <input type="date" name="" id="" style="margin-top:12px"> -->
+          <!-- 日期选择 -->
+          <div class="block">
+            <el-date-picker
+              class="date-picker"
+              v-model="date"
+              size="mini"
+              format="yyyy-MM"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+            >
+            </el-date-picker>
+          </div>
+        </dl>
+        <dl>
+          <dt>热门标签</dt>
+          <dd class="tag_container">
+            <span class="tag_active">Python</span>
+            <span>算法</span>
+            <span>诚征译者</span>
+            <span>机器学习</span>
+            <span>Java</span>
+            <span>JavaScript</span>
+            <span>数学</span>
+            <span>C语言</span>
+            <span>sql</span>
+            <span>最新上线</span>
+          </dd>
+        </dl>
+      </aside>
+
+      <!-- 右侧内容部分 -->
+      <div class="book_container">
+        <!-- 头部搜索栏 -->
+        <div class="search_container">
+          <img class="searchIcon" src="../../static/images/searchIcon.571b59cb.svg" alt="搜索" />
+          <input class="searchInput" placeholder="搜索书名、ISBN" />
+          <img class="clearIcon" src="../../static/images/clear-search.ede8c7ca.svg" alt="清空" />
+          <button class="searchBtn">搜索</button>
+          <span class="allBook">共有1945本图书</span>
+          <div class="shareBook">
+            <img class="shareIcon" src="../../static/images/share-link-icon.4e687db0.svg" alt="分享链接" />
+            <div class="buildBookLink">生成当前书单链接</div>
+          </div>
+        </div>
+        <!-- 类型和排序栏 -->
+        <div class="typeOrSort_container">
+          <!-- 类型栏 -->
+          <div class="type_container">
+            <span class="type-tab type_active">纸质书</span>
+            <span class="type-tab">电子书</span>
+            <span class="type-tab">开放出版</span>
+            <span class="type-tab">预售</span>
+            <span class="type-tab">抢读</span>
+            <span class="tab-underline"></span>
+          </div>
+          <!-- 排序栏 -->
+          <div class="sort_container">
+            <span class="sort-tab">排序方式：</span>
+            <span class="sort-tab sort_active">最新</span>
+            <span class="sort-tab">最热</span>
+            <span class="sort-tab">推荐</span>
+            <span class="tab-underline"></span>
+          </div>
+        </div>
+        <!-- 书本展示列表 -->
+        <div class="BookList_container">
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+          <div class="bookItem">
+            <div class="bookImg_container">
+              <img class="bookImg" src="../../static/images/你真的会写代码吗_封一.jpg" alt="" />
+            </div>
+            <div class="bookInfo">
+              <h3 class="bookTitle">你真的会写代码吗</h3>
+              <p class="authors">Marco Faella（作者）</p>
+              <p class="translators">雷威，李强（译者）</p>
+            </div>
+          </div>
+        </div>
+        <!-- @size-change="handleSizeChange"
+				@current-change="handleCurrentChange" -->
+        <el-pagination
+          class="pagination"
+          :background="true"
+          :current-page="current"
+          :page-size="15"
+          layout="prev, pager, next"
+          :total="total"
+        >
+        </el-pagination>
+      </div>
+    </div>
+    <!-- 底部网站信息部分 -->
+    <footer class="footer_container">
+      <div class="footer-view">
+        <div class="left-view">
+          <ul>
+            <li>
+              <h5>诚征译者</h5>
+              <p>成为图灵图书的优秀译者</p>
+            </li>
+            <li>
+              <h5>注册刮刮卡</h5>
+              <p>获得银子与电子版优惠码</p>
+            </li>
+            <li>
+              <h5>纸质书开通预售</h5>
+              <p>第一时间寄给你！</p>
+            </li>
+          </ul>
+          <div class="friendly_link">
+            <h4>媒体平台</h4>
+            <div class="link_container">
+              <div class="linkItem">
+                <img src="../../static/images/friend-icon-normal-1.743b6fa7.svg" alt="" />
+                <div class="hover"></div>
+              </div>
+              <div class="linkItem">
+                <img src="../../static/images/friend-icon-normal-2.299fb44d.svg" alt="" />
+                <div class="hover"></div>
+              </div>
+              <div class="linkItem">
+                <img src="../../static/images/friend-icon-normal-3.fc7e21e8.svg" alt="" />
+                <div class="hover"></div>
+              </div>
+              <div class="linkItem">
+                <img src="../../static/images/friend-icon-normal-4.ffa55f7c.svg" alt="" />
+                <div class="hover"></div>
+              </div>
+              <div class="linkItem">
+                <img src="../../static/images/friend-icon-normal-6.c7636e1e.svg" alt="" />
+                <div class="hover"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="us-code">
+          <h4>关注我们</h4>
+          <div class="code_container">
+            <div class="code-box">
+              <img src="../../static/images/group-qrcode.a2be38de.png" alt="" />
+              <p>关注服务号</p>
+              <p>加入读者群</p>
+            </div>
+            <div class="code-box">
+              <img src="../../static/images/下载.png" alt="" />
+              <p>关注图灵教育</p>
+              <p>分享技术知识</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 网站底部信息栏 -->
+      <div class="webInfo">
+        <div class="join-us">
+          <a href="JavaScript:;">加入我们</a>
+          <div></div>
+          <a href="JavaScript:;">联系我们</a>
+        </div>
+        <p>京ICP备11039595号 京公网安备11010502011375 新出发京零字第东110150号 统一社会信用代码 91110101777086608F</p>
+        <p>2005-2020 © 北京图灵文化发展有限公司 · All Rights Reserved</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 底部结构 -->
+</template>
+
+<script>
+import req from '../../utils/request'
+export default {
+  name: 'BookMainPage',
+  data() {
+    return {
+      total: 50,
+      current: 1,
+      date: ''
+    }
+  },
+  async mounted() {
+    const res = await req({
+      url: '/Category/All',
+      method: 'get'
+    })
+    console.log(res)
+  },
+  methods: {}
+}
+</script>
+
+<style lang="less" scoped>
+// 图书页面主要部分样式
+.Container {
+  display: flex;
+  margin: 0 auto;
+  width: 1080px;
+  height: 100%;
+}
+/* 左侧侧边栏开始 */
+.nav_container {
+  margin-right: 32px;
+  width: 220px;
+  /* background: skyblue; */
+  dl {
+    margin-top: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #cedce4;
+    .date-picker {
+      width: 190px;
+      margin-top: 20px;
+    }
+    dt {
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: bold;
+      color: #4d4d4d;
+    }
+    dd {
+      line-height: 18px;
+      margin-top: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+      span {
+        margin-left: 12px;
+      }
+      input {
+        vertical-align: middle;
+      }
+    }
+    /* 热门标签样式 */
+    .tag_container {
+      display: flex;
+      flex-wrap: wrap;
+      width: 220px;
+      height: 112px;
+      margin-top: 4px;
+      cursor: auto;
+      span {
+        border: 1px solid #a1adc5;
+        border-radius: 16px;
+        height: 20px;
+        line-height: 18px;
+        padding: 0 8px;
+        margin: 8px 8px 0 0;
+        font-size: 12px;
+        color: #152844;
+        cursor: pointer;
+        &:hover {
+          color: white;
+          background-color: #4684e2;
+        }
+        &.tag_active {
+          color: white;
+          background-color: #4684e2;
+        }
+      }
+    }
+  }
+  dl.bookNav > dd {
+    padding-left: 16px;
+    // line-height: 24.8px;
+    transition: color 0.5s;
+    &:hover {
+      color: #4684e2;
+    }
+    &.select > p {
+      color: #4684e2;
+    }
+    .category {
+      padding-left: 16px;
+    }
+    .select > p {
+      color: #4684e2;
+    }
+  }
+}
+/* 左侧侧边栏结束 */
+
+// 右边内容区域样式开始
+.book_container {
+  width: 828px;
+  padding-top: 24px;
+  // 搜索栏样式
+  .search_container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    justify-content: space-between;
+    font-size: 14px;
+    .searchInput {
+      flex-grow: 1;
+      margin: 5px 0 0 5px;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid #cedce4;
+      color: #152844;
+      height: 22px;
+      line-height: 22px;
+      padding-bottom: 5px;
+    }
+    .searchBtn {
+      outline: none;
+      border: none;
+      background: #288dda;
+      border-radius: 32px;
+      width: 88px;
+      height: 32px;
+      line-height: 30px;
+      margin-left: 2px;
+      color: #fff;
+    }
+    .clearIcon {
+      position: relative;
+      left: -28px;
+      cursor: pointer;
+    }
+    .allBook {
+      color: #999;
+      margin-left: 24px;
+    }
+    .shareBook {
+      display: flex;
+      align-items: center;
+      margin-left: 24px;
+      cursor: pointer;
+      color: #288dda;
+      .shareIcon {
+        margin-right: 4px;
+      }
+    }
+  }
+  // 类型和排序栏样式
+  .typeOrSort_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    line-height: 40px;
+    .type_container {
+      position: relative;
+      .type-tab {
+        margin-right: 32px;
+        cursor: pointer;
+        font-size: 18px;
+        color: #5f77a6;
+        &.type_active {
+          font-size: 20px;
+          color: #152844;
+          font-weight: bold;
+        }
+      }
+      .tab-underline {
+        position: absolute;
+        background: #4684e2;
+        bottom: 0;
+        left: 22px;
+        height: 4px;
+        width: 16px;
+        transition: left 0.3s;
+      }
+    }
+    .sort_container {
+      position: relative;
+      .sort-tab {
+        font-size: 14px;
+        color: #6c6c6c;
+        margin-right: 24px;
+        cursor: pointer;
+        &:first-of-type {
+          margin-right: 8px;
+          cursor: auto;
+        }
+        &.sort_active {
+          color: #152844;
+        }
+      }
+
+      .tab-underline {
+        position: absolute;
+        background: #4684e2;
+        bottom: 0;
+        left: 84px;
+        height: 4px;
+        width: 16px;
+        transition: left 0.3s;
+      }
+    }
+  }
+  // 书本展示栏样式
+  .BookList_container {
+    display: flex;
+    flex-wrap: wrap;
+    .bookItem {
+      flex: 1;
+      margin: 16px 20px 0 0;
+      min-width: 255px;
+      max-width: 255px;
+      cursor: pointer;
+      &:hover .bookImg {
+        transform: scale(1.05);
+        transition: transform 0.1s;
+      }
+      .bookImg_container {
+        height: 156px;
+        width: 255px;
+        padding: 8px 0;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 0px;
+        background: #eaf1f5;
+        .bookImg {
+          height: 100%;
+          border-radius: 5px;
+        }
+      }
+      .bookInfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #f6f9fb;
+        height: 108px;
+        overflow: hidden;
+        .bookTitle {
+          color: #1c355a;
+          font-size: 16px;
+          line-height: 20px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          margin: 12px 0 8px;
+        }
+        p {
+          color: #6f6f6f;
+          font-size: 12px;
+          line-height: 14px;
+          margin-top: 4px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  // 分页器样式
+  .el-pagination {
+    text-align: center;
+    margin-top: 24px;
+    // 添加深度选择器进行样式穿透
+    /deep/button {
+      background: #fff;
+    }
+    /deep/.el-pager li {
+      height: 30px;
+      line-height: 30px;
+      background: #fff;
+      &:hover {
+        color: #606266;
+      }
+      &.active:hover {
+        color: #fff;
+      }
+    }
+    /deep/.el-pager li.active {
+      background: #4684e2;
+      border-radius: 50%;
+    }
+  }
+}
+// 右边内容区域样式结束
+
+// 底部样式开始
+.footer_container {
+  max-width: 1108px;
+  margin: 100px auto 0;
+  padding: 24px 0 20px 100px;
+  text-align: center;
+  // 底部友情链接链接二维码样式
+  .footer-view {
+    display: flex;
+    justify-content: space-between;
+    .left-view {
+      flex: 1;
+      h4 {
+        text-align: left;
+        margin-top: 24px;
+        color: #1c355a;
+        font-size: 14px;
+        line-height: 16px;
+      }
+      .link_container {
+        display: flex;
+        margin-top: 16px;
+        .linkItem {
+          cursor: pointer;
+          margin-right: 18px;
+          position: relative;
+          .hover {
+            position: absolute;
+            top: 0;
+            border-radius: 50%;
+            z-index: 1;
+            height: 100%;
+            width: 100%;
+            transition: background 0.2s;
+            &:hover {
+              background: rgba(0, 0, 0, 0.2);
+            }
+          }
+        }
+      }
+      ul {
+        display: flex;
+      }
+      li {
+        text-align: left;
+        flex: 1;
+        h5 {
+          cursor: pointer;
+          color: #1c355a;
+          font-size: 14px;
+          line-height: 16px;
+        }
+        p {
+          cursor: pointer;
+          font-size: 12px;
+          color: #6f6f6f;
+          margin-top: 6px;
+          line-height: 16px;
+        }
+      }
+    }
+    .us-code {
+      min-width: 289px;
+      h4 {
+        text-align: left;
+        margin-bottom: 8px;
+      }
+      .code_container {
+        display: flex;
+      }
+      .code-box {
+        img {
+          width: 80px;
+          height: 80px;
+          margin-bottom: 4px;
+        }
+        p {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  // 网站信息样式
+  .webInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .join-us {
+      color: #2a4f88;
+      display: flex;
+      align-items: center;
+      margin: 24px 0 8px 0;
+      div {
+        height: 8px;
+        width: 1px;
+        background: #dbdbdb;
+      }
+      a {
+        margin: 0 16px;
+        color: #2a4f88;
+        font-size: 14px;
+        text-decoration: none;
+      }
+    }
+    p {
+      color: #aeaeae;
+      font-size: 12px;
+      margin-top: 16px;
+      line-height: 16px;
+      &:last-child {
+        margin-top: 8px;
+      }
+    }
+  }
+}
+</style>

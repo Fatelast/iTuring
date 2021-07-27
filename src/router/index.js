@@ -7,21 +7,25 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    name: 'BookMainPage',
     path: '/',
+    component: () => import('../views/BookMainPage/BookMainPage.vue')
+  },
+  {
+    path: '/article',
     name: 'Article',
     component: Article
   },
   {
     path: '/book',
-    name:'Book',
-    component:Book
+    name: 'Book',
+    component: Book
   },
   {
     path: '/article',
-    name:'Home',
-    component:Home
-  },
-  
+    name: 'Home',
+    component: Home
+  }
 ]
 
 const router = new VueRouter({
