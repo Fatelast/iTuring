@@ -36,6 +36,7 @@
             </ul>
           </dd>
         </dl>
+        <!-- 书籍状态 -->
         <dl>
           <dt class="bookStatus">书籍状态</dt>
           <dd>
@@ -50,7 +51,20 @@
             <input type="checkbox" name="" id="2" value="正在翻译" />
             <span>正在翻译</span>
           </dd>
+          <dd>
+            <input type="checkbox" name="" id="2" value="正在写作" />
+            <span>正在写作</span>
+          </dd>
+          <dd>
+            <input type="checkbox" name="" id="2" value="正在排版" />
+            <span>正在排版</span>
+          </dd>
+          <dd>
+            <input type="checkbox" name="" id="2" value="正在印刷" />
+            <span>正在印刷</span>
+          </dd>
         </dl>
+        <!-- 其他 -->
         <dl>
           <dt class="bookOther">其他</dt>
           <dd>
@@ -62,9 +76,9 @@
             <span>可兑换样书</span>
           </dd>
         </dl>
+        <!-- 日期选择 -->
         <dl>
           <dt>出版日期</dt>
-          <!-- <input type="date" name="" id="" style="margin-top:12px"> -->
           <!-- 日期选择 -->
           <div class="block">
             <el-date-picker
@@ -280,7 +294,10 @@ export default {
       // 当前页
       page: 1,
       saleType: '',
+      // 选择的日期范围
+      publishStartDate: '',
       //以上为请求书本列表需要的数据
+
       // 书本总数
       total: 50,
       // 当前页的书本列表
