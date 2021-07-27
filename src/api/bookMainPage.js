@@ -1,6 +1,6 @@
 import req from '../utils/request'
 // 获取所有三级分类目录
-export const reqGetAllBooks = () => {
+export const reqGetAllCategory = () => {
   return req({
     url: '/Category/All',
     method: 'get'

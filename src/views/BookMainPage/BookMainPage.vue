@@ -7,18 +7,29 @@
         <dl class="bookNav">
           <dt class="bookCategory">图书分类</dt>
           <!-- 分类列表 -->
-          <!-- kkkkkkk -->
-          <dd :class="{ totalBooks: true, select: true }">全部</dd>
-          <dd class="category1" v-for="category1 in categoryList" :key="category1.id">
-            <p>{{ category1.name }}</p>
-            <ul style="display:none">
-              <!-- <ul> -->
-              <li class="category2" v-for="category2 in category1.children" :key="category2.id">
-                <p>{{ category2.name }}</p>
-                <!-- <ul> -->
-                <ul style="display:none">
-                  <li class="category3" v-for="category3 in category2.children" :key="category3.id">
-                    <p>{{ category3.name }}</p>
+          <dd :class="{ totalBooks: true, select: showTotal }" @click="getTotalBooks">全部</dd>
+          <!-- 这里category1.id为数字类型，不能全等 -->
+          <dd
+            :class="{ category1: true, select: category1Id == category1.id }"
+            v-for="category1 in categoryList"
+            :key="category1.id"
+            @click="changeCategory($event)"
+          >
+            <p :data-id="category1.id" data-categorylv="1">{{ category1.name }}</p>
+            <ul :style="{ display: category1.id == category1Id ? '' : 'none' }">
+              <li
+                :class="{ category2: true, select: category2Id == category2.id }"
+                v-for="category2 in category1.children"
+                :key="category2.id"
+              >
+                <p :data-id="category2.id" data-categorylv="2">{{ category2.name }}</p>
+                <ul :style="{ display: category2.id == category2Id ? '' : 'none' }">
+                  <li
+                    :class="{ category3: true, select: category3Id == category3.id }"
+                    v-for="category3 in category2.children"
+                    :key="category3.id"
+                  >
+                    <p :data-id="category3.id" data-categorylv="3">{{ category3.name }}</p>
                   </li>
                 </ul>
               </li>
@@ -69,6 +80,7 @@
             </el-date-picker>
           </div>
         </dl>
+        <!-- 热门标签列表 -->
         <dl>
           <dt>热门标签</dt>
           <dd class="tag_container">
@@ -94,7 +106,7 @@
           <input class="searchInput" placeholder="搜索书名、ISBN" />
           <img class="clearIcon" src="../../static/images/clear-search.ede8c7ca.svg" alt="清空" />
           <button class="searchBtn">搜索</button>
-          <span class="allBook">共有1945本图书</span>
+          <span class="allBook">共有{{ total }}本图书</span>
           <div class="shareBook">
             <img class="shareIcon" src="../../static/images/share-link-icon.4e687db0.svg" alt="分享链接" />
             <div class="buildBookLink">生成当前书单链接</div>
@@ -103,21 +115,45 @@
         <!-- 类型和排序栏 -->
         <div class="typeOrSort_container">
           <!-- 类型栏 -->
-          <div class="type_container">
-            <span class="type-tab type_active">纸质书</span>
-            <span class="type-tab">电子书</span>
-            <span class="type-tab">开放出版</span>
-            <span class="type-tab">预售</span>
-            <span class="type-tab">抢读</span>
-            <span class="tab-underline"></span>
+          <div class="type_container" @click="changeType($event)">
+            <span :class="{ 'type-tab': true, type_active: selectTypeId == 1 }" data-edition="1" data-selectid="1"
+              >纸质书</span
+            >
+            <span :class="{ 'type-tab': true, type_active: selectTypeId == 2 }" data-edition="4" data-selectid="2"
+              >电子书</span
+            >
+            <span :class="{ 'type-tab': true, type_active: selectTypeId == 3 }" data-edition="5" data-selectid="3"
+              >开放出版</span
+            >
+            <span :class="{ 'type-tab': true, type_active: selectTypeId == 4 }" data-saletype="1" data-selectid="4"
+              >预售</span
+            >
+            <span :class="{ 'type-tab': true, type_active: selectTypeId == 5 }" data-saletype="0" data-selectid="5"
+              >抢读</span
+            >
+            <span
+              :class="{
+                'tab-underline': true,
+                'left-2': selectTypeId == 2,
+                'left-3': selectTypeId == 3,
+                'left-4': selectTypeId == 4,
+                'left-5': selectTypeId == 5
+              }"
+            ></span>
           </div>
           <!-- 排序栏 -->
-          <div class="sort_container">
+          <div class="sort_container" @click="changeSort($event)">
             <span class="sort-tab">排序方式：</span>
-            <span class="sort-tab sort_active">最新</span>
-            <span class="sort-tab">最热</span>
-            <span class="sort-tab">推荐</span>
-            <span class="tab-underline"></span>
+            <span :class="{ 'sort-tab': true, sort_active: sort === 'new' }" data-sort="new">最新</span>
+            <span :class="{ 'sort-tab': true, sort_active: sort === 'hot' }" data-sort="hot">最热</span>
+            <span :class="{ 'sort-tab': true, sort_active: sort === 'vote' }" data-sort="vote">推荐</span>
+            <span
+              :class="{
+                'tab-underline': true,
+                'left-2': sort === 'hot',
+                'left-3': sort === 'vote'
+              }"
+            ></span>
           </div>
         </div>
         <!-- 书本展示列表 -->
@@ -139,9 +175,10 @@
             </div>
           </div>
         </div>
-        <!-- @size-change="handleSizeChange"
-				@current-change="handleCurrentChange" -->
+
         <el-pagination
+          @current-change="handleCurrentChange"
+          v-if="bookItems.length"
           class="pagination"
           :background="true"
           :current-page="page"
@@ -150,6 +187,7 @@
           :total="total"
         >
         </el-pagination>
+        <p v-if="!bookItems.length" class="no_result">没有搜索到结果</p>
       </div>
     </div>
     <!-- 底部网站信息部分 -->
@@ -229,17 +267,20 @@
 </template>
 
 <script>
-import { reqGetAllBooks, reqGetAdvancedBook } from '../../api/bookMainPage'
+import { reqGetAllCategory, reqGetAdvancedBook } from '../../api/bookMainPage'
 export default {
   name: 'BookMainPage',
   data() {
     return {
+      //用于当前发送请求的分类id
       categoryId: 0,
       edition: 1,
       name: '',
       sort: 'new',
       // 当前页
       page: 1,
+      saleType: '',
+      //以上为请求书本列表需要的数据
       // 书本总数
       total: 50,
       // 当前页的书本列表
@@ -247,31 +288,107 @@ export default {
       // 三级分类列表
       categoryList: [],
       // 用于日期选择器组件
-      date: ''
+      date: '',
+      // 用于当前选中的分类等级
+      categorylv: '',
+      //每级分类的id
+      category1Id: '',
+      category2Id: '',
+      category3Id: '',
+      // 用于高亮显示全部按钮
+      showTotal: false,
+      // 用于切换书本类型的激活样式
+      selectTypeId: 1
     }
   },
   async mounted() {
-    const categoryList = await reqGetAllBooks()
+    const categoryList = await reqGetAllCategory()
     this.categoryList = categoryList
     // console.log(categoryList)
 
-    // 得到请求需要的属性
-    const { categoryId, edition, name, sort, page } = this
-    const dataObj = {
-      categoryId,
-      edition,
-      name,
-      sort,
-      page
-    }
-    const { bookItems, pagination } = await reqGetAdvancedBook(dataObj)
-    // console.log(bookItems, pagination)
-    this.total = pagination.totalItemCount
-    this.bookItems = bookItems
+    this.reqAdvancedBook()
   },
   methods: {
-    // async reqAdvancedBook() {}
-  }
+    // 用于发送请求书本列表信息
+    async reqAdvancedBook() {
+      // 得到请求需要的属性
+      const { categoryId, edition, name, sort, page, saleType } = this
+      let dataObj = {}
+      if (edition) {
+        dataObj = {
+          categoryId,
+          edition,
+          name,
+          sort,
+          page
+        }
+      } else {
+        dataObj = {
+          categoryId,
+          saleType,
+          name,
+          sort,
+          page
+        }
+      }
+
+      const { bookItems, pagination } = await reqGetAdvancedBook(dataObj)
+      // console.log(bookItems, pagination)
+      this.total = pagination.totalItemCount
+      this.bookItems = bookItems
+    },
+    //点击分类标签触发的事件
+    changeCategory(e) {
+      console.dir(e.target)
+      const { categorylv, id } = e.target.dataset
+      this.categoryId = id
+      this.showTotal = false
+      this.reqAdvancedBook()
+      if (categorylv === '1') return (this.category1Id = id)
+      if (categorylv === '2') return (this.category2Id = id)
+      if (categorylv === '3') return (this.category3Id = id)
+    },
+    // 用于分页器的当前页面改变时生效
+    handleCurrentChange(page) {
+      // 根据页数发送请求
+      this.page = page
+      this.reqAdvancedBook()
+    },
+    // 用于监视点击全部分类按钮触发
+    getTotalBooks() {
+      // 清除已选中的三级分类
+      this.category1Id = ''
+      this.category2Id = ''
+      this.category3Id = ''
+
+      this.showTotal = true
+      this.categoryId = 0
+      this.reqAdvancedBook()
+    },
+    //用于监视点击切换书本类型
+    changeType(e) {
+      const { saletype, edition, selectid } = e.target.dataset
+      if (selectid) this.selectTypeId = selectid
+      if (saletype) {
+        this.edition = ''
+        this.saleType = +saletype
+        return this.reqAdvancedBook()
+      }
+      if (edition) {
+        this.saletype = ''
+        this.edition = +edition
+        return this.reqAdvancedBook()
+      }
+    },
+    //用于监视点击切换排序类型
+    changeSort(e) {
+      const { sort } = e.target.dataset
+      if (!sort) return
+      this.sort = sort
+      this.reqAdvancedBook()
+    }
+  },
+  watch: {}
 }
 </script>
 
@@ -318,6 +435,9 @@ export default {
       &.totalBooks.select {
         color: #4684e2;
       }
+      &.totalBooks:hover {
+        color: #4684e2;
+      }
     }
     /* 热门标签样式 */
     .tag_container {
@@ -350,24 +470,26 @@ export default {
   }
   dl.bookNav > dd {
     padding-left: 16px;
-    // line-height: 24.8px;
-    transition: color 0.5s;
-    // kkkkkkk
+    line-height: 24.8px;
+    transition: color 0.2s;
+
     &:hover > p {
       color: #4684e2;
     }
     &.select > p {
       color: #4684e2;
     }
+
     .category1,
     .category2,
     .category3 {
       padding-left: 16px;
-      margin-top: 4px;
+      margin-top: 6px;
     }
     .category1 > p:hover,
     .category2 > p:hover,
     .category3 > p:hover {
+      transition: color 0.2s;
       color: #4684e2;
     }
     .select > p {
@@ -458,6 +580,18 @@ export default {
         height: 4px;
         width: 16px;
         transition: left 0.3s;
+        &.left-2 {
+          left: 112px;
+        }
+        &.left-3 {
+          left: 204px;
+        }
+        &.left-4 {
+          left: 288px;
+        }
+        &.left-5 {
+          left: 356px;
+        }
       }
     }
     .sort_container {
@@ -484,6 +618,12 @@ export default {
         height: 4px;
         width: 16px;
         transition: left 0.3s;
+        &.left-2 {
+          left: 135px;
+        }
+        &.left-3 {
+          left: 188px;
+        }
       }
     }
   }
@@ -567,6 +707,14 @@ export default {
       background: #4684e2;
       border-radius: 50%;
     }
+  }
+  .no_result {
+    color: #152844;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
   }
 }
 // 右边内容区域样式结束
