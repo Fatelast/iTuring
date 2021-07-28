@@ -12,9 +12,14 @@ const routes = [
     component: Home,
     children:[
       {
+        path:'/home/homepage',
+        name:'HomePage',
+        component:HomePage
+      },
+      {
         path: '/home/book',
         name:'BookMainPage',
-        component:()=>import('../views/BookMainPage/BooKMainPage'),
+        component:()=>import('../views/Home/BookMainPage/BookMainPage'),
       },
       
       {
@@ -27,16 +32,11 @@ const routes = [
       //   name:'BookInfo',
       //   component:()=>import('../views/BookInfo')
       // },
-      {
-        path:'/home/homepage',
-        name:'HomePage',
-        component:HomePage
-      },
-      {
-        path:'*',
-      redirect:'/home/homepage'
-      }
     ]
+  },
+  {
+    path:'*',
+  redirect:'/home/homepage'
   }
 ]
 

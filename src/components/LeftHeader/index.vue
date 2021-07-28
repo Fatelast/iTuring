@@ -5,18 +5,21 @@
       <router-link to="/"><img src="./logo.svg" class="logo"/></router-link>
       <ul @click="changePage($event)">
         <li data-select="1">
-          <router-link to="/home" active-class="active" exact
-            ><span class="iconfont icon-xingqiu"></span> <span class="title">推荐</span></router-link
+          <router-link to="/home/homepage" active-class="active" exact
+            ><span class="iconfont icon-xingqiu"></span>
+            <span class="title">推荐</span></router-link
           >
         </li>
         <li data-select="2">
           <router-link to="/home/book" active-class="active"
-            ><span class="iconfont icon-book"></span><span class="title">图书</span></router-link
+            ><span class="iconfont icon-book"></span
+            ><span class="title">图书</span></router-link
           >
         </li>
         <li data-select="3">
           <router-link to="/home/article" active-class="active"
-            ><span class="iconfont icon-articleicon301"></span><span class="title">文章</span></router-link
+            ><span class="iconfont icon-articleicon301"></span
+            ><span class="title">文章</span></router-link
           >
         </li>
       </ul>
@@ -42,21 +45,21 @@
 
 <script>
 export default {
-  name: 'LeftHeader',
+  name: "LeftHeader",
   data() {
     return {
-      selectPage: ''
-    }
+      selectPage: "",
+    };
   },
 
   methods: {
     changePage(e) {
-      const { select } = e.target.dataset
-      if (!select) return
-      this.selectPage = select
-    }
-  }
-}
+      const { select } = e.target.dataset;
+      if (!select) return;
+      this.selectPage = select;
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
