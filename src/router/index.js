@@ -14,13 +14,11 @@ const routes = [
         path: '/home/book',
         name: 'BookMainPage',
         component: () => import('../views/BookMainPage/BookMainPage.vue')
-        // children: [
-        //   {
-        //     path: '/home/book/:id',
-        //     name: 'BookInfo',
-        //     component: () => import('../views/BookInfo')
-        //   }
-        // ]
+      },
+      {
+        path: '/home/book/bookinfo/:id',
+        name: 'BookInfo',
+        component: () => import('../views/BookInfo')
       },
       {
         path: '/home/article',
@@ -42,7 +40,11 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  //切换路由时，控制滚动条位置
+  scrollBehavior() {
+    return { x: 0, y: 0 }
+  }
 })
 
 export default router

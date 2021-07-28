@@ -117,9 +117,9 @@
         <!-- 头部搜索栏 -->
         <div class="search_container">
           <img class="searchIcon" src="../../static/images/searchIcon.571b59cb.svg" alt="搜索" />
-          <input class="searchInput" placeholder="搜索书名、ISBN" />
-          <img class="clearIcon" src="../../static/images/clear-search.ede8c7ca.svg" alt="清空" />
-          <button class="searchBtn">搜索</button>
+          <input class="searchInput" placeholder="搜索书名、ISBN" v-model="name" />
+          <img class="clearIcon" @click="cancleSearch" src="../../static/images/clear-search.ede8c7ca.svg" alt="清空" />
+          <button class="searchBtn" @click="searchBook">搜索</button>
           <span class="allBook">共有{{ total }}本图书</span>
           <div class="shareBook">
             <img class="shareIcon" src="../../static/images/share-link-icon.4e687db0.svg" alt="分享链接" />
@@ -172,7 +172,14 @@
         </div>
         <!-- 书本展示列表 -->
         <div class="BookList_container">
-          <div class="bookItem" v-for="bookItem in bookItems" :key="bookItem.id">
+          <!-- :to="{ path: '/home/book/' + bookItem.id }" -->
+          <router-link
+            :to="{ path: '/home/book/bookinfo/' + bookItem.id }"
+            target="_blank"
+            class="bookItem"
+            v-for="bookItem in bookItems"
+            :key="bookItem.id"
+          >
             <div class="bookImg_container">
               <img
                 class="bookImg"
@@ -187,9 +194,9 @@
                 {{ bookItem.translatorNameString }}（译者）
               </p>
             </div>
-          </div>
+          </router-link>
         </div>
-
+        <!-- 分页器 -->
         <el-pagination
           @current-change="handleCurrentChange"
           v-if="bookItems.length"
@@ -198,7 +205,7 @@
           :current-page="page"
           :page-size="15"
           layout="prev, pager, next"
-          pager-count="4"
+          :pager-count="4"
           :total="total"
         >
         </el-pagination>
@@ -294,6 +301,16 @@ export default {
       if (categorylv === '1') return (this.category1Id = id)
       if (categorylv === '2') return (this.category2Id = id)
       if (categorylv === '3') return (this.category3Id = id)
+    },
+    // 用于监视搜索按钮的触发事件
+    searchBook() {
+      if (!this.name) return
+      this.reqAdvancedBook()
+    },
+    // 用于监视清空搜索按钮的事件
+    cancleSearch() {
+      this.name = ''
+      this.reqAdvancedBook()
     },
     // 用于分页器的当前页面改变时生效
     handleCurrentChange(page) {
@@ -426,11 +443,12 @@ export default {
     &.select > p {
       color: #4684e2;
     }
-
     .category1,
     .category2,
     .category3 {
       padding-left: 16px;
+    }
+    .category1 {
       margin-top: 6px;
     }
     .category1 > p:hover,
@@ -469,6 +487,7 @@ export default {
       padding-bottom: 5px;
     }
     .searchBtn {
+      cursor: pointer;
       outline: none;
       border: none;
       background: #288dda;
@@ -579,6 +598,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     .bookItem {
+      text-decoration: none;
       flex: 1;
       margin: 16px 20px 0 0;
       min-width: 255px;
