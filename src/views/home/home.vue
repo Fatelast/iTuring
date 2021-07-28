@@ -1,15 +1,13 @@
 <template>
-
   <!--首页 https://api.ituring.com.cn/api/Page/Home -->
   <div class="content-view">
     <!-- 轮播图 -->
     <div class="banner-view">
       <div class="swiper-one">
-        <Carousel />
-      </div>
-      <div class="banner-two">
-        <!-- <div class="book-swiper-view"></div> -->
-        <Carousel2 />
+        <Carousel
+          :carouselImg="carousel"
+          :preSaleImg="preSaleList"
+        />
       </div>
     </div>
 
@@ -31,23 +29,23 @@
             src="../../assets/tuijian/tulingxinshu.png"
           >
           <!-- 内容区中盒子 -->
-          <div
-            class="new-items"
-            v-for="preSalePage in preSalePages"
-            :key="preSalePage.id"
-          >
+          <div class="new-items">
             <!-- 小盒子 -->
-            <div class="book-item">
+            <div
+              class="book-item"
+              v-for="newBookItem in newBookComtent"
+              :key="newBookItem.id"
+            >
               <div class="img-view">
                 <img
-                  :src="`https://file.ituring.com.cn/Original/${preSalePage.coverKey}`"
-                  :alt="preSalePage.name"
+                  v-lazy="`https://file.ituring.com.cn/Original/${newBookItem.coverKey}`"
+                  :alt="newBookItem.name"
                 >
               </div>
               <div class="info-view">
-                <h3 class="book-name">{{preSalePage.name}}</h3>
-                <p class="authors">{{preSalePage.authorNameString}}（作者）</p>
-                <p class="translators">{{preSalePage.translatorNameString}}（译者）</p>
+                <h3 class="book-name">{{newBookItem.name}}</h3>
+                <p class="authors">{{newBookItem.authorNameString}}（作者）</p>
+                <p class="translators">{{newBookItem.translatorNameString}}（译者）</p>
               </div>
             </div>
           </div>
@@ -72,7 +70,7 @@
             :key="weeklySpecialItem.id"
           >
             <div class="img-view">
-              <img :src="`https://file.ituring.com.cn/Original/${weeklySpecialItem.coverKey}`">
+              <img v-lazy="`https://file.ituring.com.cn/Original/${weeklySpecialItem.coverKey}`">
             </div>
             <div class="info-view">
               <h3 class="book-name">{{weeklySpecialItem.name}}</h3>
@@ -100,7 +98,7 @@
           >
             <div class="img-view">
               <img
-                :src="`https://file.ituring.com.cn/Original/${BooksItem.coverKey}`"
+                v-lazy="`https://file.ituring.com.cn/Original/${BooksItem.coverKey}`"
                 :alt="BooksItem.name"
               >
             </div>
@@ -123,29 +121,34 @@
 </template>
 
 <script>
-// import { component } from 'vue/types/umd';
-import Carousel from "../../components/Carousel/index";
-import Carousel2 from "../../components/Carousel-2/index";
+import Carousel from "./Carousel/Carousel";
 import api from "../../API/home";
 
 export default {
   name: "home",
   data() {
     return {
-      popList: [],
-      weeklyList: [],
-      preSalePages: [],
+      carousel: [], //大轮播图
+      preSaleList: [], //小轮播图
+      popList: [], //热门图书
+      weeklyList: [], //每周特价
+      newBookComtent: [], //新书上市
     };
   },
 
   async mounted() {
     // 请求轮播图数据
     const lunbotu = (await api.reqGetCarouselBigImg()).banners;
-    console.log("lunbotu", lunbotu);
+    // console.log("lunbotu", lunbotu);
+    // 冻结响应式数据
+    this.carousel = Object.freeze(lunbotu);
 
-    // console.log(result);
+    //获取新书上市的数据
+    const newBookComtent = (await api.reqGetNewBookComtent()).bookItems;
+    // console.log('newBookComtent', newBookComtent)
+    this.newBookComtent = Object.freeze(newBookComtent);
 
-    // 请求新书上市、每周特价、热门图书数据
+    // 请求小轮播图、每周特价、热门图书数据
     const getRecommendPageText = (await api.reqGetRecommendPageText())
       .blockContents;
     const result = getRecommendPageText.map((item) => {
@@ -155,13 +158,13 @@ export default {
     const bookItems = Object.freeze(result.slice(0, 3));
     this.popList = bookItems[0];
     this.weeklyList = bookItems[1];
-    this.preSalePages = bookItems[2];
-    // console.log(bookItems);
+    this.preSaleList = bookItems[2];
+    // console.log('bookItems',bookItems);
   },
 
   components: {
     Carousel,
-    Carousel2,
+    // Carousel2,
   },
 };
 </script>

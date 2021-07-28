@@ -16,6 +16,14 @@ export default {
 		});
 	},
 
+	//获取新书上市的数据
+	reqGetNewBookComtent() {
+		return request({
+			method: "GET",
+			url: "/book/RecentlyPublishBook",
+		});
+	},
+
 	// 获取请求热门图书、每周特价数据
 	reqGetRecommendPageText() {
 		return request({
