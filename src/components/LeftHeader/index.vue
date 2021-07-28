@@ -5,7 +5,7 @@
       <router-link to="/"><img src="./logo.svg" class="logo"/></router-link>
       <ul @click="changePage($event)">
         <li data-select="1">
-          <router-link to="/home" active-class="active" exact
+          <router-link to="/home/homepage" active-class="active" exact
             ><span class="iconfont icon-xingqiu"></span> <span class="title">推荐</span></router-link
           >
         </li>

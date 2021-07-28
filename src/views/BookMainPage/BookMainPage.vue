@@ -40,27 +40,57 @@
         <dl>
           <dt class="bookStatus">书籍状态</dt>
           <dd>
-            <input type="checkbox" name="" id="0" value="上市销售" />
+            <input
+              type="checkbox"
+              :checked="bookStatus == 60"
+              @click="handleStatusClick(60, 'bookStatus')"
+              id="bookStatus1"
+            />
             <span>上市销售</span>
           </dd>
           <dd>
-            <input type="checkbox" name="" id="1" value="诚招译者" />
+            <input
+              type="checkbox"
+              :checked="bookStatus == 10"
+              @click="handleStatusClick(10, 'bookStatus')"
+              id="bookStatus2"
+            />
             <span>诚招译者</span>
           </dd>
           <dd>
-            <input type="checkbox" name="" id="2" value="正在翻译" />
+            <input
+              type="checkbox"
+              :checked="bookStatus == 20"
+              @click="handleStatusClick(20, 'bookStatus')"
+              id="bookStatus3"
+            />
             <span>正在翻译</span>
           </dd>
           <dd>
-            <input type="checkbox" name="" id="2" value="正在写作" />
+            <input
+              type="checkbox"
+              :checked="bookStatus == 30"
+              @click="handleStatusClick(30, 'bookStatus')"
+              id="bookStatus4"
+            />
             <span>正在写作</span>
           </dd>
           <dd>
-            <input type="checkbox" name="" id="2" value="正在排版" />
+            <input
+              type="checkbox"
+              :checked="bookStatus == 46"
+              @click="handleStatusClick(46, 'bookStatus')"
+              id="bookStatus5"
+            />
             <span>正在排版</span>
           </dd>
           <dd>
-            <input type="checkbox" name="" id="2" value="正在印刷" />
+            <input
+              type="checkbox"
+              :checked="bookStatus == 50"
+              @click="handleStatusClick(50, 'bookStatus')"
+              id="bookStatus6"
+            />
             <span>正在印刷</span>
           </dd>
         </dl>
@@ -68,11 +98,11 @@
         <dl>
           <dt class="bookOther">其他</dt>
           <dd>
-            <input type="checkbox" name="" id="3" />
+            <input type="checkbox" :checked="otherStatus == 1" @click="handleStatusClick(1, 'otherStatus')" />
             <span>免费</span>
           </dd>
           <dd>
-            <input type="checkbox" name="" id="4" />
+            <input type="checkbox" :checked="otherStatus == 2" @click="handleStatusClick(2, 'otherStatus')" />
             <span>可兑换样书</span>
           </dd>
         </dl>
@@ -110,6 +140,7 @@
             <span>最新上线</span>
           </dd>
         </dl>
+        <!-- <div ref="tagList"></div> -->
       </aside>
 
       <!-- 右侧内容部分 -->
@@ -232,8 +263,16 @@ export default {
       saleType: '',
       // 选择的日期范围
       publishStartDate: '',
+      // 选择的书本状态码
+      bookStatus: '',
+      // 是否选择免费
+      // isFree: false,
+      // 是否选择礼品书
+      // isGiftBook: false,
       //以上为请求书本列表需要的数据
 
+      // 用于控制切换选中免费和可兑换
+      otherStatus: -1,
       // 书本总数
       total: 50,
       // 当前页的书本列表
@@ -262,11 +301,10 @@ export default {
     }
   },
   async mounted() {
-    // const categoryList = await reqGetAllCategory()
-    // const { content } = await reqGetHotTag()
     const [categoryList, hotTagList] = await Promise.all([reqGetAllCategory(), reqGetHotTag()])
     this.categoryList = categoryList
     this.hotTagList = hotTagList.content
+    // this.$refs.tagList.innerHTML = hotTagList.content
     this.reqAdvancedBook()
   },
   methods: {
@@ -274,24 +312,21 @@ export default {
     async reqAdvancedBook() {
       this.loading = true
       // 得到请求需要的属性
-      const { categoryId, edition, name, sort, page, saleType } = this
-      let dataObj = {}
-      if (edition) {
-        dataObj = {
-          categoryId,
-          edition,
-          name,
-          sort,
-          page
-        }
-      } else {
-        dataObj = {
-          categoryId,
-          saleType,
-          name,
-          sort,
-          page
-        }
+      const { categoryId, edition, name, sort, page, saleType, bookStatus, otherStatus } = this
+      let dataObj = {
+        categoryId,
+        name,
+        sort,
+        page
+      }
+      // 动态添加请求对象中的属性
+      if (edition) dataObj.edition = edition
+      if (saleType) dataObj.saleType = saleType
+      if (bookStatus) dataObj.bookStatus = bookStatus
+      if (otherStatus == 1) {
+        dataObj.isFree = true
+      } else if (otherStatus == 2) {
+        dataObj.isGiftBook = true
       }
 
       const { bookItems, pagination } = await reqGetAdvancedBook(dataObj)
@@ -372,6 +407,21 @@ export default {
       this.categoryId = 0
       this.reqAdvancedBook()
     },
+    // 用于监视筛选书本状态
+    handleStatusClick(statusCode, statusType) {
+      if (this[statusType] == statusCode) {
+        this[statusType] = 0
+        return this.reqAdvancedBook()
+      }
+      if (statusType === 'bookStatus') {
+        // 判断点击的状态类型
+        this.bookStatus = statusCode
+      }
+      if (statusType === 'otherStatus') {
+        this.otherStatus = statusCode
+      }
+      this.reqAdvancedBook()
+    },
     //用于监视点击切换书本类型
     changeType(e) {
       const { saletype, edition, selectid } = e.target.dataset
@@ -382,7 +432,7 @@ export default {
         return this.reqAdvancedBook()
       }
       if (edition) {
-        this.saletype = ''
+        this.saleType = ''
         this.edition = +edition
         return this.reqAdvancedBook()
       }
@@ -394,8 +444,7 @@ export default {
       this.sort = sort
       this.reqAdvancedBook()
     }
-  },
-  watch: {}
+  }
 }
 </script>
 
