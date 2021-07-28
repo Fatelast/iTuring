@@ -8,6 +8,7 @@ import Login from '../views/product/Login/index.vue'
 import Register from '../views/product/RegisterPage/index.vue'
 import Cart from '../views/product/CartPage/index.vue'
 import Search from '../components/Search/Search.vue'
+import BookInfo from '../views/BookInfo'
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
         path:'/home/homepage',
         name:'HomePage',
         component:HomePage
+      },
+      {
+        path: '/home/book/:id',
+        name: 'BookInfo',
+        component: BookInfo
       },
       {
         path: '/home/book',
@@ -42,13 +48,14 @@ const routes = [
         name:'Cart',
         component:Cart
       },
-      // {
-      //   path:'/home/book/:id',
-      //   name:'BookInfo',
-      //   component:()=>import('../views/BookInfo')
-      // },
+      
     ]
   },
+  /* {
+    path: '/book',
+    name: 'Book',
+    component: Book
+  }, */
   {
     path:'/search',
     name:'Search',
