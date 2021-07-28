@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!-- aside 部分
+    <!-- aside 部分 -->
     <aside>aside 部分</aside>
 
-    header 部分
-    <header class="header-container">header 部分</header> -->
+    <!-- header 部分 -->
+    <header class="header-container">header 部分</header>
 
     <!-- 购物车+收货地址  -->
     <div class="cart-address">
@@ -23,14 +23,14 @@
                 <li class="book-info operation">操作</li>
               </ul>
 
-              <table style="display: none">
+              <table class="table-content" style="display: block">
                 <tr>
                   <td>1111111111</td>
-                  <td>21111111111</td>
-                  <td>31111111111</td>
-                  <td>43111111111131111111111</td>
+                  <td>纸质书</td>
+                  <td>169</td>
+                  <td>4311111</td>
                   <td>531111111111</td>
-                  <td>63111111111131111111111</td>
+                  <td><img src="../Login/images/delete-icon.svg" alt=""></td>
                 </tr>
               </table>
 
@@ -158,18 +158,18 @@ export default {};
 
 <style scoped>
 /* aside 部分开始 */
-/* aside {
+aside {
   position: absolute;
   display: inline-block;
   width: 172px;
   border-right: 1px solid #cedce4;
   height: 700px;
   box-sizing: border-box;
-} */
+}
 /* aside 部分结束 */
 
 /* header 部分开始 */
-/* body {
+body {
   position: relative;
 }
 
@@ -182,7 +182,7 @@ export default {};
   z-index: -18;
   overflow: hidden;
   border-bottom: 1px solid #cedce4;
-} */
+}
 /* header 部分结束 */
 
 /* 购物车左边开始 */
@@ -276,6 +276,7 @@ h3.shopping-book-package {
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #333;
 }
 
 .shopping-book table tr td:nth-child(1) {
@@ -295,19 +296,24 @@ h3.shopping-book-package {
 }
 
 .shopping-book table tr td:nth-child(4) {
-  /* border: 1px solid red; */
   width: 100px;
+  color: #ff8a00;
+  font-size: 16px;
 }
 
 .shopping-book table tr td:nth-child(5) {
   /* border: 1px solid red; */
-  width: 70px;
+  width: 130px;
 }
 
 .shopping-book table tr td:nth-child(6) {
   text-align: right;
   /* border: 1px solid red; */
-  width: 94px;
+  width: 30px;
+}
+
+.shopping-book table tr td:nth-child(6) img {
+  cursor: pointer;
 }
 
 .discount-code-money h3 {
