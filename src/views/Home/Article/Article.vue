@@ -40,14 +40,23 @@
         <span class="tab-item" data-sort="new">最新</span>
         <span class="tab-item" data-sort="hot">最热</span>
         <span class="tab-item" data-sort="vote">推荐</span>
+        <span class="tab-underline"></span>
       </div>
       <!-- 列表 -->
-      <div class="articleList">
+      <div
+        class="articleList"
+        v-if="articleListItems.length"
+        v-loading.lock="loading"
+        element-loading-text="拼命加载中"
+      >
         <ArticleItem
           v-for="item in articleListItems"
           :key="item.id"
           :itemData="item"
         />
+      </div>
+      <div v-else>
+        <h3>没有更多了</h3>
       </div>
     </div>
   </div>
@@ -63,6 +72,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       count: 0,
       articleListItems: [],
       articleObject: {
@@ -80,6 +90,7 @@ export default {
     sort(e) {
       if (e.target.dataset.sort) {
         let { sort } = e.target.dataset;
+
         let sortObj = {
           new: "new",
           hot: "hot",
@@ -92,17 +103,15 @@ export default {
     },
     /* 分类 */
     tab(e) {
-      console.log(e.currentTarget);
       if (e.target.dataset.tab) {
         let { tab } = e.target.dataset;
-        console.log(tab);
         let tabObj = {
           all: "",
           "7hot": "7hot",
           "30hot": "30hot",
-          "follow": "follow",
-          "fav": "fav",
-          "mine": "7hot",
+          follow: "follow",
+          fav: "fav",
+          mine: "mine",
         };
         this.articleListItems = [];
         this.articleObject.params.tab = tabObj[tab];
@@ -111,9 +120,10 @@ export default {
     },
     /* 分装请求 */
     async getArticleData({ url, params, method = "GET" }) {
+      this.loading = true;
       let { articleListItems } = await getArticle({ url, params, method });
+      this.loading = false;
       this.articleListItems.push(...articleListItems);
-      // console.log(this.articleListItems.length);
     },
     /* 节流 */
     thro(fn, time) {
@@ -144,7 +154,7 @@ export default {
         document.documentElement.scrollHeight || document.body.scrollHeight;
       if (scrollTop + windowHeight >= scrollHeight) {
         this.articleObject.params.page += 1;
-        this.thro(this.getArticleData(this.articleObject), 10);
+        this.thro(this.getArticleData(this.articleObject), 1000);
       }
     };
   },
@@ -203,6 +213,12 @@ export default {
   line-height: 42px;
   color: #6c6c6c;
   display: flex;
+}
+/* 滑动效果 */
+.content-nav .tab-underline {
+  width: 12px;
+  height: 4px;
+  background: #4684e2;
 }
 .tab-item {
   width: 44px;
