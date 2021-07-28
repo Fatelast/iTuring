@@ -31,6 +31,7 @@ const routes = [
         name: 'Article',
         component: Article
       },
+      /* 购物车 */
       {
         path:'/home/cartPage',
         name:'CartPage',
