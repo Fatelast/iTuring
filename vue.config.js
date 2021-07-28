@@ -1,10 +1,10 @@
-module.exports ={
-    devServer:{
-        proxy:{
-            '/api':{
-                target:'https://api.ituring.com.cn',
-                changeOrigin:true
-            }
-        }
+module.exports = {
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'https://api.ituring.com.cn',
+        changeOrigin: true
+      }
     }
+  }
 }

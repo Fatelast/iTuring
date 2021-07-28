@@ -1,71 +1,74 @@
-// <<<<<<< HEAD
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/home/home.vue";
-
-Vue.use(VueRouter);
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import HomePage from '../views/home/home.vue'
+import Home from '../views/home/index.vue'
+import Article from '../views/home/Article/Article.vue'
+import CartPage from '../views/product/CartPage'
+import Login from '../views/product/Login/index.vue'
+import Register from '../views/product/RegisterPage/index.vue'
+import Cart from '../views/product/CartPage/index.vue'
+import Search from '../components/Search/Search.vue'
+Vue.use(VueRouter)
 
 const routes = [
-// <<<<<<< HEAD
-	{
-		path: "/",
-		name: "Home",
-		component: Home,
-	},
-	// {
-	//   path: '/about',
-	//   name: 'About',
-	//   // route level code-splitting
-	//   // this generates a separate chunk (about.[hash].js) for this route
-	//   // which is lazy-loaded when the route is visited.
-	//   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-	// }
-];
-// =======
-// import Vue from 'vue'
-// import VueRouter from 'vue-router'
-// import Home from '../views/Home.vue'
-// import Book from '../views/Book.vue'
-// import Article from '../views/Article.vue'
-// Vue.use(VueRouter)
-
-// const routes = [
-//   {
-//     path: '/',
-//     name: 'Home',
-//     component: Home
-//   },
-//   {
-//     path: '/book',
-//     name:'Book',
-//     component:Book
-//   },
-//   {
-//     path: '/article',
-//     name:'Article',
-//     component:Article
-//   }
-// ]
-// >>>>>>> aad480368a1694d6bd6a9899fee73cb6dbec8e7e
-// =======
-//   {
-//     path: '/',
-//     name: 'Article',
-//     component: Article
-//   },
-//   {
-//     path: '/book',
-//     name:'Book',
-//     component:Book
-//   },
-// 	{
-// 		path: "/",
-// 		name: "Home",
-// 		component: Home,
-// 	},
+  {
+    path: '/home',
+    name: 'Home',
+    component: Home,
+    children:[
+      {
+        path:'/home/homepage',
+        name:'HomePage',
+        component:HomePage
+      },
+      {
+        path: '/home/book',
+        name:'BookMainPage',
+        component:()=>import('../views/home/BookMainPage/BookMainPage'),
+      },
+      {
+        path: '/home/article',
+        name: 'Article',
+        component: Article
+      },
+      {
+        path:'/home/cartPage',
+        name:'CartPage',
+        component:CartPage
+      },
+      {
+        path:'/home/cart',
+        name:'Cart',
+        component:Cart
+      },
+      // {
+      //   path:'/home/book/:id',
+      //   name:'BookInfo',
+      //   component:()=>import('../views/BookInfo')
+      // },
+    ]
+  },
+  {
+    path:'/search',
+    name:'Search',
+    component:Search
+  },
+  {
+    path:'/login',
+    name:'Login',
+    component:Login
+  },
+  {
+    path:'/register',
+    name:'Register',
+    component:Register
+  },
   
-// ]
-// >>>>>>> 7d7f465def1eedab6c4f0e91ab145a4e4bab3a46
+  {
+    path:'*',
+    redirect:'/home/homepage'
+  }
+]
 
 const router = new VueRouter({
 	mode: "history",
