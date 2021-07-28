@@ -9,9 +9,9 @@ export const getBookInfo = (Id) => {
 }
 
 // 获取评论
-export const getdiscuss = () => {
+export const getdiscuss = (Id) => {
   return request({
     method: 'GET',
-    url: `/Book/Comment/?id=2811`
+    url: `/Book/Comment/?id=${Id}`
   })
 }

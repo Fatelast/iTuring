@@ -107,9 +107,13 @@
               v-if="salesInfo.discountPrice !== salesInfo.price"
               >¥{{ salesInfo.price }}</span
             >
-            <el-button icon="el-icon-plus" class="buy-btn" type="primary">{{
-              salesInfosObj[salesInfo.edition].join
-            }}</el-button>
+            <el-button
+              icon="el-icon-plus"
+              class="buy-btn"
+              type="primary"
+              @click="toShopCat"
+              >{{ salesInfosObj[salesInfo.edition].join }}</el-button
+            >
           </div>
           <div v-else>
             <el-button class="buy-left" type="primary" size="mini">
@@ -332,10 +336,15 @@
           <div class="comment-item">
             <div class="flex-item flex-view">
               <div class="flex-view">
-                <img :src="`https://file.ituring.com.cn/LargeCover/${discuss.userAvatarImageKey}`" alt="" />
+                <img
+                  :src="
+                    `https://file.ituring.com.cn/LargeCover/${discuss.userAvatarImageKey}`
+                  "
+                  alt=""
+                />
                 <div class="person">
                   <div class="name">{{ discuss.userNickName }}</div>
-                  <div class="time">{{discuss.commentDate}}</div>
+                  <div class="time">{{ discuss.commentDate }}</div>
                 </div>
               </div>
               <div class="float-right">
@@ -344,7 +353,7 @@
               </div>
             </div>
             <p class="comment-content">
-              {{discuss.content}}
+              {{ discuss.content }}
             </p>
           </div>
         </div>
@@ -370,7 +379,7 @@
           </el-select>
         </template>
       </el-tab-pane>
-      <el-tab-pane label="相关文章" class="tab">相关文章</el-tab-pane>
+      <el-tab-pane label="相关文章" class="tab">暂无</el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -390,14 +399,27 @@ export default {
         8: { kind: "其他渠道" },
       },
       discussList: {}, //评论数据
+      shopId: "",
     };
   },
   async mounted() {
+    /* this.shopId = this.$route.query.id;
+    console.log("@@@", this.shopId); */
     const bookInfoList = await getBookInfo("2811");
     const discussList = await getdiscuss("2811");
     this.bookInfoList = bookInfoList;
     this.salesInfos = bookInfoList.salesInfos;
     this.discussList = discussList;
+  },
+  methods: {
+    toShopCat() {
+      this.$router.push({
+        path: `/home/article/${this.shopId}`,
+        params:{
+          id: this.shopId,
+        }
+      });
+    },
   },
 };
 </script>
