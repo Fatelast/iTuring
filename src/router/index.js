@@ -9,6 +9,7 @@ import Register from '../views/product/RegisterPage/index.vue'
 import Cart from '../views/product/CartPage/index.vue'
 import Search from '../components/Search/Search.vue'
 import BookInfo from '../views/BookInfo'
+import ArticleDetail from "../views/Home/Article/ArticleDetail.vue";
 Vue.use(VueRouter)
 
 const routes = [
@@ -36,6 +37,14 @@ const routes = [
         path: '/home/article',
         name: 'Article',
         component: Article
+      },
+      {
+        path: '/home/article/:id',
+        name: 'ArticleDetail',
+        component: ArticleDetail,
+        meta:{
+          hideFooter:true
+        }
       },
       /* 购物车 */
       {

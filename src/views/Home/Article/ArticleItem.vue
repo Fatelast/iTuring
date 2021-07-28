@@ -25,13 +25,13 @@ export default {
   },
   methods: {
     toDetail() {
-      console.log(this.itemData.id);
-      /* this.$router.history.push({
+      let { id } = this.itemData;
+      this.$router.history.push({
         name: "ArticleDetail",
         params: {
-          articleId,
+          id,
         },
-      }); */
+      });
     },
   },
 };
