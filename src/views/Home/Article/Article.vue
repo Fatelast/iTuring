@@ -129,6 +129,9 @@ export default {
         this.thro(this.getArticleData(this.articleObject), 0)
       }
     }
+  },
+  beforeDestroy() {
+    window.onscroll = null
   }
 }
 </script>
