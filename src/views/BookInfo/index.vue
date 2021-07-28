@@ -128,264 +128,14 @@
         </div>
       </div>
     </div>
-
-    <!-- 主要内容 -->
-    <!--v-model="activeName" @tab-click="handleClick" -->
-    <el-tabs class="main-content">
-      <el-tab-pane label="图书介绍" class="tab">
-        <div class="book-intro" v-if="bookInfoList.briefIntro">
-          <!-- 特别说明 -->
-          <h4 class="title">特别说明</h4>
-          <div class="text">
-            <p>再简单的代码，也有更好的实现方式</p>
-            <p><br /></p>
-          </div>
-          <ul>
-            <li><p>Java Champion凯·霍斯特曼作序</p></li>
-            <li><p>1个示例，7次重构，18种实现，助你明辨优劣代码</p></li>
-            <li><p>每章都配有小测验及习题答案，学以致用</p></li>
-          </ul>
-          <!-- 简介 -->
-          <h4 class="title">简介</h4>
-          <div class="text">
-            <p>
-              {{ bookInfoList.briefIntro.abstract }}
-            </p>
-            <p><br /></p>
-          </div>
-          <!-- 本书特色 -->
-          <h4 class="title">本书特色</h4>
-          <div class="text">
-            <p>
-              {{ bookInfoList.briefIntro.highlight }}
-            </p>
-            <p><br /></p>
-          </div>
-          <!-- 作译者介绍 -->
-          <h4 class="title">作译者介绍</h4>
-          <div class="text">
-            <p>
-              {{ bookInfoList.briefIntro.authorInfo }}
-            </p>
-            <p><br /></p>
-          </div>
-          <!-- 出版信息 -->
-          <h4 class="title">出版信息</h4>
-          <div class="text">
-            <ul class="pd-12">
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>书</span>
-                  <span>名</span>
-                </span>
-                <span class="published-value">{{ bookInfoList.name }}</span>
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>系</span>
-                  <span>列</span>
-                  <span>书</span>
-                  <span>名</span>
-                </span>
-                <span class="published-value">{{
-                  bookInfoList.bookCollectionName
-                }}</span>
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>执</span>
-                  <span>行</span>
-                  <span>编</span>
-                  <span>辑</span>
-                </span>
-                <span class="published-value"
-                  >关于本书的问题，请联系
-                  <a href="#">{{
-                    bookInfoList.contributor.Editor[0].name
-                  }}</a></span
-                >
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>出</span>
-                  <span>版</span>
-                  <span>日</span>
-                  <span>期</span>
-                </span>
-                <span class="published-value">{{
-                  bookInfoList.publishDate
-                }}</span>
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>书</span>
-                  <span>号</span>
-                </span>
-                <span class="published-value">{{ bookInfoList.isbn }}</span>
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>定</span>
-                  <span>价</span>
-                </span>
-                <span class="published-value">{{ salesInfos[0].price }}</span>
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>页</span>
-                  <span>数</span>
-                </span>
-                <span class="published-value">{{
-                  bookInfoList.paperEditionInfo.pageNumber
-                }}</span>
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>印</span>
-                  <span>刷</span>
-                  <span>方</span>
-                  <span>式</span>
-                </span>
-                <span class="published-value">{{
-                  bookInfoList.paperEditionInfo.bookPrintName
-                }}</span>
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>开</span>
-                  <span>本</span>
-                </span>
-                <span class="published-value">{{
-                  bookInfoList.paperEditionInfo.pageSizeName
-                }}</span>
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>出</span>
-                  <span>版</span>
-                  <span>状</span>
-                  <span>态</span>
-                </span>
-                <span class="published-value">上市销售</span>
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>原</span>
-                  <span>书</span>
-                  <span>名</span>
-                </span>
-                <span class="published-value">{{
-                  bookInfoList.originalBookInfo.originalBookName
-                }}</span>
-              </li>
-              <li class="published-item flex-view">
-                <span class="published-label flex-view">
-                  <span>原</span>
-                  <span>书</span>
-                  <span>号</span>
-                </span>
-                <span class="published-value">{{
-                  bookInfoList.originalBookInfo.originalBookIsbn
-                }}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="在线阅读" class="tab">
-        <div class="catalog" v-if="bookInfoList.ebook">
-          <div
-            class="catalog-item flex-view"
-            v-for="chapter in bookInfoList.ebook.chapters"
-            :key="chapter.id"
-          >
-            <span>{{ chapter.subject }}</span>
-            <span v-if="chapter.isFree" class="title">阅读</span>
-            <img v-else src="./images/lock.584dc0b5.svg" class="title" />
-          </div>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="评论" class="tab">
-        <div class="book-comment">
-          <div class="title">发表新的评论</div>
-          <div class="publish flex-view">
-            <img src="./images/avatar.jpg" alt="" class="mine-img" />
-            <input
-              type="text"
-              placeholder="说点什么..."
-              class="content-input"
-            />
-            <button class="send-btn">发送</button>
-          </div>
-          <div class="tab-view flex-view">
-            <div class="count-text">
-              共有4条评论
-            </div>
-            <div class="tab-box flex-view">
-              <span class="tab-select">热门</span>
-              <div class="line"></div>
-              <span class="tab-select">最新</span>
-            </div>
-          </div>
-        </div>
-        <div
-          class="comments-list"
-          v-for="discuss in discussList.comments"
-          :key="discuss.id"
-        >
-          <div class="comment-item">
-            <div class="flex-item flex-view">
-              <div class="flex-view">
-                <img
-                  :src="
-                    `https://file.ituring.com.cn/LargeCover/${discuss.userAvatarImageKey}`
-                  "
-                  alt=""
-                />
-                <div class="person">
-                  <div class="name">{{ discuss.userNickName }}</div>
-                  <div class="time">{{ discuss.commentDate }}</div>
-                </div>
-              </div>
-              <div class="float-right">
-                <span>推荐 </span>
-                <span>回复</span>
-              </div>
-            </div>
-            <p class="comment-content">
-              {{ discuss.content }}
-            </p>
-          </div>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="勘误" class="tab">
-        <template>
-          <el-select value="是否确认" placeholder="请选择">
-            <el-option value="未确认"> </el-option>
-            <el-option value="已确认"> </el-option>
-          </el-select>
-        </template>
-        <template>
-          <el-select value="介质" placeholder="请选择">
-            <el-option value="电子书"> </el-option>
-            <el-option value="纸质版"> </el-option>
-          </el-select>
-        </template>
-        <template>
-          <el-select value="类型" placeholder="请选择">
-            <el-option value="文字格式错误"> </el-option>
-            <el-option value="技术错误"> </el-option>
-            <el-option value="建议"> </el-option>
-          </el-select>
-        </template>
-      </el-tab-pane>
-      <el-tab-pane label="相关文章" class="tab">暂无</el-tab-pane>
-    </el-tabs>
+    <Content :bookInfoList="bookInfoList" :salesInfos="salesInfos" />
+    
   </div>
 </template>
 
 <script>
-import { getBookInfo, getdiscuss } from "../../api/bookInfo";
+import { getBookInfo } from "../../api/bookInfo";
+import Content from './Content'
 export default {
   name: "BookInfo",
   data() {
@@ -398,7 +148,7 @@ export default {
         5: { kind: "样书", join: "样书袋" },
         8: { kind: "其他渠道" },
       },
-      discussList: {}, //评论数据
+      // discussList: {}, //评论数据
       shopId: "",
     };
   },
@@ -406,10 +156,10 @@ export default {
     /* this.shopId = this.$route.query.id;
     console.log("@@@", this.shopId); */
     const bookInfoList = await getBookInfo("2811");
-    const discussList = await getdiscuss("2811");
+    
     this.bookInfoList = bookInfoList;
     this.salesInfos = bookInfoList.salesInfos;
-    this.discussList = discussList;
+    
   },
   methods: {
     toShopCat() {
@@ -421,6 +171,9 @@ export default {
       });
     },
   },
+  components:{
+    Content
+  }
 };
 </script>
 
@@ -620,178 +373,5 @@ export default {
   }
 }
 
-/* 主要内容 */
-.main-content {
-  width: 70%;
-  margin: 0 auto;
-  padding: 50px 0;
-}
 
-/* 图书介绍 */
-/deep/.is-active {
-  font-weight: 600;
-  color: #152844 !important;
-}
-
-.main-content .book-intro {
-  .title {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 18px;
-    color: #152844;
-    height: 16px;
-    border-left: 4px solid #4684e2;
-    margin: 27px 0 11px;
-    padding-left: 8px;
-  }
-  .text {
-    color: #484848;
-    font-size: 16px;
-    line-height: 26px;
-    padding-left: 12px;
-    margin: 11px 0;
-  }
-}
-
-.book-intro .text .pd-12 {
-  .published-item {
-    margin-bottom: 8px;
-    font-size: 14px;
-    line-height: 22px;
-    height: 22px;
-    color: #484848;
-  }
-  .flex-view {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-  }
-  .published-item .published-label {
-    justify-content: space-between;
-    flex: 0 0 56px;
-    margin-right: 24px;
-    text-align: justify;
-  }
-}
-
-/* 在线阅读 */
-.flex-view {
-  display: flex;
-  justify-content: space-between;
-}
-
-.catalog-item {
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #e9e9e9;
-  font-size: 14px;
-  height: 46px;
-}
-
-/* 评论 */
-.book-comment {
-  .title {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 22px;
-    height: 22px;
-    color: #152844;
-    margin: 24px 0 12px;
-  }
-  .flex-view {
-    display: flex;
-    justify-content: space-between;
-  }
-}
-
-.book-comment .publish {
-  align-items: center;
-  .mine-img {
-    flex: 0 0 40px;
-    margin-right: 12px;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-  }
-  .content-input {
-    border-width: 0;
-    border-color: #dae1e7;
-    flex: 1;
-    background: #f6f9fb;
-    border-radius: 4px;
-    height: 32px;
-    line-height: 32px;
-    color: #484848;
-    padding: 5px 12px;
-    white-space: nowrap;
-  }
-  .send-btn {
-    border-width: 0;
-    border-color: #dae1e7;
-    margin-left: 10px;
-    background: #4684e2;
-    border-radius: 4px;
-    -webkit-box-flex: 0;
-    -ms-flex: 0 0 80px;
-    flex: 0 0 80px;
-    color: #fff;
-    font-size: 14px;
-    text-align: center;
-    height: 32px;
-    line-height: 32px;
-  }
-}
-
-.book-comment .tab-view {
-  justify-content: space-between;
-  font-size: 14px;
-  align-items: center;
-  margin: 24px 0;
-  .tab-box {
-    display: flex;
-    color: #5f77a6;
-    align-items: center;
-    .line {
-      width: 1px;
-      height: 12px;
-      margin: 0 12px;
-      background: #cedce4;
-    }
-  }
-}
-
-.comments-list {
-  margin: 30px 0;
-  .flex-item img {
-    flex: 0 0 40px;
-    width: 40px;
-    height: 40px;
-    margin-right: 12px;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  .name {
-    color: #152844;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 22px;
-    height: 22px;
-    cursor: pointer;
-  }
-  .comment-content {
-    margin-top: 8px;
-    color: #484848;
-    font-size: 14px;
-    line-height: 22px;
-    padding-bottom: 16px;
-    border-bottom: 1px dashed #cedce4;
-    margin-left: 52px;
-    overflow: hidden;
-  }
-}
-
-.comments-list .flex-item .float-right {
-  color: #4684e2;
-  font-size: 14px;
-}
 </style>
