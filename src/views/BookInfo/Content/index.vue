@@ -1,24 +1,8 @@
 <template>
   <!-- 主要内容 -->
-  <!--v-model="activeName" @tab-click="handleClick" -->
   <el-tabs class="main-content">
     <el-tab-pane label="图书介绍" class="tab">
       <div class="book-intro" v-if="bookInfoList.briefIntro">
-        <!-- 特别说明 -->
-
-        <!-- <h4 class="title">特别说明</h4>
-        <div class="text">
-          <p>再简单的代码，也有更好的实现方式</p>
-          <p><br /></p>
-        </div>
-        <div>
-          {{ bookInfoList.briefIntro.specialNotes }}
-          <ul>
-          <li><p>Java Champion凯·霍斯特曼作序</p></li>
-          <li><p>1个示例，7次重构，18种实现，助你明辨优劣代码</p></li>
-          <li><p>每章都配有小测验及习题答案，学以致用</p></li>
-        </ul>
-        </div> -->
         <!-- 简介 -->
         <h4 class="title">简介</h4>
         <div class="text">
@@ -187,7 +171,7 @@
         </div>
         <div class="tab-view flex-view">
           <div class="count-text">
-            共有4条评论
+            共有{{commentDate.length}}条评论
           </div>
           <div class="tab-box flex-view">
             <span class="tab-select">热门</span>
