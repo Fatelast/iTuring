@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!-- aside 部分 -->
+    <!-- aside 部分
     <aside>aside 部分</aside>
 
-    <!-- header 部分 -->
-    <header class="header-container">header 部分</header>
+    header 部分
+    <header class="header-container">header 部分</header> -->
 
     <!-- 购物车+收货地址  -->
     <div class="cart-address">
@@ -158,19 +158,18 @@ export default {};
 
 <style scoped>
 /* aside 部分开始 */
-aside {
+/* aside {
   position: absolute;
   display: inline-block;
   width: 172px;
   border-right: 1px solid #cedce4;
   height: 700px;
-  /* overflow: hidden; */
   box-sizing: border-box;
-}
+} */
 /* aside 部分结束 */
 
 /* header 部分开始 */
-body {
+/* body {
   position: relative;
 }
 
@@ -183,8 +182,7 @@ body {
   z-index: -18;
   overflow: hidden;
   border-bottom: 1px solid #cedce4;
-  /* background-color: pink; */
-}
+} */
 /* header 部分结束 */
 
 /* 购物车左边开始 */
