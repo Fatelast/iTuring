@@ -86,9 +86,7 @@
                 <span>日</span>
                 <span>期</span>
               </span>
-              <span class="published-value">{{
-                bookInfoList.publishDate
-              }}</span>
+              <span class="published-value">{{ publicationDate }}</span>
             </li>
             <li class="published-item flex-view">
               <span class="published-label flex-view">
@@ -200,7 +198,7 @@
       </div>
       <div
         class="comments-list"
-        v-for="discuss in discussList.comments"
+        v-for="(discuss, index) in discussList.comments"
         :key="discuss.id"
       >
         <div class="comment-item">
@@ -213,7 +211,7 @@
               />
               <div class="person">
                 <div class="name">{{ discuss.userNickName }}</div>
-                <div class="time">{{ discuss.commentDate }}</div>
+                <div class="time">{{ commentDate[index] }}</div>
               </div>
             </div>
             <div class="float-right">
@@ -254,21 +252,32 @@
 
 <script>
 import { getdiscuss } from "../../../api/bookInfo";
+import moment from "moment";
 export default {
   name: "Content",
   data() {
     return {
-      discussList: {},
+      discussList: {}, //评论列表
+      commentDate: [], //评论的时间
     };
   },
   async mounted() {
-    const discussList = await getdiscuss("2811");
-    this.discussList = discussList;
-    console.log(this.$refs.explain);  
-    // this.$refs.explain.innerHTML(this.specialNotes);
-
+    // 获取评论详情
+    this.getdiscussList("2811");
   },
-  props: ["bookInfoList", "salesInfos", "specialNotes"],
+  methods: {
+    // 获取评论详情
+    async getdiscussList(Id) {
+      const discussList = await getdiscuss(Id);
+      this.discussList = discussList;
+      // moment(discuss.commentDate).format('YYYY-MM-DD')
+      const commentDate = discussList.comments.map((item) => {
+        return moment(item.commentDate).format("YYYY-MM-DD");
+      });
+      this.commentDate = commentDate;
+    },
+  },
+  props: ["bookInfoList", "salesInfos", "specialNotes", "publicationDate"],
 };
 </script>
 

@@ -10,8 +10,10 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import './assets/iconfont/iconfont.css'
 import './assets/iconfont/iconfont.js'
+import moment from 'moment'
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
+Vue.use(moment)
 Vue.config.productionTip = false
 new Vue({
   router,
