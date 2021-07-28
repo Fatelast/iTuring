@@ -284,7 +284,7 @@
 import {
   reqGetAllCategory,
   reqGetAdvancedBook,
-} from "../../../API/bookMainPage";
+} from "../../../API/bookMainPage.js";
 export default {
   name: "BookMainPage",
   data() {

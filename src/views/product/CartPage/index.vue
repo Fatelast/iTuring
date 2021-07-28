@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- aside 部分 -->
-    <aside>aside 部分</aside>
+    <!-- <aside>aside 部分</aside> -->
 
     <!-- header 部分 -->
-    <header class="header-container">header 部分</header>
+    <!-- <header class="header-container">header 部分</header> -->
 
     <!-- 购物车+收货地址  -->
     <div class="cart-address">
@@ -30,7 +30,7 @@
                   <td>169</td>
                   <td>4311111</td>
                   <td>531111111111</td>
-                  <td><img src="../Login/images/delete-icon.svg" alt=""></td>
+                  <td><img src="../Login/images/delete-icon.svg" alt="" /></td>
                 </tr>
               </table>
 
@@ -173,7 +173,7 @@ body {
   position: relative;
 }
 
-.header-container {
+/* .header-container {
   position: absolute;
   top: 0;
   left: 180px;
@@ -182,14 +182,14 @@ body {
   z-index: -18;
   overflow: hidden;
   border-bottom: 1px solid #cedce4;
-}
+} */
 /* header 部分结束 */
 
 /* 购物车左边开始 */
 .cart-address {
-  position: absolute;
-  left: 172px;
-  top: 56px;
+  /* position: absolute; */
+  /* left: 172px;
+  top: 56px; */
   width: 1360px;
   /* height: 1800px; */
   overflow: hidden;
@@ -434,7 +434,7 @@ button.cotinue-shopping {
   outline: none;
 }
 
-button.cotinue-shopping:hover{
+button.cotinue-shopping:hover {
   background: #4684e2;
   color: #fff;
 }
@@ -451,7 +451,6 @@ button.settlement-button {
   outline: none;
 }
 /* 购物车右边结束*/
-
 
 /* 公共样式 */
 
@@ -526,7 +525,7 @@ button:hover {
 }
 
 a {
-  color: #4684e2;;
+  color: #4684e2;
   text-decoration: none;
   font-size: 14px;
 }
