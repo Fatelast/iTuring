@@ -16,16 +16,16 @@
             @click="changeCategory($event)"
           >
             <p :data-id="category1.id" data-categorylv="1">{{ category1.name }}</p>
-            <ul :style="{ display: category1.id == category1Id ? '' : 'none' }">
+            <ul :style="{ display: category1.id == category1Id && isShowCategory2 ? '' : 'none' }">
               <li
-                :class="{ category2: true, select: category2Id == category2.id }"
+                :class="{ category2: true, select: category2Id == category2.id && isShowCategory2 }"
                 v-for="category2 in category1.children"
                 :key="category2.id"
               >
                 <p :data-id="category2.id" data-categorylv="2">{{ category2.name }}</p>
-                <ul :style="{ display: category2.id == category2Id ? '' : 'none' }">
+                <ul :style="{ display: category2.id == category2Id && isShowCategory3 ? '' : 'none' }">
                   <li
-                    :class="{ category3: true, select: category3Id == category3.id }"
+                    :class="{ category3: true, select: category3Id == category3.id && isShowCategory3 }"
                     v-for="category3 in category2.children"
                     :key="category3.id"
                   >
@@ -171,7 +171,7 @@
           </div>
         </div>
         <!-- 书本展示列表 -->
-        <div class="BookList_container">
+        <div class="BookList_container" v-loading="loading">
           <!-- :to="{ path: '/home/book/' + bookItem.id }" -->
           <router-link
             :to="{ path: '/home/book/bookinfo/' + bookItem.id }"
@@ -205,7 +205,6 @@
           :current-page="page"
           :page-size="15"
           layout="prev, pager, next"
-          :pager-count="4"
           :total="total"
         >
         </el-pagination>
@@ -218,7 +217,7 @@
 </template>
 
 <script>
-import { reqGetAllCategory, reqGetAdvancedBook } from '../../api/bookMainPage'
+import { reqGetAllCategory, reqGetAdvancedBook, reqGetHotTag } from '../../api/bookMainPage'
 export default {
   name: 'BookMainPage',
   data() {
@@ -239,32 +238,41 @@ export default {
       total: 50,
       // 当前页的书本列表
       bookItems: [],
+      // 热门标签列表，字符串形式
+      hotTagList: '',
       // 三级分类列表
       categoryList: [],
       // 用于日期选择器组件
       date: '',
-      // 用于当前选中的分类等级
-      categorylv: '',
       //每级分类的id
       category1Id: '',
       category2Id: '',
       category3Id: '',
       // 用于高亮显示全部按钮
+      // 当前选中的分类等级
+      categorylv: '',
       showTotal: false,
+      // 用于点击隐藏三级分类
+      isShowCategory2: false,
+      isShowCategory3: false,
       // 用于切换书本类型的激活样式
-      selectTypeId: 1
+      selectTypeId: 1,
+      // 用于显示正在加载
+      loading: false
     }
   },
   async mounted() {
-    const categoryList = await reqGetAllCategory()
+    // const categoryList = await reqGetAllCategory()
+    // const { content } = await reqGetHotTag()
+    const [categoryList, hotTagList] = await Promise.all([reqGetAllCategory(), reqGetHotTag()])
     this.categoryList = categoryList
-    // console.log(categoryList)
-
+    this.hotTagList = hotTagList.content
     this.reqAdvancedBook()
   },
   methods: {
     // 用于发送请求书本列表信息
     async reqAdvancedBook() {
+      this.loading = true
       // 得到请求需要的属性
       const { categoryId, edition, name, sort, page, saleType } = this
       let dataObj = {}
@@ -290,14 +298,49 @@ export default {
       // console.log(bookItems, pagination)
       this.total = pagination.totalItemCount
       this.bookItems = bookItems
+      this.loading = false
     },
     //点击分类标签触发的事件
     changeCategory(e) {
-      console.dir(e.target)
       const { categorylv, id } = e.target.dataset
+      // 记录信息以发送请求
       this.categoryId = id
       this.showTotal = false
       this.reqAdvancedBook()
+      // 判断重复点击是否隐藏当前分类列表
+      const { category1Id, category2Id, isShowCategory2, isShowCategory3 } = this
+      // 点击一级列表时，展示二级列表，三级不展示
+      if (categorylv === '1') {
+        this.isShowCategory2 = true
+        this.isShowCategory3 = false
+      }
+      // 每次点击相同的一级列表时，切换二级列表显示（show2 =!show2,show3 =false）
+      if (categorylv === '1' && id === category1Id) {
+        this.isShowCategory2 = !isShowCategory2
+        this.isShowCategory3 = false
+        if (isShowCategory2) {
+          this.category2Id = ''
+          this.category3Id = ''
+        }
+      }
+      // 点击不同的一级列表时，对应二级列表显示（show2 =true,show3=false）
+      if (categorylv === '1' && id !== category1Id) {
+        this.isShowCategory2 = true
+        this.isShowCategory3 = false
+      }
+      // 每次点击相同的二级列表时，切换三级列表显示（show3 =!show3）
+      if (categorylv === '2' && id === category2Id) {
+        this.isShowCategory3 = !isShowCategory3
+        if (isShowCategory3) {
+          this.category3Id = ''
+        }
+      }
+      // 点击不同的二级列表时，对应三级列表显示（show3 = true）
+      if (categorylv === '2' && id !== category2Id) {
+        this.isShowCategory3 = true
+      }
+      // 记录点击的分类等级
+      this.categorylv = categorylv
       if (categorylv === '1') return (this.category1Id = id)
       if (categorylv === '2') return (this.category2Id = id)
       if (categorylv === '3') return (this.category3Id = id)
