@@ -13,43 +13,32 @@
 
     <!-- 内容区 -->
     <div class="book-list hidden-sm">
+      
       <!-- 新书上市 -->
       <div class="new-view">
         <!-- 标题 -->
         <div class="title">
           <span class="title-one">新书上市</span>
-          <button class="right-btns">
-            >
+          <button
+            class="right-btns"
+            v-if="change"
+            @click="handleChange"
+          >
+            &gt;
+          </button>
+          <button
+            class="right-btns"
+            v-else
+            @click="handleChange"
+          >
+            &lt;
           </button>
         </div>
-        <!-- 新书上市 内容区大盒子 -->
-        <div class="new-books">
-          <img
-            class="new-img"
-            src="../../assets/tuijian/tulingxinshu.png"
-          >
-          <!-- 内容区中盒子 -->
-          <div class="new-items">
-            <!-- 小盒子 -->
-            <div
-              class="book-item"
-              v-for="newBookItem in newBookComtent"
-              :key="newBookItem.id"
-            >
-              <div class="img-view">
-                <img
-                  v-lazy="`https://file.ituring.com.cn/Original/${newBookItem.coverKey}`"
-                  :alt="newBookItem.name"
-                >
-              </div>
-              <div class="info-view">
-                <h3 class="book-name">{{newBookItem.name}}</h3>
-                <p class="authors">{{newBookItem.authorNameString}}（作者）</p>
-                <p class="translators">{{newBookItem.translatorNameString}}（译者）</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <NewBook
+          :change="change"
+          :newBookComtent="newBookComtent"
+          :newBookSwitch="newBookSwitch"
+        />
       </div>
 
       <!-- 每周特价 -->
@@ -108,9 +97,7 @@
               <p class="translators">{{BooksItem.translatorNameString}}（译者）</p>
             </div>
           </div>
-
         </div>
-
         <a
           class="more-hot-books"
           href=""
@@ -121,6 +108,7 @@
 </template>
 
 <script>
+import NewBook from "@/views/home/NewBook/NewBook";
 import Carousel from "./Carousel/Carousel";
 import api from "../../API/home";
 
@@ -128,12 +116,24 @@ export default {
   name: "home",
   data() {
     return {
+      change: true,
       carousel: [], //大轮播图
       preSaleList: [], //小轮播图
       popList: [], //热门图书
       weeklyList: [], //每周特价
       newBookComtent: [], //新书上市
+      newBookSwitch: [], //新书上市切换
     };
+  },
+
+  methods: {
+    handleBookClick(id) {
+      console.log("123", id);
+    },
+
+    handleChange() {
+      this.change = !this.change;
+    },
   },
 
   async mounted() {
@@ -147,6 +147,9 @@ export default {
     const newBookComtent = (await api.reqGetNewBookComtent()).bookItems;
     // console.log('newBookComtent', newBookComtent)
     this.newBookComtent = Object.freeze(newBookComtent);
+
+    const getNewBookSwitch = (await api.reqGetNewBookSwitch()).bookItems;
+    this.newBookSwitch = Object.freeze(getNewBookSwitch);
 
     // 请求小轮播图、每周特价、热门图书数据
     const getRecommendPageText = (await api.reqGetRecommendPageText())
@@ -164,7 +167,7 @@ export default {
 
   components: {
     Carousel,
-    // Carousel2,
+    NewBook,
   },
 };
 </script>
@@ -235,27 +238,9 @@ export default {
   cursor: pointer;
   margin-right: 20px;
 }
-.new-books {
-  display: flex;
-  flex-wrap: nowrap;
-  box-sizing: inherit;
-  width: 100%;
-  height: 560px;
-  /* border: 1px solid red; */
-}
-.new-img {
-  width: 255px;
-  height: 544px;
-  margin: 16px 20px 0 0;
-}
-.new-items {
-  display: flex;
-  /* justify-content: space-between; */
-  flex: 1;
-  flex-wrap: wrap;
-  height: 560px;
-  /* border: 1px solid green; */
-}
+
+/* 新书上市 */
+
 .book-item {
   position: relative;
   flex: 1;
@@ -299,6 +284,7 @@ export default {
   line-height: 20px;
   overflow: hidden;
   margin: 12px 0 8px;
+  color: #1c355a;
 }
 .authors {
   font-size: 12px;
@@ -307,6 +293,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #6f6f6f;
 }
 .translators {
   font-size: 12px;
@@ -315,6 +302,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #6f6f6f;
 }
 
 .special-view {
