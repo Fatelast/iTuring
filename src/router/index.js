@@ -51,11 +51,6 @@ const routes = [
       
     ]
   },
-  /* {
-    path: '/book',
-    name: 'Book',
-    component: Book
-  }, */
   {
     path:'/search',
     name:'Search',
