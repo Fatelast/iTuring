@@ -43,101 +43,94 @@
       </div>
       <!-- 列表 -->
       <div class="articleList">
-        <ArticleItem
-          v-for="item in articleListItems"
-          :key="item.id"
-          :itemData="item"
-        />
+        <ArticleItem v-for="item in articleListItems" :key="item.id" :itemData="item" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import ArticleItem from "./ArticleItem";
-import { getArticle } from "../../../utils/api";
+import ArticleItem from './ArticleItem'
+import { getArticle } from '../../../utils/api'
 export default {
-  name: "Article",
+  name: 'Article',
   components: {
-    ArticleItem,
+    ArticleItem
   },
   data() {
     return {
       count: 0,
       articleListItems: [],
       articleObject: {
-        url: "/Article",
+        url: '/Article',
         params: {
-          sort: "new",
+          sort: 'new',
           page: 1,
-          tab: "",
-        },
-      },
-    };
+          tab: ''
+        }
+      }
+    }
   },
   methods: {
     sort(e) {
       if (e.target.dataset.sort) {
-        let { sort } = e.target.dataset;
-        console.log(sort);
-        if (sort === "new") {
-          this.articleListItems = [];
-          this.articleObject.params.sort = "new";
-          this.getArticleData(this.articleObject);
-        } else if (sort === "hot") {
-          this.articleListItems = [];
-          this.articleObject.params.sort = "hot";
-          this.getArticleData(this.articleObject);
-        } else if (sort === "vote") {
-          this.articleListItems = [];
-          this.articleObject.params.sort = "vote";
-          this.getArticleData(this.articleObject);
+        let { sort } = e.target.dataset
+        console.log(sort)
+        if (sort === 'new') {
+          this.articleListItems = []
+          this.articleObject.params.sort = 'new'
+          this.getArticleData(this.articleObject)
+        } else if (sort === 'hot') {
+          this.articleListItems = []
+          this.articleObject.params.sort = 'hot'
+          this.getArticleData(this.articleObject)
+        } else if (sort === 'vote') {
+          this.articleListItems = []
+          this.articleObject.params.sort = 'vote'
+          this.getArticleData(this.articleObject)
         } else {
-          console.log("error");
+          console.log('error')
         }
       }
     },
-    async getArticleData({ url, params, method = "GET" }) {
-      let { articleListItems } = await getArticle({ url, params, method });
-      this.articleListItems.push(...articleListItems);
-      console.log(this.articleListItems.length);
+    async getArticleData({ url, params, method = 'GET' }) {
+      let { articleListItems } = await getArticle({ url, params, method })
+      this.articleListItems.push(...articleListItems)
+      console.log(this.articleListItems.length)
     },
     /* 节流 */
     thro(fn, time) {
-      var lasttime = 0;
+      var lasttime = 0
       return function() {
-        let starttime = Date.now();
+        let starttime = Date.now()
         if (starttime - lasttime < time) {
-          return;
+          return
         }
-        lasttime = starttime;
-        fn.call(this, arguments[0]);
-      };
-    },
+        lasttime = starttime
+        fn.call(this, arguments[0])
+      }
+    }
   },
   async mounted() {
     /* 初次加载 */
-    await this.getArticleData(this.articleObject);
+    await this.getArticleData(this.articleObject)
     /* 滚动到底部 */
     window.onscroll = () => {
       //变量scrollTop是滚动条滚动时，距离顶部的距离
-      var scrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
       // 变量 windowHeight 是可视区的高度
-      var windowHeight =
-        document.documentElement.clientHeight || document.body.clientHeight;
+      var windowHeight = document.documentElement.clientHeight || document.body.clientHeight
       // 变量 scrollHeight 是滚动条的总高度
-      var scrollHeight =
-        document.documentElement.scrollHeight || document.body.scrollHeight;
-      if (scrollTop + windowHeight >= scrollHeight) {
+      var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
+      if (scrollTop + windowHeight >= scrollHeight - 19) {
         /* console.log(this.articleObject.params.page); */
-        this.articleObject.params.page += 1;
+        this.articleObject.params.page += 1
         /* console.log(this.articleObject.params.page); */
-        this.thro(this.getArticleData(this.articleObject), 0);
+        this.thro(this.getArticleData(this.articleObject), 0)
       }
-    };
-  },
-};
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
