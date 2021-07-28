@@ -1,34 +1,34 @@
 <template>
   <div class="content-margin">
     <!-- 左侧菜单 -->
-    <div class="content-menu">
+    <div class="content-menu" @click="tab">
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="all">
         <span class>所有文章</span>
         <div class="traingle"></div>
       </div>
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="7hot">
         <span class>7日热门</span>
         <div class="traingle"></div>
       </div>
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="30hot">
         <span class>30日热门</span>
         <div class="traingle"></div>
       </div>
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="follow">
         <span class>我的关注</span>
         <div class="traingle"></div>
       </div>
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="fav">
         <span class>我的搜藏</span>
         <div class="traingle"></div>
       </div>
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="mine">
         <span class>我的文章</span>
         <div class="traingle"></div>
       </div>
@@ -76,31 +76,44 @@ export default {
     };
   },
   methods: {
+    /* 排序 */
     sort(e) {
       if (e.target.dataset.sort) {
         let { sort } = e.target.dataset;
-        console.log(sort);
-        if (sort === "new") {
-          this.articleListItems = [];
-          this.articleObject.params.sort = "new";
-          this.getArticleData(this.articleObject);
-        } else if (sort === "hot") {
-          this.articleListItems = [];
-          this.articleObject.params.sort = "hot";
-          this.getArticleData(this.articleObject);
-        } else if (sort === "vote") {
-          this.articleListItems = [];
-          this.articleObject.params.sort = "vote";
-          this.getArticleData(this.articleObject);
-        } else {
-          console.log("error");
-        }
+        let sortObj = {
+          new: "new",
+          hot: "hot",
+          vote: "vote",
+        };
+        this.articleListItems = [];
+        this.articleObject.params.sort = sortObj[sort];
+        this.getArticleData(this.articleObject);
       }
     },
+    /* 分类 */
+    tab(e) {
+      console.log(e.currentTarget);
+      if (e.target.dataset.tab) {
+        let { tab } = e.target.dataset;
+        console.log(tab);
+        let tabObj = {
+          all: "",
+          "7hot": "7hot",
+          "30hot": "30hot",
+          "follow": "follow",
+          "fav": "fav",
+          "mine": "7hot",
+        };
+        this.articleListItems = [];
+        this.articleObject.params.tab = tabObj[tab];
+        this.getArticleData(this.articleObject);
+      }
+    },
+    /* 分装请求 */
     async getArticleData({ url, params, method = "GET" }) {
       let { articleListItems } = await getArticle({ url, params, method });
       this.articleListItems.push(...articleListItems);
-      console.log(this.articleListItems.length);
+      // console.log(this.articleListItems.length);
     },
     /* 节流 */
     thro(fn, time) {
@@ -130,10 +143,8 @@ export default {
       var scrollHeight =
         document.documentElement.scrollHeight || document.body.scrollHeight;
       if (scrollTop + windowHeight >= scrollHeight) {
-        /* console.log(this.articleObject.params.page); */
         this.articleObject.params.page += 1;
-        /* console.log(this.articleObject.params.page); */
-        this.thro(this.getArticleData(this.articleObject), 0);
+        this.thro(this.getArticleData(this.articleObject), 10);
       }
     };
   },

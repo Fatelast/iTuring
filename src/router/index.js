@@ -10,7 +10,7 @@ const routes = [
     name: 'Home',
     component: Home,
     children:[
-      {
+      /* {
         path: '/home/book',
         name:'BookMainPage',
         component:()=>import('../views/BookMainPage/BooKMainPage'),
@@ -21,7 +21,7 @@ const routes = [
             component:()=>import('../views/BookInfo')
           }
         ]
-      },
+      }, */
       {
         path: '/home/article',
         name:'Article',

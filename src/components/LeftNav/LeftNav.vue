@@ -49,7 +49,7 @@
 export default {
   name: "LeftNav",
   mounted() {
-    console.log("mounted");
+    /* console.log("mounted"); */
   },
 };
 </script>
