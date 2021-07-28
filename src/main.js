@@ -17,7 +17,7 @@ Vue.use(VueLazyload, {
 	preLoad: 1.3,
 	error: "dist/error.png",
 	loading: require("./assets/loding2.gif"),
-	attempt: 1,
+	attempt: 3,
 	// the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
 	listenEvents: ["scroll"],
 });

@@ -11,11 +11,17 @@ const routes = [
     name: 'Home',
     component: Home,
     children:[
-      // {
-      //   path: '/home/book',
-      //   name:'BookMainPage',
-      //   component:()=>import('../views/BookMainPage/BooKMainPage'),
-      // },
+      {
+        path: '/home/book',
+        name:'BookMainPage',
+        component:()=>import('../views/BookMainPage/BooKMainPage'),
+      },
+      
+      {
+        path: '/home/article',
+        name: 'Article',
+        component: Article
+      },
       // {
       //   path:'/home/book/:id',
       //   name:'BookInfo',
@@ -27,23 +33,12 @@ const routes = [
         component:HomePage
       },
       {
-        path: '/home/article',
-        name:'Article',
-        component:Article
-      },
-      // {
-      //   path:'/login',
-      //   name:'Login',  
-      // }
+        path:'*',
+      redirect:'/home/homepage'
+      }
     ]
-  },
-  {
-    path:'*',
-    redirect:'/home/homepage'
   }
-  
- ]
-// >>>>>>> 7d7f465def1eedab6c4f0e91ab145a4e4bab3a46
+]
 
 const router = new VueRouter({
 	mode: "history",

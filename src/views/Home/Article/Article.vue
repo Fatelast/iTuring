@@ -63,12 +63,12 @@
 </template>
 
 <script>
-import ArticleItem from "./ArticleItem";
-import { getArticle } from "../../../utils/api";
+import ArticleItem from './ArticleItem'
+import { getArticle } from '../../../utils/api'
 export default {
-  name: "Article",
+  name: 'Article',
   components: {
-    ArticleItem,
+    ArticleItem
   },
   data() {
     return {
@@ -76,14 +76,14 @@ export default {
       count: 0,
       articleListItems: [],
       articleObject: {
-        url: "/Article",
+        url: '/Article',
         params: {
-          sort: "new",
+          sort: 'new',
           page: 1,
-          tab: "",
-        },
-      },
-    };
+          tab: ''
+        }
+      }
+    }
   },
   methods: {
     /* 排序 */
@@ -127,38 +127,39 @@ export default {
     },
     /* 节流 */
     thro(fn, time) {
-      var lasttime = 0;
+      var lasttime = 0
       return function() {
-        let starttime = Date.now();
+        let starttime = Date.now()
         if (starttime - lasttime < time) {
-          return;
+          return
         }
-        lasttime = starttime;
-        fn.call(this, arguments[0]);
-      };
-    },
+        lasttime = starttime
+        fn.call(this, arguments[0])
+      }
+    }
   },
   async mounted() {
     /* 初次加载 */
-    await this.getArticleData(this.articleObject);
+    await this.getArticleData(this.articleObject)
     /* 滚动到底部 */
     window.onscroll = () => {
       //变量scrollTop是滚动条滚动时，距离顶部的距离
-      var scrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
       // 变量 windowHeight 是可视区的高度
-      var windowHeight =
-        document.documentElement.clientHeight || document.body.clientHeight;
+      var windowHeight = document.documentElement.clientHeight || document.body.clientHeight
       // 变量 scrollHeight 是滚动条的总高度
       var scrollHeight =
         document.documentElement.scrollHeight || document.body.scrollHeight;
-      if (scrollTop + windowHeight >= scrollHeight) {
+      if (scrollTop + windowHeight >= scrollHeight-19) {
         this.articleObject.params.page += 1;
         this.thro(this.getArticleData(this.articleObject), 1000);
       }
-    };
+    }
   },
-};
+  beforeDestory(){
+    window.onscroll=null
+  }
+}
 </script>
 
 <style lang="less" scoped>
