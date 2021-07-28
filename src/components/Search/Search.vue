@@ -4,7 +4,9 @@
     <div class="search-input">
       <img src="./image/search-icon.7e146fd0.svg" />
       <input placeholder="请输入搜索关键词 " />
-      <img src="./image/search-close-icon.58504ba8.svg" />
+      <router-link to="/home/homepage">
+        <img src="./image/search-close-icon.58504ba8.svg" />
+      </router-link>
     </div>
     <!-- 搜索历史 -->
     <div class="search-history">
