@@ -24,7 +24,7 @@
         <router-link to="/"><img src="./logo.svg" class="logo"/></router-link>
       </li>
       <li>
-        <router-link to="/home" active-class="active"
+        <router-link to="/home/homepage" active-class="active"
           ><span class="iconfont icon-xingqiu"></span>
           <span class="title">推荐</span></router-link
         >
