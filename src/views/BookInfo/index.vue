@@ -1,5 +1,5 @@
 <template>
-  <div class="bookInfoContainer">
+  <div class="bookInfoContainer" v-loading.fullscreen.lock="loading">
     <!-- 详情页头部 -->
     <div class="book-infos-view">
       <!-- 封面及作者 -->
@@ -128,14 +128,13 @@
         </div>
       </div>
     </div>
-    <Content :bookInfoList="bookInfoList" :salesInfos="salesInfos" />
-    
+    <Content :bookInfoList="bookInfoList" :salesInfos="salesInfos" :specialNotes="specialNotes" />
   </div>
 </template>
 
 <script>
 import { getBookInfo } from "../../api/bookInfo";
-import Content from './Content'
+import Content from "./Content";
 export default {
   name: "BookInfo",
   data() {
@@ -148,32 +147,35 @@ export default {
         5: { kind: "样书", join: "样书袋" },
         8: { kind: "其他渠道" },
       },
-      // discussList: {}, //评论数据
       shopId: "",
+      specialNotes:"",
+      loading: true, //是否显示正在加载
     };
   },
   async mounted() {
     /* this.shopId = this.$route.query.id;
     console.log("@@@", this.shopId); */
+    // 请求书本详情
     const bookInfoList = await getBookInfo("2811");
-    
     this.bookInfoList = bookInfoList;
     this.salesInfos = bookInfoList.salesInfos;
-    
+    this.specialNotes=bookInfoList.briefIntro.specialNotes;
+    // 关闭loading状态
+    this.loading = false;
   },
   methods: {
     toShopCat() {
       this.$router.push({
         path: `/home/article/${this.shopId}`,
-        params:{
+        params: {
           id: this.shopId,
-        }
+        },
       });
     },
   },
-  components:{
-    Content
-  }
+  components: {
+    Content,
+  },
 };
 </script>
 
@@ -372,6 +374,4 @@ export default {
     }
   }
 }
-
-
 </style>

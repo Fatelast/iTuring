@@ -5,16 +5,20 @@
     <el-tab-pane label="图书介绍" class="tab">
       <div class="book-intro" v-if="bookInfoList.briefIntro">
         <!-- 特别说明 -->
-        <h4 class="title">特别说明</h4>
+
+        <!-- <h4 class="title">特别说明</h4>
         <div class="text">
           <p>再简单的代码，也有更好的实现方式</p>
           <p><br /></p>
         </div>
-        <ul>
+        <div>
+          {{ bookInfoList.briefIntro.specialNotes }}
+          <ul>
           <li><p>Java Champion凯·霍斯特曼作序</p></li>
           <li><p>1个示例，7次重构，18种实现，助你明辨优劣代码</p></li>
           <li><p>每章都配有小测验及习题答案，学以致用</p></li>
         </ul>
+        </div> -->
         <!-- 简介 -->
         <h4 class="title">简介</h4>
         <div class="text">
@@ -206,7 +210,6 @@
                 :src="
                   `https://file.ituring.com.cn/LargeCover/${discuss.userAvatarImageKey}`
                 "
-                alt=""
               />
               <div class="person">
                 <div class="name">{{ discuss.userNickName }}</div>
@@ -261,8 +264,11 @@ export default {
   async mounted() {
     const discussList = await getdiscuss("2811");
     this.discussList = discussList;
+    console.log(this.$refs.explain);  
+    // this.$refs.explain.innerHTML(this.specialNotes);
+
   },
-  props: ["bookInfoList", "salesInfos"],
+  props: ["bookInfoList", "salesInfos", "specialNotes"],
 };
 </script>
 
@@ -274,10 +280,20 @@ export default {
   padding: 50px 0;
 }
 
-/* 图书介绍 */
-/deep/.is-active {
-  font-weight: 600;
-  color: #152844 !important;
+.main-content {
+  .el-tabs__item {
+    color: #5f77a6;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 24px;
+  }
+  .is-active {
+    font-weight: 600;
+    color: #152844 !important;
+  }
+}
+.main-content .el-tabs__item:hover {
+  color: #152844;
 }
 
 .main-content .book-intro {
