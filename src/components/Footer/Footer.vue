@@ -22,23 +22,38 @@
             <h4>媒体平台</h4>
             <div class="link_container">
               <div class="linkItem">
-                <img src="../../static/images/friend-icon-normal-1.743b6fa7.svg" alt="" />
+                <img
+                  src="../../static/images/friend-icon-normal-1.743b6fa7.svg"
+                  alt=""
+                />
                 <div class="hover"></div>
               </div>
               <div class="linkItem">
-                <img src="../../static/images/friend-icon-normal-2.299fb44d.svg" alt="" />
+                <img
+                  src="../../static/images/friend-icon-normal-2.299fb44d.svg"
+                  alt=""
+                />
                 <div class="hover"></div>
               </div>
               <div class="linkItem">
-                <img src="../../static/images/friend-icon-normal-3.fc7e21e8.svg" alt="" />
+                <img
+                  src="../../static/images/friend-icon-normal-3.fc7e21e8.svg"
+                  alt=""
+                />
                 <div class="hover"></div>
               </div>
               <div class="linkItem">
-                <img src="../../static/images/friend-icon-normal-4.ffa55f7c.svg" alt="" />
+                <img
+                  src="../../static/images/friend-icon-normal-4.ffa55f7c.svg"
+                  alt=""
+                />
                 <div class="hover"></div>
               </div>
               <div class="linkItem">
-                <img src="../../static/images/friend-icon-normal-6.c7636e1e.svg" alt="" />
+                <img
+                  src="../../static/images/friend-icon-normal-6.c7636e1e.svg"
+                  alt=""
+                />
                 <div class="hover"></div>
               </div>
             </div>
@@ -67,7 +82,10 @@
           <div></div>
           <a href="JavaScript:;">联系我们</a>
         </div>
-        <p>京ICP备11039595号 京公网安备11010502011375 新出发京零字第东110150号 统一社会信用代码 91110101777086608F</p>
+        <p>
+          京ICP备11039595号 京公网安备11010502011375 新出发京零字第东110150号
+          统一社会信用代码 91110101777086608F
+        </p>
         <p>2005-2020 © 北京图灵文化发展有限公司 · All Rights Reserved</p>
       </div>
     </footer>
@@ -76,8 +94,8 @@
 
 <script>
 export default {
-  name: 'Footer'
-}
+  name: "Footer",
+};
 </script>
 
 <style lang="less" scoped>

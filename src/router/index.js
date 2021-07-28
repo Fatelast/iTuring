@@ -36,7 +36,7 @@ const routes = [
   },
   {
     path:'*',
-  redirect:'/home/homepage'
+    redirect:'/home/homepage'
   }
 ]
 
