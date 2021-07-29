@@ -151,7 +151,7 @@ export default {
       }
     }
   },
-  beforeDestory() {
+  beforeDestroy() {
     window.onscroll = null
   }
 }

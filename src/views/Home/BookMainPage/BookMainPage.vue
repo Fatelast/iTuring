@@ -252,7 +252,7 @@
           v-show="!loading"
         >
         </el-pagination>
-        <p v-if="!bookItems.length" class="no_result">没有搜索到结果</p>
+        <p v-if="!bookItems.length && !loading" class="no_result">没有搜索到结果</p>
       </div>
     </div>
   </div>
