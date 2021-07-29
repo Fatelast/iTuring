@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import HomePage from '../views/Home/home.vue'
 import Home from '../views/index.vue'
 import Article from '../views/Home/Article/Article.vue'
-import CartPage from '../views/product/CartPage'
 import Login from '../views/product/Login/index.vue'
 import Register from '../views/product/RegisterPage/index.vue'
 import Cart from '../views/product/CartPage/index.vue'
@@ -47,11 +46,6 @@ const routes = [
         }
       },
       /* 购物车 */
-      {
-        path: '/home/cartPage',
-        name: 'CartPage',
-        component: CartPage
-      },
       {
         path: '/home/cart',
         name: 'Cart',

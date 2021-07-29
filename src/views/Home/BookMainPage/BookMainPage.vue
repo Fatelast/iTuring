@@ -334,7 +334,7 @@ export default {
       }
       // 动态添加请求对象中的属性
       if (edition) dataObj.edition = edition
-      if (saleType) dataObj.saleType = saleType
+      if (saleType || saleType === 0) dataObj.saleType = saleType
       if (bookStatus) dataObj.bookStatus = bookStatus
       if (otherStatus == 1) {
         dataObj.isFree = true
