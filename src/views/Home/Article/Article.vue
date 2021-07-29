@@ -1,34 +1,34 @@
 <template>
   <div class="content-margin">
     <!-- 左侧菜单 -->
-    <div class="content-menu">
+    <div class="content-menu" @click="tab">
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="all">
         <span class>所有文章</span>
         <div class="traingle"></div>
       </div>
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="7hot">
         <span class>7日热门</span>
         <div class="traingle"></div>
       </div>
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="30hot">
         <span class>30日热门</span>
         <div class="traingle"></div>
       </div>
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="follow">
         <span class>我的关注</span>
         <div class="traingle"></div>
       </div>
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="fav">
         <span class>我的搜藏</span>
         <div class="traingle"></div>
       </div>
       <!-- 单个项目 -->
-      <div class="menu-item">
+      <div class="menu-item" data-tab="mine">
         <span class>我的文章</span>
         <div class="traingle"></div>
       </div>
@@ -40,104 +40,126 @@
         <span class="tab-item" data-sort="new">最新</span>
         <span class="tab-item" data-sort="hot">最热</span>
         <span class="tab-item" data-sort="vote">推荐</span>
+        <span class="tab-underline"></span>
       </div>
       <!-- 列表 -->
-      <div class="articleList">
+      <div
+        class="articleList"
+        v-if="articleListItems.length"
+        v-loading.lock="loading"
+        element-loading-text="拼命加载中"
+      >
         <ArticleItem
           v-for="item in articleListItems"
           :key="item.id"
           :itemData="item"
         />
       </div>
+      <div v-else>
+        <h3>没有更多了</h3>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import ArticleItem from "./ArticleItem";
-import { getArticle } from "../../../utils/api";
+import ArticleItem from './ArticleItem'
+import { getArticle } from '../../../utils/api'
 export default {
-  name: "Article",
+  name: 'Article',
   components: {
-    ArticleItem,
+    ArticleItem
   },
   data() {
     return {
+      loading: true,
       count: 0,
       articleListItems: [],
       articleObject: {
-        url: "/Article",
+        url: '/Article',
         params: {
-          sort: "new",
+          sort: 'new',
           page: 1,
-          tab: "",
-        },
-      },
-    };
+          tab: ''
+        }
+      }
+    }
   },
   methods: {
+    /* 排序 */
     sort(e) {
       if (e.target.dataset.sort) {
         let { sort } = e.target.dataset;
-        console.log(sort);
-        if (sort === "new") {
-          this.articleListItems = [];
-          this.articleObject.params.sort = "new";
-          this.getArticleData(this.articleObject);
-        } else if (sort === "hot") {
-          this.articleListItems = [];
-          this.articleObject.params.sort = "hot";
-          this.getArticleData(this.articleObject);
-        } else if (sort === "vote") {
-          this.articleListItems = [];
-          this.articleObject.params.sort = "vote";
-          this.getArticleData(this.articleObject);
-        } else {
-          console.log("error");
-        }
+
+        let sortObj = {
+          new: "new",
+          hot: "hot",
+          vote: "vote",
+        };
+        this.articleListItems = [];
+        this.articleObject.params.sort = sortObj[sort];
+        this.getArticleData(this.articleObject);
       }
     },
+    /* 分类 */
+    tab(e) {
+      if (e.target.dataset.tab) {
+        let { tab } = e.target.dataset;
+        let tabObj = {
+          all: "",
+          "7hot": "7hot",
+          "30hot": "30hot",
+          follow: "follow",
+          fav: "fav",
+          mine: "mine",
+        };
+        this.articleListItems = [];
+        this.articleObject.params.tab = tabObj[tab];
+        this.getArticleData(this.articleObject);
+      }
+    },
+    /* 分装请求 */
     async getArticleData({ url, params, method = "GET" }) {
+      this.loading = true;
       let { articleListItems } = await getArticle({ url, params, method });
+      this.loading = false;
       this.articleListItems.push(...articleListItems);
-      console.log(this.articleListItems.length);
     },
     /* 节流 */
     thro(fn, time) {
-      var lasttime = 0;
+      var lasttime = 0
       return function() {
-        let starttime = Date.now();
+        let starttime = Date.now()
         if (starttime - lasttime < time) {
-          return;
+          return
         }
-        lasttime = starttime;
-        fn.call(this, arguments[0]);
-      };
-    },
+        lasttime = starttime
+        fn.call(this, arguments[0])
+      }
+    }
   },
   async mounted() {
     /* 初次加载 */
-    await this.getArticleData(this.articleObject);
+    await this.getArticleData(this.articleObject)
     /* 滚动到底部 */
     window.onscroll = () => {
       //变量scrollTop是滚动条滚动时，距离顶部的距离
-      var scrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
       // 变量 windowHeight 是可视区的高度
-      var windowHeight =
-        document.documentElement.clientHeight || document.body.clientHeight;
+      var windowHeight = document.documentElement.clientHeight || document.body.clientHeight
       // 变量 scrollHeight 是滚动条的总高度
       var scrollHeight =
         document.documentElement.scrollHeight || document.body.scrollHeight;
-      if (scrollTop + windowHeight >= scrollHeight) {
-        /* console.log(this.articleObject.params.page); */
+      if (scrollTop + windowHeight >= scrollHeight-19) {
         this.articleObject.params.page += 1;
-        /* console.log(this.articleObject.params.page); */
-        this.thro(this.getArticleData(this.articleObject), 0);
+        this.thro(this.getArticleData(this.articleObject), 1000);
       }
-    };
+    }
   },
-};
+  beforeDestory(){
+    window.onscroll=null
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -192,6 +214,12 @@ export default {
   line-height: 42px;
   color: #6c6c6c;
   display: flex;
+}
+/* 滑动效果 */
+.content-nav .tab-underline {
+  width: 12px;
+  height: 4px;
+  background: #4684e2;
 }
 .tab-item {
   width: 44px;

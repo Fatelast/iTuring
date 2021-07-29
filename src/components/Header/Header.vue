@@ -6,7 +6,7 @@
     </div>
     <div class="icon-button">
       <button class="push icon-button">投稿</button>
-      <button class="login icon-button">登录图灵</button>
+      <router-link class="login icon-button" to="/login">登录图灵</router-link>
       <span class="iconfont icon-ling icon-button"></span>
       <span class="iconfont icon-gouwu icon-button"></span>
     </div>
