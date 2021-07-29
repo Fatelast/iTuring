@@ -1,6 +1,6 @@
 <template>
   <div class="articleItem">
-    <h3 class="title" @click="toDetail(itemdData.id)">
+    <h3 class="title" @click="toDetail">
       {{ itemData.subject }}
     </h3>
     <div class="info">
@@ -24,11 +24,12 @@ export default {
     itemData: Object,
   },
   methods: {
-    toDetail(articleId) {
+    toDetail() {
+      let { id } = this.itemData;
       this.$router.history.push({
         name: "ArticleDetail",
         params: {
-          articleId,
+          id,
         },
       });
     },

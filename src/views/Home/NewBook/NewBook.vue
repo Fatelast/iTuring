@@ -76,7 +76,13 @@ export default {
 
   methods: {
     handleBookClick(id) {
-      console.log("id", id);
+      // console.log("id", id);
+      this.$router.push({
+        name: "BookInfo",
+        params: {
+          id,
+        },
+      });
     },
   },
 };

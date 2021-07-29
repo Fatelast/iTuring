@@ -3,7 +3,11 @@
     <LeftHeader />
     <div class="showPage">
       <router-view />
+<!-- <<<<<<< HEAD -->
       <!-- <Footer /> -->
+<!-- ======= -->
+      <!-- <Footer v-if="!$route.meta.hideFooter"/> -->
+<!-- >>>>>>> 8dbeca6f1a26a3b38790bccca8ec7dd6d7ee59aa -->
     </div>
   </div>
 </template>

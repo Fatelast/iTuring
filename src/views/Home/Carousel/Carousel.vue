@@ -7,9 +7,9 @@
         <!-- 轮播图 -->
         <div
           class="swiper-slide"
-          @click="handleBookClick(bigImgItem.id)"
           v-for="bigImgItem in carouselImg"
           :key="bigImgItem.id"
+          @click="handleBookClick(bigImgItem.id)"
         >
           <img
             class="swiper-Img"
@@ -29,7 +29,7 @@
         <div
           class="swiper-slide"
           @click="handleBookClick(preSaleItem.id)"
-          v-for="preSaleItem in preSaleImg"
+          v-for="preSaleItem in preSaleList"
           :key="preSaleItem.id"
         >
           <div class="preSale">
@@ -69,17 +69,16 @@ export default {
   name: "Carousel",
   props: {
     carouselImg: Array,
-    preSaleImg: Array,
+    preSaleList: Array,
   },
   methods: {
-    handleBookClick(bookId) {
-      // this.$router.push({
-      //   name: "BookDetail",
-      //   params: {
-      //     bookId,
-      //   },
-      // });
-      console.log(bookId);
+    handleBookClick(id) {
+      this.$router.push({
+        name: "BookDetail",
+        params: {
+          id,
+        },
+      });
     },
   },
 
@@ -97,18 +96,18 @@ export default {
         });
       });
     },
-    preSaleImg() {
+    preSaleList() {
       this.$nextTick(() => {
         new Swiper(".swiper-container", {
           pagination: {
             el: ".swiper-pagination",
-            clickable: true,
           },
           loop: true, // 开启无缝轮播
-          autoplay: true, //自动轮播
+          autoplay: true,
         });
       });
     },
+    immediate: true,
   },
 };
 </script>

@@ -6,7 +6,8 @@
       <div class="swiper-one">
         <Carousel
           :carouselImg="carousel"
-          :preSaleImg="preSaleList"
+          :preSaleList="preSaleList"
+          @click="handleBookClick"
         />
       </div>
     </div>
@@ -57,6 +58,7 @@
             class="book-item"
             v-for="weeklySpecialItem in weeklyList"
             :key="weeklySpecialItem.id"
+            @click="handleBookClick(weeklySpecialItem.id)"
           >
             <div class="img-view">
               <img v-lazy="`https://file.ituring.com.cn/Original/${weeklySpecialItem.coverKey}`">
@@ -84,6 +86,7 @@
             class="book-item"
             v-for="BooksItem in popList"
             :key="BooksItem.id"
+            @click="handleBookClick(BooksItem.id)"
           >
             <div class="img-view">
               <img
@@ -104,7 +107,8 @@
         >查看全部热门书籍</a>
       </div>
     </div>
-    <Footer></Footer>
+    <!-- <Footer></Footer> -->
+    <Footer v-if="!$route.meta.hideFooter" />
   </div>
 </template>
 
@@ -130,7 +134,13 @@ export default {
 
   methods: {
     handleBookClick(id) {
-      console.log("123", id);
+      // console.log("id", id);
+      this.$router.push({
+        name: "BookInfo",
+        params: {
+          id,
+        },
+      });
     },
 
     handleChange() {
@@ -184,7 +194,6 @@ export default {
   width: 1080px;
   margin: 0 auto;
   padding-top: 2px;
-
 }
 
 /* 轮播图 */

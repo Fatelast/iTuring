@@ -8,6 +8,8 @@ import Login from '../views/product/Login/index.vue'
 import Register from '../views/product/RegisterPage/index.vue'
 import Cart from '../views/product/CartPage/index.vue'
 import Search from '../components/Search/Search.vue'
+import BookInfo from '../views/BookInfo'
+import ArticleDetail from "../views/home/Article/ArticleDetail.vue";
 Vue.use(VueRouter)
 
 const routes = [
@@ -22,6 +24,11 @@ const routes = [
         component:HomePage
       },
       {
+        path: '/home/book/:id',
+        name: 'BookInfo',
+        component: BookInfo
+      },
+      {
         path: '/home/book',
         name:'BookMainPage',
         component:()=>import('../views/home/BookMainPage/BookMainPage'),
@@ -32,6 +39,15 @@ const routes = [
         component: Article
       },
       {
+        path: '/home/article/:id',
+        name: 'ArticleDetail',
+        component: ArticleDetail,
+        meta:{
+          hideFooter:true
+        }
+      },
+      /* 购物车 */
+      {
         path:'/home/cartPage',
         name:'CartPage',
         component:CartPage
@@ -41,11 +57,7 @@ const routes = [
         name:'Cart',
         component:Cart
       },
-      // {
-      //   path:'/home/book/:id',
-      //   name:'BookInfo',
-      //   component:()=>import('../views/BookInfo')
-      // },
+      
     ]
   },
   {
