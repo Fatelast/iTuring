@@ -1,13 +1,15 @@
 <template>
   <div class="recommedPage-swiper">
     <!-- 左边轮播图 -->
-    <div class="swiper-container recommedPage-swiper-left">
+    <div
+      ref="leftSwiper"
+      class="swiper-container recommedPage-swiper-left"
+    >
       <!-- 轮播图容器 -->
       <div class="swiper-wrapper">
         <!-- 轮播图 -->
         <div
           class="swiper-slide"
-          @click="handleBookClick(bigImgItem.id)"
           v-for="bigImgItem in carouselImg"
           :key="bigImgItem.id"
         >
@@ -22,14 +24,16 @@
     </div>
 
     <!-- 右边轮播 -->
-    <div class="swiper-container recommedPage-swiper-right">
+    <div
+      ref="rightSwiper"
+      class="swiper-container recommedPage-swiper-right"
+    >
       <!-- 轮播图容器 -->
       <div class="swiper-wrapper">
         <!-- 轮播图 -->
         <div
           class="swiper-slide"
-          @click="handleBookClick(preSaleItem.id)"
-          v-for="preSaleItem in preSaleImg"
+          v-for="preSaleItem in preSaleList"
           :key="preSaleItem.id"
         >
           <div class="preSale">
@@ -69,25 +73,15 @@ export default {
   name: "Carousel",
   props: {
     carouselImg: Array,
-    preSaleImg: Array,
+    preSaleList: Array,
   },
-  methods: {
-    handleBookClick(bookId) {
-      // this.$router.push({
-      //   name: "BookDetail",
-      //   params: {
-      //     bookId,
-      //   },
-      // });
-      console.log(bookId);
-    },
-  },
+  methods: {},
 
   mounted() {},
   watch: {
     carouselImg() {
       this.$nextTick(() => {
-        new Swiper(".swiper-container", {
+        new Swiper(this.$refs.leftSwiper, {
           pagination: {
             el: ".swiper-pagination",
             clickable: true,
@@ -97,25 +91,25 @@ export default {
         });
       });
     },
-    preSaleImg() {
+    preSaleList() {
       this.$nextTick(() => {
-        new Swiper(".swiper-container", {
+        new Swiper(this.$refs.rightSwiper, {
           pagination: {
             el: ".swiper-pagination",
-            clickable: true,
           },
           loop: true, // 开启无缝轮播
-          autoplay: true, //自动轮播
+          autoplay: true,
         });
       });
     },
+    immediate: true,
   },
 };
 </script>
 
 <style scoped lang="less">
 .recommedPage-swiper {
-  width: 1080px;
+  // width: 1080px;
   height: 309px;
   // margin-top: 70px;
   display: flex;
@@ -125,6 +119,7 @@ export default {
     // border: 1px solid red;
     width: 740px;
     height: 100%;
+    margin-right: 20px;
     cursor: pointer;
     .swiper-Img {
       width: 740px;
@@ -137,7 +132,7 @@ export default {
     position: relative;
     width: 320px;
     height: 100%;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: #f6f9fb;
     cursor: pointer;
     .preSale {
@@ -149,7 +144,7 @@ export default {
       img {
         width: 127.65px;
         height: 168px;
-        border-radius: 10px;
+        border-radius: 8px;
       }
       b {
         display: block;

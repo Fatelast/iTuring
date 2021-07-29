@@ -8,7 +8,7 @@ import Register from '../views/product/RegisterPage/index.vue'
 import Cart from '../views/product/CartPage/index.vue'
 import Search from '../components/Search/Search.vue'
 import BookInfo from '../views/BookInfo'
-import ArticleDetail from "../views/Home/Article/ArticleDetail.vue";
+import ArticleDetail from "../views/home/Article/ArticleDetail.vue";
 Vue.use(VueRouter)
 
 const routes = [
@@ -30,7 +30,7 @@ const routes = [
       {
         path: '/home/book',
         name:'BookMainPage',
-        component:()=>import('../views/Home/BookMainPage/BookMainPage'),
+        component:()=>import('../views/home/BookMainPage/BookMainPage'),
       },
       {
         path: '/home/article',

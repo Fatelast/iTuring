@@ -175,6 +175,15 @@ export default {
         },
       });
     },
+    handleBookClick(id) {
+      // console.log("id", id);
+      this.$route.push({
+        name: "BookInfo",
+        params: {
+          id,
+        },
+      });
+    },
   },
   components: {
     Content,

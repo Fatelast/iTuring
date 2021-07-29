@@ -6,50 +6,40 @@
       <div class="swiper-one">
         <Carousel
           :carouselImg="carousel"
-          :preSaleImg="preSaleList"
+          :preSaleList="preSaleList"
+          @click="handleBookClick"
         />
       </div>
     </div>
 
     <!-- 内容区 -->
     <div class="book-list hidden-sm">
+
       <!-- 新书上市 -->
       <div class="new-view">
         <!-- 标题 -->
         <div class="title">
           <span class="title-one">新书上市</span>
-          <button class="right-btns">
-            >
+          <button
+            class="right-btns"
+            v-if="change"
+            @click="handleChange"
+          >
+            &gt;
+          </button>
+          <button
+            class="right-btns"
+            v-else
+            @click="handleChange"
+          >
+            &lt;
           </button>
         </div>
-        <!-- 新书上市 内容区大盒子 -->
-        <div class="new-books">
-          <img
-            class="new-img"
-            src="../../assets/tuijian/tulingxinshu.png"
-          >
-          <!-- 内容区中盒子 -->
-          <div class="new-items">
-            <!-- 小盒子 -->
-            <div
-              class="book-item"
-              v-for="newBookItem in newBookComtent"
-              :key="newBookItem.id"
-            >
-              <div class="img-view">
-                <img
-                  v-lazy="`https://file.ituring.com.cn/Original/${newBookItem.coverKey}`"
-                  :alt="newBookItem.name"
-                >
-              </div>
-              <div class="info-view">
-                <h3 class="book-name">{{newBookItem.name}}</h3>
-                <p class="authors">{{newBookItem.authorNameString}}（作者）</p>
-                <p class="translators">{{newBookItem.translatorNameString}}（译者）</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <NewBook
+          :change="change"
+          :newBookComtent="newBookComtent"
+          :newBookSwitch="newBookSwitch"
+        />
       </div>
 
       <!-- 每周特价 -->
@@ -68,6 +58,7 @@
             class="book-item"
             v-for="weeklySpecialItem in weeklyList"
             :key="weeklySpecialItem.id"
+            @click="handleBookClick(weeklySpecialItem.id)"
           >
             <div class="img-view">
               <img v-lazy="`https://file.ituring.com.cn/Original/${weeklySpecialItem.coverKey}`">
@@ -92,9 +83,10 @@
 
         <div class="hot-books">
           <div
-            class="book-item"
+            class="book-item-remen"
             v-for="BooksItem in popList"
             :key="BooksItem.id"
+            @click="handleBookClick(BooksItem.id)"
           >
             <div class="img-view">
               <img
@@ -108,32 +100,56 @@
               <p class="translators">{{BooksItem.translatorNameString}}（译者）</p>
             </div>
           </div>
-
         </div>
-
-        <a
+        <!-- <a
           class="more-hot-books"
           href=""
-        >查看全部热门书籍</a>
+        >查看全部热门书籍</a> -->
+        <router-link
+          class="more-hot-books"
+          :to="{name:'BookMainPage',query:{}}"
+        >查看全部热门书籍</router-link>
       </div>
     </div>
+    <!-- <Footer></Footer> -->
+    <Footer v-if="!$route.meta.hideFooter" />
   </div>
 </template>
 
 <script>
+import NewBook from "@/views/home/NewBook/NewBook";
 import Carousel from "./Carousel/Carousel";
 import api from "../../API/home";
+import Footer from "../../components/Footer/Footer";
 
 export default {
   name: "home",
   data() {
     return {
+      change: true,
       carousel: [], //大轮播图
       preSaleList: [], //小轮播图
       popList: [], //热门图书
       weeklyList: [], //每周特价
       newBookComtent: [], //新书上市
+      newBookSwitch: [], //新书上市切换
     };
+  },
+
+  methods: {
+    handleBookClick(id) {
+      // console.log("id", id);
+      this.$router.push({
+        name: "BookInfo",
+        params: {
+          id,
+        },
+      });
+    },
+
+    handleChange() {
+      this.change = !this.change;
+    },
   },
 
   async mounted() {
@@ -147,6 +163,9 @@ export default {
     const newBookComtent = (await api.reqGetNewBookComtent()).bookItems;
     // console.log('newBookComtent', newBookComtent)
     this.newBookComtent = Object.freeze(newBookComtent);
+
+    const getNewBookSwitch = (await api.reqGetNewBookSwitch()).bookItems;
+    this.newBookSwitch = Object.freeze(getNewBookSwitch);
 
     // 请求小轮播图、每周特价、热门图书数据
     const getRecommendPageText = (await api.reqGetRecommendPageText())
@@ -164,7 +183,8 @@ export default {
 
   components: {
     Carousel,
-    // Carousel2,
+    NewBook,
+    Footer,
   },
 };
 </script>
@@ -177,24 +197,15 @@ export default {
 .content-view {
   width: 1080px;
   margin: 0 auto;
+  padding-top: 2px;
 }
 
 /* 轮播图 */
 .banner-view {
   display: flex;
-  width: 1080px;
+  width: 100%;
   height: 309px;
   margin: 16px 0 3px 0;
-}
-.swiper-one {
-  width: 740px;
-  height: 309px;
-}
-/* 第二个轮播 */
-.banner-two {
-  width: 320px;
-  height: 309px;
-  background: #f8fafb;
 }
 
 /* 内容展示 */
@@ -204,7 +215,7 @@ export default {
 .new-view {
   display: block;
   width: 100%;
-  height: 586px;
+  /* height: 586px; */
   background: #fff;
   margin: 24px 0;
 }
@@ -233,43 +244,43 @@ export default {
   border: 0;
   border-radius: 50%;
   cursor: pointer;
-  margin-right: 20px;
 }
-.new-books {
-  display: flex;
-  flex-wrap: nowrap;
-  box-sizing: inherit;
-  width: 100%;
-  height: 560px;
-  /* border: 1px solid red; */
-}
-.new-img {
-  width: 255px;
-  height: 544px;
-  margin: 16px 20px 0 0;
-}
-.new-items {
-  display: flex;
-  /* justify-content: space-between; */
-  flex: 1;
-  flex-wrap: wrap;
-  height: 560px;
-  /* border: 1px solid green; */
-}
+
+/* 新书上市 */
+
 .book-item {
   position: relative;
-  flex: 1;
-  width: 255px;
-  height: 264px;
-  background: greenyellow;
+  /* flex: 1; */
+  /* width: 255px; */
+  /* height: 264px; */
   margin-top: 16px;
-  min-width: 248px;
-  max-width: 250px;
+  min-width: 255px;
+  max-width: 255px;
   overflow: hidden;
   border-radius: 5px;
   cursor: pointer;
   box-sizing: inherit;
   margin-right: 20px;
+}
+.book-item:nth-of-type(3n) {
+  margin-right: 0;
+}
+.book-item-remen {
+  position: relative;
+  flex: 1;
+  width: 255px;
+  height: 264px;
+  margin-top: 16px;
+  min-width: 255px;
+  max-width: 255px;
+  overflow: hidden;
+  border-radius: 5px;
+  cursor: pointer;
+  box-sizing: inherit;
+  margin-right: 20px;
+}
+.book-item-remen:nth-of-type(4n) {
+  margin-right: 0;
 }
 .img-view {
   width: 255px;
@@ -299,6 +310,7 @@ export default {
   line-height: 20px;
   overflow: hidden;
   margin: 12px 0 8px;
+  color: #1c355a;
 }
 .authors {
   font-size: 12px;
@@ -307,6 +319,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #6f6f6f;
 }
 .translators {
   font-size: 12px;
@@ -315,6 +328,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #6f6f6f;
 }
 
 .special-view {
@@ -336,7 +350,7 @@ export default {
 /* 第三栏 */
 .hot-view {
   width: 100%;
-  height: 352px;
+  /* height: 352px; */
   margin: 24px 0;
 }
 .hot-books {

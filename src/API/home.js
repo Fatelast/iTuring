@@ -23,6 +23,13 @@ export default {
 			url: "/book/RecentlyPublishBook",
 		});
 	},
+	//获取新书上市切换数据
+	reqGetNewBookSwitch() {
+		return request({
+			method: "GET",
+			url: "/book/RecentlyPublishBook?page=2",
+		});
+	},
 
 	// 获取请求热门图书、每周特价数据
 	reqGetRecommendPageText() {
