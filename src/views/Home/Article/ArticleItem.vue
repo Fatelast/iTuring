@@ -1,6 +1,8 @@
 <template>
   <div class="articleItem">
-    <h3 class="title">{{ itemData.subject }}</h3>
+    <h3 class="title" @click="toDetail">
+      {{ itemData.subject }}
+    </h3>
     <div class="info">
       <div class="left-info">
         <img class="left-info-avatar" src="../../../assets/logo.png" alt="" />
@@ -20,6 +22,17 @@ export default {
   name: "ArticleItem",
   props: {
     itemData: Object,
+  },
+  methods: {
+    toDetail() {
+      let { id } = this.itemData;
+      this.$router.history.push({
+        name: "ArticleDetail",
+        params: {
+          id,
+        },
+      });
+    },
   },
 };
 </script>

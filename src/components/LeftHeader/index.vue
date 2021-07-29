@@ -24,14 +24,14 @@
     <!-- 头部导航栏结构 -->
     <div class="header">
       <div class="container">
-        <div class="search">
+        <div class="search" @click="toSearch">
           <img src="../../static/images/searchIcon.571b59cb.svg" alt="" />
           <input class="input" placeholder="输入关键词" />
         </div>
         <div class="header-right">
           <button class="push icon-button">投稿</button>
-          <button class="login icon-button">登录图灵</button>
-          <span class="iconfont icon-gouwu icon-button"></span>
+          <button class="login icon-button" @click="toLogin">登录图灵</button>
+          <span class="iconfont icon-gouwu icon-button" @click="toCart"></span>
           <span class="iconfont icon-ling icon-button"></span>
         </div>
       </div>
@@ -50,6 +50,21 @@ export default {
   },
 
   methods: {
+    toSearch() {
+      this.$router.history.push({
+        name: 'Search'
+      })
+    },
+    toCart() {
+      this.$router.history.push({
+        name: 'Cart'
+      })
+    },
+    toLogin() {
+      this.$router.history.push({
+        name: 'Login'
+      })
+    },
     changePage(e) {
       const { select } = e.target.dataset
       if (!select) return
@@ -89,6 +104,7 @@ export default {
       }
       span.title {
         font-size: 14px;
+        padding: 0;
         margin-left: 16px;
       }
       span.iconfont {

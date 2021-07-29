@@ -7,7 +7,9 @@
         <dl class="bookNav">
           <dt class="bookCategory">图书分类</dt>
           <!-- 分类列表 -->
-          <dd :class="{ totalBooks: true, select: showTotal }" @click="getTotalBooks">全部</dd>
+          <dd :class="{ totalBooks: true, select: showTotal }" @click="getTotalBooks">
+            全部
+          </dd>
           <!-- 这里category1.id为数字类型，不能全等 -->
           <dd
             :class="{ category1: true, select: category1Id == category1.id }"
@@ -29,7 +31,9 @@
                     v-for="category3 in category2.children"
                     :key="category3.id"
                   >
-                    <p :data-id="category3.id" data-categorylv="3">{{ category3.name }}</p>
+                    <p :data-id="category3.id" data-categorylv="3">
+                      {{ category3.name }}
+                    </p>
                   </li>
                 </ul>
               </li>
@@ -147,13 +151,18 @@
       <div class="book_container">
         <!-- 头部搜索栏 -->
         <div class="search_container">
-          <img class="searchIcon" src="../../static/images/searchIcon.571b59cb.svg" alt="搜索" />
+          <img class="searchIcon" src="../../../static/images/searchIcon.571b59cb.svg" alt="搜索" />
           <input class="searchInput" placeholder="搜索书名、ISBN" v-model="name" />
-          <img class="clearIcon" @click="cancleSearch" src="../../static/images/clear-search.ede8c7ca.svg" alt="清空" />
+          <img
+            class="clearIcon"
+            @click="cancleSearch"
+            src="../../../static/images/clear-search.ede8c7ca.svg"
+            alt="清空"
+          />
           <button class="searchBtn" @click="searchBook">搜索</button>
           <span class="allBook">共有{{ total }}本图书</span>
           <div class="shareBook">
-            <img class="shareIcon" src="../../static/images/share-link-icon.4e687db0.svg" alt="分享链接" />
+            <img class="shareIcon" src="../../../static/images/share-link-icon.4e687db0.svg" alt="分享链接" />
             <div class="buildBookLink">生成当前书单链接</div>
           </div>
         </div>
@@ -215,7 +224,9 @@
             <div class="bookImg_container">
               <img
                 class="bookImg"
-                v-lazy="{ src: 'https://file.ituring.com.cn/LargeCover/' + bookItem.coverKey }"
+                v-lazy="{
+                  src: 'https://file.ituring.com.cn/LargeCover/' + bookItem.coverKey
+                }"
                 :alt="bookItem.name"
               />
             </div>
@@ -250,7 +261,7 @@
 </template>
 
 <script>
-import { reqGetAllCategory, reqGetAdvancedBook, reqGetHotTag } from '../../api/bookMainPage'
+import { reqGetAllCategory, reqGetAdvancedBook, reqGetHotTag } from '../../../API/bookMainPage'
 export default {
   name: 'BookMainPage',
   data() {
