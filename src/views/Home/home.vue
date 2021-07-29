@@ -14,24 +14,15 @@
 
     <!-- 内容区 -->
     <div class="book-list hidden-sm">
-
       <!-- 新书上市 -->
       <div class="new-view">
         <!-- 标题 -->
         <div class="title">
           <span class="title-one">新书上市</span>
-          <button
-            class="right-btns"
-            v-if="change"
-            @click="handleChange"
-          >
+          <button class="right-btns" v-if="change" @click="handleChange">
             &gt;
           </button>
-          <button
-            class="right-btns"
-            v-else
-            @click="handleChange"
-          >
+          <button class="right-btns" v-else @click="handleChange">
             &lt;
           </button>
         </div>
@@ -50,10 +41,7 @@
         </div>
 
         <div class="special-books">
-          <img
-            class="special-img"
-            src="../../assets/tuijian/tejia.png"
-          >
+          <img class="special-img" src="../../assets/tuijian/tejia.png" />
           <div
             class="book-item"
             v-for="weeklySpecialItem in weeklyList"
@@ -61,21 +49,27 @@
             @click="handleBookClick(weeklySpecialItem.id)"
           >
             <div class="img-view">
-              <img v-lazy="`https://file.ituring.com.cn/Original/${weeklySpecialItem.coverKey}`">
+              <img
+                v-lazy="
+                  `https://file.ituring.com.cn/Original/${weeklySpecialItem.coverKey}`
+                "
+              />
             </div>
             <div class="info-view">
-              <h3 class="book-name">{{weeklySpecialItem.name}}</h3>
-              <p class="authors">{{weeklySpecialItem.authorNameString}}（作者）</p>
-              <p class="translators">{{weeklySpecialItem.translatorNameString}}（译者）</p>
+              <h3 class="book-name">{{ weeklySpecialItem.name }}</h3>
+              <p class="authors">
+                {{ weeklySpecialItem.authorNameString }}（作者）
+              </p>
+              <p class="translators">
+                {{ weeklySpecialItem.translatorNameString }}（译者）
+              </p>
             </div>
           </div>
-
         </div>
       </div>
 
       <!-- 热门图书 -->
       <div class="hot-view">
-
         <!-- 标题 -->
         <div class="title">
           <span class="title-one">热门图书</span>
@@ -90,14 +84,18 @@
           >
             <div class="img-view">
               <img
-                v-lazy="`https://file.ituring.com.cn/Original/${BooksItem.coverKey}`"
+                v-lazy="
+                  `https://file.ituring.com.cn/Original/${BooksItem.coverKey}`
+                "
                 :alt="BooksItem.name"
-              >
+              />
             </div>
             <div class="info-view">
-              <h3 class="book-name">{{BooksItem.name}}</h3>
-              <p class="authors">{{BooksItem.authorNameString}}（作者）</p>
-              <p class="translators">{{BooksItem.translatorNameString}}（译者）</p>
+              <h3 class="book-name">{{ BooksItem.name }}</h3>
+              <p class="authors">{{ BooksItem.authorNameString }}（作者）</p>
+              <p class="translators">
+                {{ BooksItem.translatorNameString }}（译者）
+              </p>
             </div>
           </div>
         </div>
@@ -107,8 +105,9 @@
         >查看全部热门书籍</a> -->
         <router-link
           class="more-hot-books"
-          :to="{name:'BookMainPage',query:{}}"
-        >查看全部热门书籍</router-link>
+          :to="{ name: 'BookMainPage', query: {} }"
+          >查看全部热门书籍</router-link
+        >
       </div>
     </div>
     <!-- <Footer></Footer> -->
@@ -117,7 +116,7 @@
 </template>
 
 <script>
-import NewBook from "@/views/home/NewBook/NewBook";
+import NewBook from "@/views/Home/NewBook/NewBook";
 import Carousel from "./Carousel/Carousel";
 import api from "../../API/home";
 import Footer from "../../components/Footer/Footer";

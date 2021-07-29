@@ -268,7 +268,6 @@
           :current-page="page"
           :page-size="15"
           layout="prev, pager, next"
-          pager-count="4"
           :total="total"
         >
         </el-pagination>

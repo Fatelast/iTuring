@@ -60,7 +60,7 @@ export default {
     },
     toCart() {
       this.$router.history.push({
-        name: "CartPage",
+        name: "Cart",
       });
     },
     toLogin() {
