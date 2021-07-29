@@ -4,9 +4,9 @@
     <div class="Container">
       <!-- 左侧侧边栏部分 -->
       <aside class="nav_container">
+        <!-- 分类列表 -->
         <dl class="bookNav">
           <dt class="bookCategory">图书分类</dt>
-          <!-- 分类列表 -->
           <dd :class="{ totalBooks: true, select: showTotal }" @click="getTotalBooks">
             全部
           </dd>
@@ -232,7 +232,9 @@
             </div>
             <div class="bookInfo">
               <h3 class="bookTitle">{{ bookItem.name }}</h3>
-              <p class="authors" v-if="bookItem.authorNameString">{{ bookItem.authorNameString }}（作者）</p>
+              <p class="authors" v-if="bookItem.authorNameString">
+                {{ bookItem.authors.length === 1 ? bookItem.authors[0].name : bookItem.authorNameString }}（作者）
+              </p>
               <p class="translators" v-if="bookItem.translatorNameString">
                 {{ bookItem.translatorNameString }}（译者）
               </p>
@@ -320,6 +322,7 @@ export default {
     // this.$refs.tagList.innerHTML = hotTagList.content
     this.reqAdvancedBook()
   },
+
   methods: {
     // 用于发送请求书本列表信息
     async reqAdvancedBook() {
