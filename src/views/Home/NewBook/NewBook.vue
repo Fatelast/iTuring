@@ -90,44 +90,10 @@ export default {
 
 <style scoped>
 /* 内容展示 */
-.book-list {
-  width: 1080px;
+*{
+  margin: 0;
+  padding: 0;
 }
-.new-view {
-  display: block;
-  width: 100%;
-  height: 586px;
-  background: #fff;
-  margin: 24px 0;
-}
-.title {
-  position: relative;
-  width: 100%;
-  height: 26px;
-  line-height: 26px;
-  font-weight: 600px;
-  color: #333;
-}
-.title-one {
-  font-weight: 600;
-  font-size: 18px;
-}
-.right-btns {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 26px;
-  height: 26px;
-  margin-left: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  background: #f6f9fb;
-  border: 0;
-  border-radius: 50%;
-  cursor: pointer;
-  margin-right: 20px;
-}
-
 /* 新书上市 */
 .new-books {
   display: flex;
@@ -144,11 +110,9 @@ export default {
 }
 .new-items {
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: flex-start;
   flex: 1;
   flex-wrap: wrap;
-  height: 560px;
-  /* border: 1px solid green; */
 }
 .book-item {
   position: relative;
@@ -157,13 +121,16 @@ export default {
   height: 264px;
   background: greenyellow;
   margin-top: 16px;
-  min-width: 248px;
-  max-width: 250px;
+  min-width: 255px;
+  max-width: 255px;
   overflow: hidden;
   border-radius: 5px;
   cursor: pointer;
   box-sizing: inherit;
   margin-right: 20px;
+}
+.book-item:nth-of-type(3n) {
+  margin-right: 0;
 }
 .img-view {
   width: 255px;

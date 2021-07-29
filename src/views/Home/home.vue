@@ -83,7 +83,7 @@
 
         <div class="hot-books">
           <div
-            class="book-item"
+            class="book-item-remen"
             v-for="BooksItem in popList"
             :key="BooksItem.id"
             @click="handleBookClick(BooksItem.id)"
@@ -101,10 +101,14 @@
             </div>
           </div>
         </div>
-        <a
+        <!-- <a
           class="more-hot-books"
           href=""
-        >查看全部热门书籍</a>
+        >查看全部热门书籍</a> -->
+        <router-link
+          class="more-hot-books"
+          :to="{name:'BookMainPage',query:{}}"
+        >查看全部热门书籍</router-link>
       </div>
     </div>
     <!-- <Footer></Footer> -->
@@ -199,19 +203,9 @@ export default {
 /* 轮播图 */
 .banner-view {
   display: flex;
-  width: 1080px;
-  /* height: 309px; */
+  width: 100%;
+  height: 309px;
   margin: 16px 0 3px 0;
-}
-.swiper-one {
-  width: 740px;
-  /* height: 309px; */
-}
-/* 第二个轮播 */
-.banner-two {
-  width: 320px;
-  /* height: 309px; */
-  background: #f8fafb;
 }
 
 /* 内容展示 */
@@ -250,25 +244,43 @@ export default {
   border: 0;
   border-radius: 50%;
   cursor: pointer;
-  margin-right: 20px;
 }
 
 /* 新书上市 */
 
 .book-item {
   position: relative;
-  flex: 1;
-  width: 255px;
-  height: 264px;
-  background: greenyellow;
+  /* flex: 1; */
+  /* width: 255px; */
+  /* height: 264px; */
   margin-top: 16px;
-  min-width: 248px;
-  max-width: 250px;
+  min-width: 255px;
+  max-width: 255px;
   overflow: hidden;
   border-radius: 5px;
   cursor: pointer;
   box-sizing: inherit;
   margin-right: 20px;
+}
+.book-item:nth-of-type(3n) {
+  margin-right: 0;
+}
+.book-item-remen {
+  position: relative;
+  flex: 1;
+  width: 255px;
+  height: 264px;
+  margin-top: 16px;
+  min-width: 255px;
+  max-width: 255px;
+  overflow: hidden;
+  border-radius: 5px;
+  cursor: pointer;
+  box-sizing: inherit;
+  margin-right: 20px;
+}
+.book-item-remen:nth-of-type(4n) {
+  margin-right: 0;
 }
 .img-view {
   width: 255px;

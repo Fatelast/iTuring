@@ -1,7 +1,10 @@
 <template>
   <div class="recommedPage-swiper">
     <!-- 左边轮播图 -->
-    <div class="swiper-container recommedPage-swiper-left">
+    <div
+      ref="leftSwiper"
+      class="swiper-container recommedPage-swiper-left"
+    >
       <!-- 轮播图容器 -->
       <div class="swiper-wrapper">
         <!-- 轮播图 -->
@@ -9,7 +12,6 @@
           class="swiper-slide"
           v-for="bigImgItem in carouselImg"
           :key="bigImgItem.id"
-          @click="handleBookClick(bigImgItem.id)"
         >
           <img
             class="swiper-Img"
@@ -22,13 +24,15 @@
     </div>
 
     <!-- 右边轮播 -->
-    <div class="swiper-container recommedPage-swiper-right">
+    <div
+      ref="rightSwiper"
+      class="swiper-container recommedPage-swiper-right"
+    >
       <!-- 轮播图容器 -->
       <div class="swiper-wrapper">
         <!-- 轮播图 -->
         <div
           class="swiper-slide"
-          @click="handleBookClick(preSaleItem.id)"
           v-for="preSaleItem in preSaleList"
           :key="preSaleItem.id"
         >
@@ -71,22 +75,13 @@ export default {
     carouselImg: Array,
     preSaleList: Array,
   },
-  methods: {
-    handleBookClick(id) {
-      this.$router.push({
-        name: "BookDetail",
-        params: {
-          id,
-        },
-      });
-    },
-  },
+  methods: {},
 
   mounted() {},
   watch: {
     carouselImg() {
       this.$nextTick(() => {
-        new Swiper(".swiper-container", {
+        new Swiper(this.$refs.leftSwiper, {
           pagination: {
             el: ".swiper-pagination",
             clickable: true,
@@ -98,7 +93,7 @@ export default {
     },
     preSaleList() {
       this.$nextTick(() => {
-        new Swiper(".swiper-container", {
+        new Swiper(this.$refs.rightSwiper, {
           pagination: {
             el: ".swiper-pagination",
           },
@@ -114,7 +109,7 @@ export default {
 
 <style scoped lang="less">
 .recommedPage-swiper {
-  width: 1080px;
+  // width: 1080px;
   height: 309px;
   // margin-top: 70px;
   display: flex;
@@ -124,6 +119,7 @@ export default {
     // border: 1px solid red;
     width: 740px;
     height: 100%;
+    margin-right: 20px;
     cursor: pointer;
     .swiper-Img {
       width: 740px;
