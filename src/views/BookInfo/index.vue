@@ -161,17 +161,20 @@ export default {
   },
   mounted() {
     this.shopId = this.$route.params.id;
-    // console.log("@@@", this.shopId);
     // 请求书本详情
     this.getBookInfoList(this.shopId);
   },
   methods: {
     // 请求书本详情
     async getBookInfoList(Id) {
+      // 请求书本的详细信息
       const bookInfoList = await getBookInfo(Id);
       this.bookInfoList = bookInfoList;
+      // 购买方式及价格
       this.salesInfos = bookInfoList.salesInfos;
+      // 书本的详细介绍
       this.specialNotes = bookInfoList.briefIntro.specialNotes;
+      // 格式化时间
       this.publicationDate = moment(bookInfoList.publishDate).format(
         "YYYY-MM-DD"
       );
@@ -185,7 +188,7 @@ export default {
         params: {
           id: this.shopId,
         },
-      });   
+      });
     },
   },
   components: {

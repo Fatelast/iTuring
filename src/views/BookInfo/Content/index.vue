@@ -1,235 +1,266 @@
 <template>
-  <!-- 主要内容 -->
-  <el-tabs class="main-content">
-    <el-tab-pane label="图书介绍" class="tab">
-      <div class="book-intro" v-if="bookInfoList.briefIntro">
-        <!-- 简介 -->
-        <h4 class="title">简介</h4>
-        <div class="text">
-          <p>
-            {{ bookInfoList.briefIntro.abstract }}
-          </p>
-          <p><br /></p>
-        </div>
-        <!-- 本书特色 -->
-        <h4 class="title">本书特色</h4>
-        <div class="text">
-          <p>
-            {{ bookInfoList.briefIntro.highlight }}
-          </p>
-          <p><br /></p>
-        </div>
-        <!-- 作译者介绍 -->
-        <h4 class="title">作译者介绍</h4>
-        <div class="text">
-          <p>
-            {{ bookInfoList.briefIntro.authorInfo }}
-          </p>
-          <p><br /></p>
-        </div>
-        <!-- 出版信息 -->
-        <h4 class="title">出版信息</h4>
-        <div class="text">
-          <ul class="pd-12">
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>书</span>
-                <span>名</span>
-              </span>
-              <span class="published-value">{{ bookInfoList.name }}</span>
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>系</span>
-                <span>列</span>
-                <span>书</span>
-                <span>名</span>
-              </span>
-              <span class="published-value">{{
-                bookInfoList.bookCollectionName
-              }}</span>
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>执</span>
-                <span>行</span>
-                <span>编</span>
-                <span>辑</span>
-              </span>
-              <span class="published-value"
-                >关于本书的问题，请联系
-                <a href="#">{{
-                  bookInfoList.contributor.Editor[0].name
-                }}</a></span
-              >
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>出</span>
-                <span>版</span>
-                <span>日</span>
-                <span>期</span>
-              </span>
-              <span class="published-value">{{ publicationDate }}</span>
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>书</span>
-                <span>号</span>
-              </span>
-              <span class="published-value">{{ bookInfoList.isbn }}</span>
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>定</span>
-                <span>价</span>
-              </span>
-              <span class="published-value">{{ salesInfos[0].price }}</span>
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>页</span>
-                <span>数</span>
-              </span>
-              <span class="published-value">{{
-                bookInfoList.paperEditionInfo.pageNumber
-              }}</span>
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>印</span>
-                <span>刷</span>
-                <span>方</span>
-                <span>式</span>
-              </span>
-              <span class="published-value">{{
-                bookInfoList.paperEditionInfo.bookPrintName
-              }}</span>
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>开</span>
-                <span>本</span>
-              </span>
-              <span class="published-value">{{
-                bookInfoList.paperEditionInfo.pageSizeName
-              }}</span>
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>出</span>
-                <span>版</span>
-                <span>状</span>
-                <span>态</span>
-              </span>
-              <span class="published-value">上市销售</span>
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>原</span>
-                <span>书</span>
-                <span>名</span>
-              </span>
-              <span class="published-value">{{
-                bookInfoList.originalBookInfo.originalBookName
-              }}</span>
-            </li>
-            <li class="published-item flex-view">
-              <span class="published-label flex-view">
-                <span>原</span>
-                <span>书</span>
-                <span>号</span>
-              </span>
-              <span class="published-value">{{
-                bookInfoList.originalBookInfo.originalBookIsbn
-              }}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </el-tab-pane>
-    <el-tab-pane label="在线阅读" class="tab">
-      <div class="catalog" v-if="bookInfoList.ebook">
-        <div
-          class="catalog-item flex-view"
-          v-for="chapter in bookInfoList.ebook.chapters"
-          :key="chapter.id"
-        >
-          <span>{{ chapter.subject }}</span>
-          <span v-if="chapter.isFree" class="read-title">阅读</span>
-          <img v-else src="../images/lock.584dc0b5.svg" class="title" />
-        </div>
-      </div>
-    </el-tab-pane>
-    <el-tab-pane label="评论" class="tab">
-      <div class="book-comment">
-        <div class="title">发表新的评论</div>
-        <div class="publish flex-view">
-          <img src="../images/avatar.jpg" alt="" class="mine-img" />
-          <input type="text" placeholder="说点什么..." class="content-input" />
-          <button class="send-btn">发送</button>
-        </div>
-        <div class="tab-view flex-view">
-          <div class="count-text">共有{{ commentDate.length }}条评论</div>
-          <div class="tab-box flex-view">
-            <span class="tab-select">热门</span>
-            <div class="line"></div>
-            <span class="tab-select">最新</span>
+  <div class="book-content-view flex">
+    <!-- 主要内容 -->
+    <el-tabs class="main-content">
+      <el-tab-pane label="图书介绍" class="tab">
+        <div class="book-intro" v-if="bookInfoList.briefIntro">
+          <!-- 简介 -->
+          <h4 class="title">简介</h4>
+          <div class="text">
+            <p>
+              {{ bookInfoList.briefIntro.abstract }}
+            </p>
+            <p><br /></p>
+          </div>
+          <!-- 本书特色 -->
+          <h4 class="title">本书特色</h4>
+          <div class="text">
+            <p>
+              {{ bookInfoList.briefIntro.highlight }}
+            </p>
+            <p><br /></p>
+          </div>
+          <!-- 作译者介绍 -->
+          <h4 class="title">作译者介绍</h4>
+          <div class="text">
+            <p>
+              {{ bookInfoList.briefIntro.authorInfo }}
+            </p>
+            <p><br /></p>
+          </div>
+          <!-- 出版信息 -->
+          <h4 class="title">出版信息</h4>
+          <div class="text">
+            <ul class="pd-12">
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>书</span>
+                  <span>名</span>
+                </span>
+                <span class="published-value">{{ bookInfoList.name }}</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>系</span>
+                  <span>列</span>
+                  <span>书</span>
+                  <span>名</span>
+                </span>
+                <span class="published-value">{{
+                  bookInfoList.bookCollectionName
+                }}</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>执</span>
+                  <span>行</span>
+                  <span>编</span>
+                  <span>辑</span>
+                </span>
+                <span class="published-value"
+                  >关于本书的问题，请联系
+                  <a href="#">{{
+                    bookInfoList.contributor.Editor[0].name
+                  }}</a></span
+                >
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>出</span>
+                  <span>版</span>
+                  <span>日</span>
+                  <span>期</span>
+                </span>
+                <span class="published-value">{{ publicationDate }}</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>书</span>
+                  <span>号</span>
+                </span>
+                <span class="published-value">{{ bookInfoList.isbn }}</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>定</span>
+                  <span>价</span>
+                </span>
+                <span class="published-value">{{ salesInfos[0].price }}</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>页</span>
+                  <span>数</span>
+                </span>
+                <span class="published-value">{{
+                  bookInfoList.paperEditionInfo.pageNumber
+                }}</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>印</span>
+                  <span>刷</span>
+                  <span>方</span>
+                  <span>式</span>
+                </span>
+                <span class="published-value">{{
+                  bookInfoList.paperEditionInfo.bookPrintName
+                }}</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>开</span>
+                  <span>本</span>
+                </span>
+                <span class="published-value">{{
+                  bookInfoList.paperEditionInfo.pageSizeName
+                }}</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>出</span>
+                  <span>版</span>
+                  <span>状</span>
+                  <span>态</span>
+                </span>
+                <span class="published-value">上市销售</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>原</span>
+                  <span>书</span>
+                  <span>名</span>
+                </span>
+                <span class="published-value">{{
+                  bookInfoList.originalBookInfo.originalBookName
+                }}</span>
+              </li>
+              <li class="published-item flex-view">
+                <span class="published-label flex-view">
+                  <span>原</span>
+                  <span>书</span>
+                  <span>号</span>
+                </span>
+                <span class="published-value">{{
+                  bookInfoList.originalBookInfo.originalBookIsbn
+                }}</span>
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
-      <div
-        class="comments-list"
-        v-for="(discuss, index) in discussList.comments"
-        :key="discuss.id"
-      >
-        <div class="comment-item">
-          <div class="flex-item flex-view">
-            <div class="flex-view">
-              <img
-                :src="
-                  `https://file.ituring.com.cn/LargeCover/${discuss.userAvatarImageKey}`
-                "
-              />
-              <div class="person">
-                <div class="name">{{ discuss.userNickName }}</div>
-                <div class="time">{{ commentDate[index] }}</div>
+      </el-tab-pane>
+      <el-tab-pane label="在线阅读" class="tab">
+        <div class="catalog" v-if="bookInfoList.ebook">
+          <div
+            class="catalog-item flex-view"
+            v-for="chapter in bookInfoList.ebook.chapters"
+            :key="chapter.id"
+          >
+            <span>{{ chapter.subject }}</span>
+            <span v-if="chapter.isFree" class="read-title">阅读</span>
+            <img v-else src="../images/lock.584dc0b5.svg" class="title" />
+          </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="评论" class="tab">
+        <div class="book-comment">
+          <div class="title">发表新的评论</div>
+          <div class="publish flex-view">
+            <img src="../images/avatar.jpg" alt="" class="mine-img" />
+            <input
+              type="text"
+              placeholder="说点什么..."
+              class="content-input"
+            />
+            <button class="send-btn">发送</button>
+          </div>
+          <div class="tab-view flex-view">
+            <div class="count-text">共有{{ commentDate.length }}条评论</div>
+            <div class="tab-box flex-view">
+              <span class="tab-select">热门</span>
+              <div class="line"></div>
+              <span class="tab-select">最新</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="comments-list"
+          v-for="(discuss, index) in discussList.comments"
+          :key="discuss.id"
+        >
+          <div class="comment-item">
+            <div class="flex-item flex-view">
+              <div class="flex-view">
+                <img
+                  :src="
+                    `https://file.ituring.com.cn/LargeCover/${discuss.userAvatarImageKey}`
+                  "
+                />
+                <div class="person">
+                  <div class="name">{{ discuss.userNickName }}</div>
+                  <div class="time">{{ commentDate[index] }}</div>
+                </div>
+              </div>
+              <div class="float-right">
+                <span>推荐 </span>
+                <span>回复</span>
               </div>
             </div>
-            <div class="float-right">
-              <span>推荐 </span>
-              <span>回复</span>
-            </div>
+            <p class="comment-content">
+              {{ discuss.content }}
+            </p>
           </div>
-          <p class="comment-content">
-            {{ discuss.content }}
-          </p>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="勘误" class="tab">
+        <template>
+          <el-select value="是否确认" placeholder="请选择">
+            <el-option value="未确认"> </el-option>
+            <el-option value="已确认"> </el-option>
+          </el-select>
+        </template>
+        <template>
+          <el-select value="介质" placeholder="请选择">
+            <el-option value="电子书"> </el-option>
+            <el-option value="纸质版"> </el-option>
+          </el-select>
+        </template>
+        <template>
+          <el-select value="类型" placeholder="请选择">
+            <el-option value="文字格式错误"> </el-option>
+            <el-option value="技术错误"> </el-option>
+            <el-option value="建议"> </el-option>
+          </el-select>
+        </template>
+      </el-tab-pane>
+      <el-tab-pane label="相关文章" class="tab">暂无</el-tab-pane>
+    </el-tabs>
+    <div class="recommend">
+      <div class="loveRead">大家都在读</div>
+      <div
+        class="books"
+        v-for="relatedBook in bookInfoList.relatedBooks"
+        :key="relatedBook.id"
+      >
+        <div class="book-item">
+          <div class="img-view">
+            <img
+              :src="
+                `https://file.ituring.com.cn/LargeCover/${relatedBook.coverKey}`
+              "
+            />
+          </div>
+          <div class="info-view">
+            <h3 class="book-name">{{ relatedBook.name }}</h3>
+            <p class="authors">
+              {{ authorsName(relatedBook) + "（作者）" }}
+            </p>
+            <p class="translators">{{relatedBook.translatorNameString+"（译者）"}}</p>
+          </div>
         </div>
       </div>
-    </el-tab-pane>
-    <el-tab-pane label="勘误" class="tab">
-      <template>
-        <el-select value="是否确认" placeholder="请选择">
-          <el-option value="未确认"> </el-option>
-          <el-option value="已确认"> </el-option>
-        </el-select>
-      </template>
-      <template>
-        <el-select value="介质" placeholder="请选择">
-          <el-option value="电子书"> </el-option>
-          <el-option value="纸质版"> </el-option>
-        </el-select>
-      </template>
-      <template>
-        <el-select value="类型" placeholder="请选择">
-          <el-option value="文字格式错误"> </el-option>
-          <el-option value="技术错误"> </el-option>
-          <el-option value="建议"> </el-option>
-        </el-select>
-      </template>
-    </el-tab-pane>
-    <el-tab-pane label="相关文章" class="tab">暂无</el-tab-pane>
-  </el-tabs>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -244,9 +275,8 @@ export default {
       shopId: "", //书本的ID
     };
   },
-  async mounted() {
+  mounted() {
     this.shopId = this.$route.params.id;
-    // console.log("$$$", this.shopId);
     // 获取评论详情
     this.getdiscussList(this.shopId);
   },
@@ -264,16 +294,94 @@ export default {
     },
   },
   props: ["bookInfoList", "salesInfos", "specialNotes", "publicationDate"],
+  computed: {
+    authorsName() {
+      return function(bookItem) {
+        let str = "";
+        bookItem.authors.forEach((item) => {
+          str = str + item.name + " ";
+        });
+        return str;
+      };
+    },
+  },
 };
 </script>
 
 <style lang="less" scope>
-/* 主要内容 */
-.main-content {
+/* 外层容器 */
+.book-content-view {
   width: 70%;
   margin: 0 auto;
-  padding: 50px 0;
+  padding-top: 40px;
+  padding-bottom: 50px;
+  .recommend {
+    margin-left: 20px;
+    /* 都爱看内容区的标题 */
+    .loveRead {
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 26px;
+      color: #152844;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #cedce4;
+    }
+  }
+  /* 都爱看内容区的内容 */
+  .recommend .books .book-item {
+    margin: 16px 0;
+    min-width: 255px;
+    max-width: 255px;
+    cursor: pointer;
+    .img-view {
+      background: #eaf1f5;
+      font-size: 0;
+      text-align: center;
+      height: 156px;
+      padding: 8px 0;
+      img {
+        height: 100%;
+        margin: 0 auto;
+        border-radius: 4px;
+      }
+    }
+    .info-view {
+      background: #f6f9fb;
+      text-align: center;
+      height: 108px;
+      overflow: hidden;
+      padding: 0 16px;
+      .book-name {
+        color: #1c355a;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin: 12px 0 8px;
+      }
+      .authors,
+      .translators {
+        color: #6f6f6f;
+        font-size: 12px;
+        line-height: 14px;
+        margin-top: 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
 }
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+/* 主要内容 */
 
 .main-content {
   .el-tabs__item {
@@ -457,4 +565,6 @@ export default {
   color: #4684e2;
   font-size: 14px;
 }
+
+/* 大家都爱读 */
 </style>
