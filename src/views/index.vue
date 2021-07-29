@@ -3,7 +3,7 @@
     <LeftHeader />
     <div class="showPage">
       <router-view />
-      <Footer v-if="!$route.meta.hideFooter"/>
+      <Footer v-if="!$route.meta.hideFooter" />
     </div>
   </div>
 </template>

@@ -49,11 +49,7 @@
         v-loading.lock="loading"
         element-loading-text="拼命加载中"
       >
-        <ArticleItem
-          v-for="item in articleListItems"
-          :key="item.id"
-          :itemData="item"
-        />
+        <ArticleItem v-for="item in articleListItems" :key="item.id" :itemData="item" />
       </div>
       <div v-else>
         <h3>没有更多了</h3>
@@ -89,41 +85,41 @@ export default {
     /* 排序 */
     sort(e) {
       if (e.target.dataset.sort) {
-        let { sort } = e.target.dataset;
+        let { sort } = e.target.dataset
 
         let sortObj = {
-          new: "new",
-          hot: "hot",
-          vote: "vote",
-        };
-        this.articleListItems = [];
-        this.articleObject.params.sort = sortObj[sort];
-        this.getArticleData(this.articleObject);
+          new: 'new',
+          hot: 'hot',
+          vote: 'vote'
+        }
+        this.articleListItems = []
+        this.articleObject.params.sort = sortObj[sort]
+        this.getArticleData(this.articleObject)
       }
     },
     /* 分类 */
     tab(e) {
       if (e.target.dataset.tab) {
-        let { tab } = e.target.dataset;
+        let { tab } = e.target.dataset
         let tabObj = {
-          all: "",
-          "7hot": "7hot",
-          "30hot": "30hot",
-          follow: "follow",
-          fav: "fav",
-          mine: "mine",
-        };
-        this.articleListItems = [];
-        this.articleObject.params.tab = tabObj[tab];
-        this.getArticleData(this.articleObject);
+          all: '',
+          '7hot': '7hot',
+          '30hot': '30hot',
+          follow: 'follow',
+          fav: 'fav',
+          mine: 'mine'
+        }
+        this.articleListItems = []
+        this.articleObject.params.tab = tabObj[tab]
+        this.getArticleData(this.articleObject)
       }
     },
     /* 分装请求 */
-    async getArticleData({ url, params, method = "GET" }) {
-      this.loading = true;
-      let { articleListItems } = await getArticle({ url, params, method });
-      this.loading = false;
-      this.articleListItems.push(...articleListItems);
+    async getArticleData({ url, params, method = 'GET' }) {
+      this.loading = true
+      let { articleListItems } = await getArticle({ url, params, method })
+      this.loading = false
+      this.articleListItems.push(...articleListItems)
     },
     /* 节流 */
     thro(fn, time) {
@@ -148,16 +144,15 @@ export default {
       // 变量 windowHeight 是可视区的高度
       var windowHeight = document.documentElement.clientHeight || document.body.clientHeight
       // 变量 scrollHeight 是滚动条的总高度
-      var scrollHeight =
-        document.documentElement.scrollHeight || document.body.scrollHeight;
-      if (scrollTop + windowHeight >= scrollHeight-19) {
-        this.articleObject.params.page += 1;
-        this.thro(this.getArticleData(this.articleObject), 1000);
+      var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
+      if (scrollTop + windowHeight >= scrollHeight - 19) {
+        this.articleObject.params.page += 1
+        this.thro(this.getArticleData(this.articleObject), 1000)
       }
     }
   },
-  beforeDestory(){
-    window.onscroll=null
+  beforeDestroy() {
+    window.onscroll = null
   }
 }
 </script>

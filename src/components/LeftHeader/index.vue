@@ -6,20 +6,17 @@
       <ul @click="changePage($event)">
         <li data-select="1">
           <router-link to="/home/homepage" active-class="active" exact
-            ><span class="iconfont icon-xingqiu"></span>
-            <span class="title">推荐</span></router-link
+            ><span class="iconfont icon-xingqiu"></span> <span class="title">推荐</span></router-link
           >
         </li>
         <li data-select="2">
           <router-link to="/home/book" active-class="active"
-            ><span class="iconfont icon-book"></span
-            ><span class="title">图书</span></router-link
+            ><span class="iconfont icon-book"></span><span class="title">图书</span></router-link
           >
         </li>
         <li data-select="3">
           <router-link to="/home/article" active-class="active"
-            ><span class="iconfont icon-articleicon301"></span
-            ><span class="title">文章</span></router-link
+            ><span class="iconfont icon-articleicon301"></span><span class="title">文章</span></router-link
           >
         </li>
       </ul>
@@ -45,36 +42,36 @@
 
 <script>
 export default {
-  name: "LeftHeader",
+  name: 'LeftHeader',
   data() {
     return {
-      selectPage: "",
-    };
+      selectPage: ''
+    }
   },
 
   methods: {
     toSearch() {
       this.$router.history.push({
-        name: "Search",
-      });
+        name: 'Search'
+      })
     },
     toCart() {
       this.$router.history.push({
-        name: "Cart",
-      });
+        name: 'Cart'
+      })
     },
     toLogin() {
       this.$router.history.push({
-        name: "Login",
-      });
+        name: 'Login'
+      })
     },
     changePage(e) {
-      const { select } = e.target.dataset;
-      if (!select) return;
-      this.selectPage = select;
-    },
-  },
-};
+      const { select } = e.target.dataset
+      if (!select) return
+      this.selectPage = select
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -107,6 +104,7 @@ export default {
       }
       span.title {
         font-size: 14px;
+        padding: 0;
         margin-left: 16px;
       }
       span.iconfont {
