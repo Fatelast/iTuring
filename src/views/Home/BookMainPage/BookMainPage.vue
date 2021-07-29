@@ -233,7 +233,8 @@
             <div class="bookInfo">
               <h3 class="bookTitle">{{ bookItem.name }}</h3>
               <p class="authors" v-if="bookItem.authorNameString">
-                {{ bookItem.authors.length === 1 ? bookItem.authors[0].name : bookItem.authorNameString }}（作者）
+                <!-- {{ bookItem.authors.length === 1 ? bookItem.authors[0].name : bookItem.authorNameString }}（作者） -->
+                {{ showName(bookItem) ? showName(bookItem) + '（作者）' : '' }}
               </p>
               <p class="translators" v-if="bookItem.translatorNameString">
                 {{ bookItem.translatorNameString }}（译者）
@@ -322,7 +323,17 @@ export default {
     // this.$refs.tagList.innerHTML = hotTagList.content
     this.reqAdvancedBook()
   },
-
+  computed: {
+    showName() {
+      return function(bookItem) {
+        let nameStr = ''
+        bookItem.authors.forEach((item) => {
+          return (nameStr = nameStr + item.name + ' ')
+        })
+        return nameStr
+      }
+    }
+  },
   methods: {
     // 用于发送请求书本列表信息
     async reqAdvancedBook() {
@@ -742,13 +753,16 @@ export default {
         background: #f6f9fb;
         height: 108px;
         overflow: hidden;
+        min-width: 0px;
+        padding: 0 16px;
         .bookTitle {
           color: #1c355a;
           font-size: 16px;
           line-height: 20px;
-          overflow: hidden;
           text-overflow: ellipsis;
           text-align: center;
+          overflow: hidden;
+          display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           margin: 12px 0 8px;
@@ -759,8 +773,9 @@ export default {
           line-height: 14px;
           margin-top: 4px;
           overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
         }
       }
     }
