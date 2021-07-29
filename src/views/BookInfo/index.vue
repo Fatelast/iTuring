@@ -153,17 +153,17 @@ export default {
         5: { kind: "样书", join: "样书袋" },
         8: { kind: "其他渠道" },
       },
-      shopId: "",
+      shopId: "",//书本的ID
       specialNotes: "",
       loading: true, //是否显示正在加载
       publicationDate: "", //发版时间
     };
   },
   mounted() {
-    /* this.shopId = this.$route.query.id;
-    console.log("@@@", this.shopId); */
+    this.shopId = this.$route.params.id;
+    console.log("@@@", this.shopId);
     // 请求书本详情
-    this.getBookInfoList("2811");
+    this.getBookInfoList(this.shopId);
   },
   methods: {
     // 请求书本详情
@@ -172,7 +172,6 @@ export default {
       this.bookInfoList = bookInfoList;
       this.salesInfos = bookInfoList.salesInfos;
       this.specialNotes = bookInfoList.briefIntro.specialNotes;
-      // moment(this.backgroundAudioManager.currentTime * 1000).format('mm:ss');
       this.publicationDate = moment(bookInfoList.publishDate).format('YYYY-MM-DD')
       // 关闭loading状态
       this.loading = false;

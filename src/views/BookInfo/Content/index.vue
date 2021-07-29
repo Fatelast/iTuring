@@ -3,7 +3,7 @@
   <el-tabs class="main-content">
     <el-tab-pane label="图书介绍" class="tab">
       <div class="book-intro" v-if="bookInfoList.briefIntro">
-        <!-- 简介 --> 
+        <!-- 简介 -->
         <h4 class="title">简介</h4>
         <div class="text">
           <p>
@@ -170,9 +170,7 @@
           <button class="send-btn">发送</button>
         </div>
         <div class="tab-view flex-view">
-          <div class="count-text">
-            共有{{commentDate.length}}条评论
-          </div>
+          <div class="count-text">共有{{ commentDate.length }}条评论</div>
           <div class="tab-box flex-view">
             <span class="tab-select">热门</span>
             <div class="line"></div>
@@ -243,11 +241,14 @@ export default {
     return {
       discussList: {}, //评论列表
       commentDate: [], //评论的时间
+      shopId: "", //书本的ID
     };
   },
   async mounted() {
+    this.shopId = this.$route.params.id;
+    console.log("$$$", this.shopId);
     // 获取评论详情
-    this.getdiscussList("2811");
+    this.getdiscussList(this.shopId);
   },
   methods: {
     // 获取评论详情
