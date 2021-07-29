@@ -8,6 +8,7 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import moment from 'moment';	
 import VueLazyload from "vue-lazyload";
 import './assets/iconfont/iconfont.css'
 import './assets/iconfont/iconfont.js'

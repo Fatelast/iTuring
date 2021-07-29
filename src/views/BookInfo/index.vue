@@ -111,7 +111,7 @@
               icon="el-icon-plus"
               class="buy-btn"
               type="primary"
-              @click="toShopCat"
+              @click="toShopCar"
               >{{ salesInfosObj[salesInfo.edition].join }}</el-button
             >
           </div>
@@ -138,8 +138,8 @@
 </template>
 
 <script>
-import { getBookInfo } from "../../api/bookInfo";
-import moment from 'moment'
+import { getBookInfo } from "../../API/bookInfo";
+import moment from "moment";
 import Content from "./Content";
 export default {
   name: "BookInfo",
@@ -153,7 +153,7 @@ export default {
         5: { kind: "样书", join: "样书袋" },
         8: { kind: "其他渠道" },
       },
-      shopId: "",//书本的ID
+      shopId: "", //书本的ID
       specialNotes: "",
       loading: true, //是否显示正在加载
       publicationDate: "", //发版时间
@@ -161,25 +161,27 @@ export default {
   },
   mounted() {
     this.shopId = this.$route.params.id;
-    console.log("@@@", this.shopId);
+    // console.log("@@@", this.shopId);
     // 请求书本详情
     this.getBookInfoList(this.shopId);
   },
   methods: {
     // 请求书本详情
     async getBookInfoList(Id) {
-      const bookInfoList = await getBookInfo(Id)
+      const bookInfoList = await getBookInfo(Id);
       this.bookInfoList = bookInfoList;
       this.salesInfos = bookInfoList.salesInfos;
       this.specialNotes = bookInfoList.briefIntro.specialNotes;
-      this.publicationDate = moment(bookInfoList.publishDate).format('YYYY-MM-DD')
+      this.publicationDate = moment(bookInfoList.publishDate).format(
+        "YYYY-MM-DD"
+      );
       // 关闭loading状态
       this.loading = false;
     },
     // 跳转至购物车页面
-    toShopCat() {
+    toShopCar() {
       this.$router.push({
-        path: `/home/article/${this.shopId}`,
+        path: `/home/cartPage/${this.shopId}`,
         params: {
           id: this.shopId,
         },

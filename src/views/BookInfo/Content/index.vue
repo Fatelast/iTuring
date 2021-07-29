@@ -233,7 +233,7 @@
 </template>
 
 <script>
-import { getdiscuss } from "../../../api/bookInfo";
+import { getdiscuss } from "../../../API/bookInfo";
 import moment from "moment";
 export default {
   name: "Content",
@@ -246,16 +246,17 @@ export default {
   },
   async mounted() {
     this.shopId = this.$route.params.id;
-    console.log("$$$", this.shopId);
+    // console.log("$$$", this.shopId);
     // 获取评论详情
     this.getdiscussList(this.shopId);
   },
   methods: {
     // 获取评论详情
     async getdiscussList(Id) {
+      // 获取当前书本的评论信息
       const discussList = await getdiscuss(Id);
       this.discussList = discussList;
-      // moment(discuss.commentDate).format('YYYY-MM-DD')
+      // 格式化时间
       const commentDate = discussList.comments.map((item) => {
         return moment(item.commentDate).format("YYYY-MM-DD");
       });
