@@ -3,26 +3,22 @@
     <LeftHeader />
     <div class="showPage">
       <router-view />
-<!-- <<<<<<< HEAD -->
-      <!-- <Footer /> -->
-<!-- ======= -->
-      <!-- <Footer v-if="!$route.meta.hideFooter"/> -->
-<!-- >>>>>>> 8dbeca6f1a26a3b38790bccca8ec7dd6d7ee59aa -->
+      <Footer v-if="!$route.meta.hideFooter" />
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import LeftHeader from '@/components/LeftHeader'
+import LeftHeader from "@/components/LeftHeader";
 // import Footer from '@/components/Footer/Footer'
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     LeftHeader,
     // Footer
-  }
-}
+  },
+};
 </script>
 <style scoped>
 .showPage {

@@ -4,7 +4,7 @@ import 'nprogress/nprogress.css'
 NProgress.configure({ showSpinner: false })
 const request = axios.create({
   baseURL: '/api',
-  timeout: 5000
+  timeout: 10000
   // headers: {}
 })
 // 设置请求拦截器

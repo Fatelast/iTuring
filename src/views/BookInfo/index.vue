@@ -132,12 +132,14 @@
       :bookInfoList="bookInfoList"
       :salesInfos="salesInfos"
       :specialNotes="specialNotes"
+      :publicationDate="publicationDate"
     />
   </div>
 </template>
 
 <script>
 import { getBookInfo } from "../../API/bookInfo";
+import moment from "moment";
 import Content from "./Content";
 export default {
   name: "BookInfo",
@@ -151,36 +153,36 @@ export default {
         5: { kind: "样书", join: "样书袋" },
         8: { kind: "其他渠道" },
       },
-      shopId: "",
+      shopId: "", //书本的ID
       specialNotes: "",
       loading: true, //是否显示正在加载
+      publicationDate: "", //发版时间
     };
   },
-  async mounted() {
+  mounted() {
     this.shopId = this.$route.params.id;
     // 请求书本详情
-    const bookInfoList = await getBookInfo(this.shopId);
-    this.bookInfoList = bookInfoList;
-    this.salesInfos = bookInfoList.salesInfos;
-    this.specialNotes = bookInfoList.briefIntro.specialNotes;
-    // 关闭loading状态
-    this.loading = false;
+    this.getBookInfoList(this.shopId);
   },
   methods: {
+    // 请求书本详情
+    async getBookInfoList(Id) {
+      const bookInfoList = await getBookInfo(Id);
+      this.bookInfoList = bookInfoList;
+      this.salesInfos = bookInfoList.salesInfos;
+      this.specialNotes = bookInfoList.briefIntro.specialNotes;
+      this.publicationDate = moment(bookInfoList.publishDate).format(
+        "YYYY-MM-DD"
+      );
+      // 关闭loading状态
+      this.loading = false;
+    },
+    // 跳转至购物车页面
     toShopCat() {
       this.$router.push({
         path: `/home/article/${this.shopId}`,
         params: {
           id: this.shopId,
-        },
-      });
-    },
-    handleBookClick(id) {
-      // console.log("id", id);
-      this.$route.push({
-        name: "BookInfo",
-        params: {
-          id,
         },
       });
     },

@@ -1,24 +1,8 @@
 <template>
   <!-- 主要内容 -->
-  <!--v-model="activeName" @tab-click="handleClick" -->
   <el-tabs class="main-content">
     <el-tab-pane label="图书介绍" class="tab">
       <div class="book-intro" v-if="bookInfoList.briefIntro">
-        <!-- 特别说明 -->
-
-        <!-- <h4 class="title">特别说明</h4>
-        <div class="text">
-          <p>再简单的代码，也有更好的实现方式</p>
-          <p><br /></p>
-        </div>
-        <div>
-          {{ bookInfoList.briefIntro.specialNotes }}
-          <ul>
-          <li><p>Java Champion凯·霍斯特曼作序</p></li>
-          <li><p>1个示例，7次重构，18种实现，助你明辨优劣代码</p></li>
-          <li><p>每章都配有小测验及习题答案，学以致用</p></li>
-        </ul>
-        </div> -->
         <!-- 简介 -->
         <h4 class="title">简介</h4>
         <div class="text">
@@ -86,9 +70,7 @@
                 <span>日</span>
                 <span>期</span>
               </span>
-              <span class="published-value">{{
-                bookInfoList.publishDate
-              }}</span>
+              <span class="published-value">{{ publicationDate }}</span>
             </li>
             <li class="published-item flex-view">
               <span class="published-label flex-view">
@@ -188,9 +170,7 @@
           <button class="send-btn">发送</button>
         </div>
         <div class="tab-view flex-view">
-          <div class="count-text">
-            共有4条评论
-          </div>
+          <div class="count-text">共有{{ commentDate.length }}条评论</div>
           <div class="tab-box flex-view">
             <span class="tab-select">热门</span>
             <div class="line"></div>
@@ -200,7 +180,7 @@
       </div>
       <div
         class="comments-list"
-        v-for="discuss in discussList.comments"
+        v-for="(discuss, index) in discussList.comments"
         :key="discuss.id"
       >
         <div class="comment-item">
@@ -213,7 +193,7 @@
               />
               <div class="person">
                 <div class="name">{{ discuss.userNickName }}</div>
-                <div class="time">{{ discuss.commentDate }}</div>
+                <div class="time">{{ commentDate[index] }}</div>
               </div>
             </div>
             <div class="float-right">
@@ -254,20 +234,35 @@
 
 <script>
 import { getdiscuss } from "../../../API/bookInfo";
+import moment from "moment";
 export default {
   name: "Content",
   data() {
     return {
-      discussList: {},
+      discussList: {}, //评论列表
+      commentDate: [], //评论的时间
+      shopId: "", //书本的ID
     };
   },
   async mounted() {
-    const discussList = await getdiscuss("2811");
-    this.discussList = discussList;
-    console.log(this.$refs.explain);
-    // this.$refs.explain.innerHTML(this.specialNotes);
+    this.shopId = this.$route.params.id;
+    console.log("$$$", this.shopId);
+    // 获取评论详情
+    this.getdiscussList(this.shopId);
   },
-  props: ["bookInfoList", "salesInfos", "specialNotes"],
+  methods: {
+    // 获取评论详情
+    async getdiscussList(Id) {
+      const discussList = await getdiscuss(Id);
+      this.discussList = discussList;
+      // moment(discuss.commentDate).format('YYYY-MM-DD')
+      const commentDate = discussList.comments.map((item) => {
+        return moment(item.commentDate).format("YYYY-MM-DD");
+      });
+      this.commentDate = commentDate;
+    },
+  },
+  props: ["bookInfoList", "salesInfos", "specialNotes", "publicationDate"],
 };
 </script>
 
