@@ -202,12 +202,13 @@
           </div>
         </div>
         <!-- 书本展示列表 -->
-        <div class="BookList_container" v-loading="loading">
-          <!-- :to="{ path: '/home/book/' + bookItem.id }" -->
+        <div class="BookList_container">
+          <div class="loadingBox" v-loading="loading" v-show="loading"></div>
           <router-link
             :to="{ path: '/home/book/bookinfo/' + bookItem.id }"
             target="_blank"
             class="bookItem"
+            v-show="!loading"
             v-for="bookItem in bookItems"
             :key="bookItem.id"
           >
@@ -237,6 +238,7 @@
           :page-size="15"
           layout="prev, pager, next"
           :total="total"
+          v-show="!loading"
         >
         </el-pagination>
         <p v-if="!bookItems.length" class="no_result">没有搜索到结果</p>
@@ -689,6 +691,12 @@ export default {
   .BookList_container {
     display: flex;
     flex-wrap: wrap;
+    position: relative;
+    .loadingBox {
+      position: absolute;
+      left: 45%;
+      top: 100px;
+    }
     .bookItem {
       text-decoration: none;
       flex: 1;
