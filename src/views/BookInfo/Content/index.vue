@@ -156,7 +156,7 @@
           :key="chapter.id"
         >
           <span>{{ chapter.subject }}</span>
-          <span v-if="chapter.isFree" class="title">阅读</span>
+          <span v-if="chapter.isFree" class="read-title">阅读</span>
           <img v-else src="../images/lock.584dc0b5.svg" class="title" />
         </div>
       </div>
@@ -344,6 +344,11 @@ export default {
   border-bottom: 1px solid #e9e9e9;
   font-size: 14px;
   height: 46px;
+  .read-title {
+    font-size: 14px;
+    color: #3d5b96;
+    cursor: pointer;
+  }
 }
 
 /* 评论 */

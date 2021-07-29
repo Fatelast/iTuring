@@ -5,7 +5,12 @@
       <!-- 封面及作者 -->
       <div class="book-infos">
         <div class="book-img-box">
-          <img :src="`https://file.ituring.com.cn/LargeCover/${bookInfoList.coverKey}`" alt="" />
+          <img
+            :src="
+              `https://file.ituring.com.cn/LargeCover/${bookInfoList.coverKey}`
+            "
+            alt=""
+          />
         </div>
         <div class="book-info-box">
           <div class="book-state">
@@ -63,7 +68,9 @@
             <span class="count-title">随书下载</span>
             <div>
               <span class="text">文件</span>
-              <span class="num-text">{{ bookInfoList.resources ? bookInfoList.resources.length : 0 }}</span>
+              <span class="num-text">{{
+                bookInfoList.resources ? bookInfoList.resources.length : 0
+              }}</span>
             </div>
           </div>
         </div>
@@ -95,7 +102,9 @@
           </div>
           <div class="price" v-if="salesInfo.edition !== 8">
             <span class="discount-price">¥{{ salesInfo.discountPrice }}</span>
-            <span class="original-price" v-if="salesInfo.discountPrice !== salesInfo.price"
+            <span
+              class="original-price"
+              v-if="salesInfo.discountPrice !== salesInfo.price"
               >¥{{ salesInfo.price }}</span
             >
             <el-button
@@ -133,22 +142,22 @@ import { getBookInfo } from "../../API/bookInfo";
 import moment from "moment";
 import Content from "./Content";
 export default {
-  name: 'BookInfo',
+  name: "BookInfo",
   data() {
     return {
       bookInfoList: {}, //详情页总数据
       salesInfos: [], //购买方式的种类
       salesInfosObj: {
-        1: { kind: '纸质书', join: '购书袋' },
-        4: { kind: '电子书', join: '购书袋' },
-        5: { kind: '样书', join: '样书袋' },
-        8: { kind: '其他渠道' }
+        1: { kind: "纸质书", join: "购书袋" },
+        4: { kind: "电子书", join: "购书袋" },
+        5: { kind: "样书", join: "样书袋" },
+        8: { kind: "其他渠道" },
       },
       shopId: "", //书本的ID
       specialNotes: "",
       loading: true, //是否显示正在加载
-      publicationDate: '' //发版时间
-    }
+      publicationDate: "", //发版时间
+    };
   },
   mounted() {
     this.shopId = this.$route.params.id;
@@ -167,22 +176,22 @@ export default {
         "YYYY-MM-DD"
       );
       // 关闭loading状态
-      this.loading = false
+      this.loading = false;
     },
     // 跳转至购物车页面
     toShopCar() {
       this.$router.push({
-        path: `/home/cartPage/${this.shopId}`,
+        path: `/home/cart/${this.shopId}`,
         params: {
-          id: this.shopId
-        }
-      })
-    }
+          id: this.shopId,
+        },
+      });   
+    },
   },
   components: {
-    Content
-  }
-}
+    Content,
+  },
+};
 </script>
 
 <style lang="less" scoped>
