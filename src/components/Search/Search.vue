@@ -2,8 +2,12 @@
   <div class="search">
     <!-- 搜索 -->
     <div class="search-input">
-      <img src="./image/search-icon.7e146fd0.svg" />
-      <input placeholder="请输入搜索关键词 " />
+      <img src="./image/search-icon.7e146fd0.svg" @click="toBook" />
+      <input
+        placeholder="请输入搜索关键词 "
+        v-model="search"
+        @keyup.enter="toBook"
+      />
       <router-link to="/home/homepage">
         <img src="./image/search-close-icon.58504ba8.svg" />
       </router-link>
@@ -12,11 +16,7 @@
     <div class="search-history">
       <h3>搜索历史</h3>
       <div class="history-box">
-        <button>前端</button>
-        <button>前端</button>
-        <button>前端</button>
-        <button>前端</button>
-        <button>前端</button>
+        <button v-for="item in history" :key="item">{{ item }}</button>
       </div>
     </div>
     <!-- 热门搜索 -->
@@ -43,8 +43,24 @@ export default {
   name: "Search",
   data() {
     return {
-      // search: "",
+      history: [],
+      search: "",
     };
+  },
+  methods: {
+    toBook() {
+      let { search, history } = this;
+      if (!search) return;
+      history.unshift(search);
+      sessionStorage.setItem("history", JSON.stringify(history));
+      this.$router.history.push("/home/book");
+    },
+  },
+  mounted() {
+    if (sessionStorage.getItem("history")) {
+      let history = JSON.parse(sessionStorage.getItem("history"));
+      this.history = history;
+    }
   },
 };
 </script>

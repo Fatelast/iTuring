@@ -155,7 +155,7 @@ export default {
         sort: "vote",
       },
     });
-    console.log(comment.comments);
+    this.comments = comment;
   },
 };
 </script>

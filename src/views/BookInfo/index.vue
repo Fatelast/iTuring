@@ -157,10 +157,9 @@ export default {
     };
   },
   async mounted() {
-    /* this.shopId = this.$route.query.id;
-    console.log("@@@", this.shopId); */
+    this.shopId = this.$route.params.id;
     // 请求书本详情
-    const bookInfoList = await getBookInfo("2811");
+    const bookInfoList = await getBookInfo(this.shopId);
     this.bookInfoList = bookInfoList;
     this.salesInfos = bookInfoList.salesInfos;
     this.specialNotes = bookInfoList.briefIntro.specialNotes;

@@ -37,10 +37,31 @@
     <div class="content-list-view">
       <div class="content-nav" @click="sort">
         <span>排序方式:</span>
-        <span class="tab-item" data-sort="new">最新</span>
-        <span class="tab-item" data-sort="hot">最热</span>
-        <span class="tab-item" data-sort="vote">推荐</span>
-        <span class="tab-underline"></span>
+        <span
+          class="tab-item"
+          @click="num = 0"
+          :class="{ active: num == 0 }"
+          data-sort="new"
+          >最新</span
+        >
+        <span
+          class="tab-item"
+          @click="num = 1"
+          :class="{ active: num == 1 }"
+          data-sort="hot"
+          >最热</span
+        >
+        <span
+          class="tab-item"
+          @click="num = 2"
+          :class="{ active: num == 2 }"
+          data-sort="vote"
+          >推荐</span
+        >
+        <span
+          class="tab-underline"
+          :style="`transform:translate(${offset}px)`"
+        ></span>
       </div>
       <!-- 列表 -->
       <div
@@ -63,34 +84,54 @@
 </template>
 
 <script>
-import ArticleItem from './ArticleItem'
-import { getArticle } from '../../../utils/api'
+import ArticleItem from "./ArticleItem";
+import { getArticle } from "../../../utils/api";
 export default {
-  name: 'Article',
+  name: "Article",
   components: {
-    ArticleItem
+    ArticleItem,
   },
   data() {
     return {
+      offset: 80,
       loading: true,
+      num: 0,
       count: 0,
       articleListItems: [],
       articleObject: {
-        url: '/Article',
+        url: "/Article",
         params: {
-          sort: 'new',
+          sort: "new",
           page: 1,
-          tab: ''
+          tab: "",
+        },
+      },
+    };
+  },
+  watch: {
+    num(val) {
+      switch (val) {
+        case 0: {
+          this.offset = 80;
+          break;
+        }
+        case 2: {
+          this.offset = 200;
+          break;
+        }
+        case 1: {
+          this.offset = 140;
+          break;
         }
       }
-    }
+    },
   },
   methods: {
     /* 排序 */
     sort(e) {
       if (e.target.dataset.sort) {
         let { sort } = e.target.dataset;
-
+        /* e.target.classList.add('tab-item-active') */
         let sortObj = {
           new: "new",
           hot: "hot",
@@ -127,39 +168,41 @@ export default {
     },
     /* 节流 */
     thro(fn, time) {
-      var lasttime = 0
+      var lasttime = 0;
       return function() {
-        let starttime = Date.now()
+        let starttime = Date.now();
         if (starttime - lasttime < time) {
-          return
+          return;
         }
-        lasttime = starttime
-        fn.call(this, arguments[0])
-      }
-    }
+        lasttime = starttime;
+        fn.call(this, arguments[0]);
+      };
+    },
   },
   async mounted() {
     /* 初次加载 */
-    await this.getArticleData(this.articleObject)
+    await this.getArticleData(this.articleObject);
     /* 滚动到底部 */
     window.onscroll = () => {
       //变量scrollTop是滚动条滚动时，距离顶部的距离
-      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+      var scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
       // 变量 windowHeight 是可视区的高度
-      var windowHeight = document.documentElement.clientHeight || document.body.clientHeight
+      var windowHeight =
+        document.documentElement.clientHeight || document.body.clientHeight;
       // 变量 scrollHeight 是滚动条的总高度
       var scrollHeight =
         document.documentElement.scrollHeight || document.body.scrollHeight;
-      if (scrollTop + windowHeight >= scrollHeight-19) {
+      if (scrollTop + windowHeight >= scrollHeight - 19) {
         this.articleObject.params.page += 1;
         this.thro(this.getArticleData(this.articleObject), 1000);
       }
-    }
+    };
   },
-  beforeDestory(){
-    window.onscroll=null
-  }
-}
+  beforeDestroy() {
+    window.onscroll = null;
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -209,14 +252,20 @@ export default {
   flex: 1;
 }
 .content-nav {
-  /* position: relative; */
+  position: relative;
   height: 42px;
   line-height: 42px;
   color: #6c6c6c;
   display: flex;
 }
+.content-nav .active {
+  color: blue;
+}
 /* 滑动效果 */
 .content-nav .tab-underline {
+  top: 35px;
+  transition: 0.3s;
+  position: absolute;
   width: 12px;
   height: 4px;
   background: #4684e2;

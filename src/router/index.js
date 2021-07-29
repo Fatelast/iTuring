@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import HomePage from '../views/Home/home.vue'
 import Home from '../views/Home/index.vue'
 import Article from '../views/Home/Article/Article.vue'
-import CartPage from '../views/product/CartPage'
 import Login from '../views/product/Login/index.vue'
 import Register from '../views/product/RegisterPage/index.vue'
 import Cart from '../views/product/CartPage/index.vue'
@@ -48,11 +47,6 @@ const routes = [
       },
       /* 购物车 */
       {
-        path:'/home/cartPage',
-        name:'CartPage',
-        component:CartPage
-      },
-      {
         path:'/home/cart',
         name:'Cart',
         component:Cart
@@ -86,6 +80,9 @@ const router = new VueRouter({
 	mode: "history",
 	base: process.env.BASE_URL,
 	routes,
+  scrollBehavior(){
+    return{x:0,y:0}
+  }
 });
 
 export default router;
