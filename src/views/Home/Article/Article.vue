@@ -116,11 +116,11 @@ export default {
           break;
         }
         case 2: {
-          this.offset = 200;
+          this.offset = 205;
           break;
         }
         case 1: {
-          this.offset = 140;
+          this.offset = 145;
           break;
         }
       }
