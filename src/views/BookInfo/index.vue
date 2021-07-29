@@ -168,7 +168,7 @@ export default {
   methods: {
     // 请求书本详情
     async getBookInfoList(Id) {
-      const bookInfoList = await getBookInfo(Id);
+      const bookInfoList = await getBookInfo(Id)
       this.bookInfoList = bookInfoList;
       this.salesInfos = bookInfoList.salesInfos;
       this.specialNotes = bookInfoList.briefIntro.specialNotes;

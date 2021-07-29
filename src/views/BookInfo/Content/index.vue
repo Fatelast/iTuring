@@ -3,7 +3,7 @@
   <el-tabs class="main-content">
     <el-tab-pane label="图书介绍" class="tab">
       <div class="book-intro" v-if="bookInfoList.briefIntro">
-        <!-- 简介 -->
+        <!-- 简介 --> 
         <h4 class="title">简介</h4>
         <div class="text">
           <p>
