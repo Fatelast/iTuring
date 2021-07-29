@@ -235,7 +235,7 @@
       </el-tab-pane>
       <el-tab-pane label="相关文章" class="tab">暂无</el-tab-pane>
     </el-tabs>
-    <div class="recommend">
+    <div class="recommend" v-if="bookInfoList.relatedBooks.length">
       <div class="loveRead">大家都在读</div>
       <div
         class="books"
@@ -255,7 +255,9 @@
             <p class="authors">
               {{ authorsName(relatedBook) + "（作者）" }}
             </p>
-            <p class="translators">{{relatedBook.translatorNameString+"（译者）"}}</p>
+            <p class="translators">
+              {{ relatedBook.translatorNameString + "（译者）" }}
+            </p>
           </div>
         </div>
       </div>
@@ -565,6 +567,4 @@ export default {
   color: #4684e2;
   font-size: 14px;
 }
-
-/* 大家都爱读 */
 </style>
