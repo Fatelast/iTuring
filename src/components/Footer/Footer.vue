@@ -63,12 +63,18 @@
           <h4>关注我们</h4>
           <div class="code_container">
             <div class="code-box">
-              <img src="../../static/images/group-qrcode.a2be38de.png" alt="" />
+              <img
+                src="../../static/images/group-qrcode.a2be38de.png"
+                alt=""
+              />
               <p>关注服务号</p>
               <p>加入读者群</p>
             </div>
             <div class="code-box">
-              <img src="../../static/images/下载.png" alt="" />
+              <img
+                src="../../static/images/下载.png"
+                alt=""
+              />
               <p>关注图灵教育</p>
               <p>分享技术知识</p>
             </div>
@@ -101,8 +107,14 @@ export default {
 <style lang="less" scoped>
 // 底部样式开始
 .footer_container {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  background: #fbfeff;
+  padding-left: 172px;
+
   max-width: 1108px;
-  margin: 100px auto 0;
+  margin: 0 auto ;
   padding: 24px 0 20px 100px;
   text-align: center;
   // 底部友情链接链接二维码样式

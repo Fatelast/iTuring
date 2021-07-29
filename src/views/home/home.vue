@@ -13,7 +13,7 @@
 
     <!-- 内容区 -->
     <div class="book-list hidden-sm">
-      
+
       <!-- 新书上市 -->
       <div class="new-view">
         <!-- 标题 -->
@@ -104,6 +104,7 @@
         >查看全部热门书籍</a>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -111,6 +112,7 @@
 import NewBook from "@/views/home/NewBook/NewBook";
 import Carousel from "./Carousel/Carousel";
 import api from "../../API/home";
+import Footer from "../../components/Footer/Footer";
 
 export default {
   name: "home",
@@ -168,6 +170,7 @@ export default {
   components: {
     Carousel,
     NewBook,
+    Footer,
   },
 };
 </script>
@@ -180,23 +183,25 @@ export default {
 .content-view {
   width: 1080px;
   margin: 0 auto;
+  padding-top: 2px;
+
 }
 
 /* 轮播图 */
 .banner-view {
   display: flex;
   width: 1080px;
-  height: 309px;
+  /* height: 309px; */
   margin: 16px 0 3px 0;
 }
 .swiper-one {
   width: 740px;
-  height: 309px;
+  /* height: 309px; */
 }
 /* 第二个轮播 */
 .banner-two {
   width: 320px;
-  height: 309px;
+  /* height: 309px; */
   background: #f8fafb;
 }
 
@@ -207,7 +212,7 @@ export default {
 .new-view {
   display: block;
   width: 100%;
-  height: 586px;
+  /* height: 586px; */
   background: #fff;
   margin: 24px 0;
 }
@@ -324,7 +329,7 @@ export default {
 /* 第三栏 */
 .hot-view {
   width: 100%;
-  height: 352px;
+  /* height: 352px; */
   margin: 24px 0;
 }
 .hot-books {

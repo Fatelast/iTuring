@@ -3,7 +3,7 @@
     <LeftHeader />
     <div class="showPage">
       <router-view />
-      <Footer />
+      <!-- <Footer /> -->
     </div>
   </div>
 </template>
@@ -11,12 +11,12 @@
 <script>
 // @ is an alias to /src
 import LeftHeader from '@/components/LeftHeader'
-import Footer from '@/components/Footer/Footer'
+// import Footer from '@/components/Footer/Footer'
 export default {
   name: 'Home',
   components: {
     LeftHeader,
-    Footer
+    // Footer
   }
 }
 </script>

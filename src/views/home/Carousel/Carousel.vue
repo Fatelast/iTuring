@@ -137,7 +137,7 @@ export default {
     position: relative;
     width: 320px;
     height: 100%;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: #f6f9fb;
     cursor: pointer;
     .preSale {
@@ -149,7 +149,7 @@ export default {
       img {
         width: 127.65px;
         height: 168px;
-        border-radius: 10px;
+        border-radius: 8px;
       }
       b {
         display: block;
