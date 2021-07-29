@@ -111,7 +111,7 @@
               icon="el-icon-plus"
               class="buy-btn"
               type="primary"
-              @click="toShopCat"
+              @click="toShopCar"
               >{{ salesInfosObj[salesInfo.edition].join }}</el-button
             >
           </div>
@@ -167,10 +167,14 @@ export default {
   methods: {
     // 请求书本详情
     async getBookInfoList(Id) {
+      // 请求书本的详细信息
       const bookInfoList = await getBookInfo(Id);
       this.bookInfoList = bookInfoList;
+      // 购买方式及价格
       this.salesInfos = bookInfoList.salesInfos;
+      // 书本的详细介绍
       this.specialNotes = bookInfoList.briefIntro.specialNotes;
+      // 格式化时间
       this.publicationDate = moment(bookInfoList.publishDate).format(
         "YYYY-MM-DD"
       );
@@ -178,9 +182,9 @@ export default {
       this.loading = false;
     },
     // 跳转至购物车页面
-    toShopCat() {
+    toShopCar() {
       this.$router.push({
-        path: `/home/article/${this.shopId}`,
+        path: `/home/cart/${this.shopId}`,
         params: {
           id: this.shopId,
         },

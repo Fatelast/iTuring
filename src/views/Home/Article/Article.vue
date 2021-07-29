@@ -66,18 +66,19 @@
       <!-- 列表 -->
       <div
         class="articleList"
-        v-if="articleListItems.length"
-        v-loading.lock="loading"
         element-loading-text="拼命加载中"
+        v-loading="loading"
       >
-        <ArticleItem
-          v-for="item in articleListItems"
-          :key="item.id"
-          :itemData="item"
-        />
-      </div>
-      <div v-else>
-        <h3>没有更多了</h3>
+        <div v-if="articleListItems.length">
+          <ArticleItem
+            v-for="item in articleListItems"
+            :key="item.id"
+            :itemData="item"
+          />
+        </div>
+        <div v-else-if="!loading && !articleListItems.length">
+          <h3>没有更多了</h3>
+        </div>
       </div>
     </div>
   </div>
