@@ -214,7 +214,7 @@
         <div class="BookList_container">
           <div class="loadingBox" v-loading="loading" v-show="loading"></div>
           <router-link
-            :to="{ path: '/home/book/bookinfo/' + bookItem.id }"
+            :to="{ path: '/home/book/' + bookItem.id }"
             target="_blank"
             class="bookItem"
             v-show="!loading"
